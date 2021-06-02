@@ -5,7 +5,13 @@
 }
 
 .header {
-	text-align:center;
+	text-align: center;
+}
+
+.form_container {
+	justify-content: center;
+	text-align: center;
+	margin:0 auto;	
 }
 
 .form {
