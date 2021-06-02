@@ -11,22 +11,20 @@
 </head>
 <body>
   <h2 class="header">Trip Deals</h2>
-  <div class="form_container">
-	  <form class="form" action="#" th:action="@{/packages/search}" th:object="${tripInfo}" method="post">
-	  Departure City: <input type="text" th:field="*{startingCity}" /> 
-	  <span th:if="${#fields.hasErrors('startingCity')}" th:errors="*{startingCity}"></span> 
-	  <br />
-	  Destination City: <input type="text" th:field="*{destinationCity}" />
-	  <span th:if="${#fields.hasErrors('destinationCity')}" th:errors="*{destinationCity}"></span> 
-	  <br /> 
-	  Departing Date: <input type="date" th:field="*{departureDate}" /> 
-	  <span th:if="${#fields.hasErrors('departureDate')}" th:errors="*{departureDate}"></span>
-	  <br /> 
-	  Arrival Date: <input type="date" th:field="*{arrivalDate}" /> 
-	  <span th:if="${#fields.hasErrors('arrivalDate')}" th:errors="*{arrivalDate}"></span>
-	  <br /> 
-	  <input type="submit" value="Submit" />
-	  </form>
-  </div> <!-- Form container -->
+  <form class="form" action="#" th:action="@{/packages}" th:object="${tripInfo}" method="post">
+  Departure City: <input type="text" th:field="*{startingCity}" /> 
+    <span th:if="${#fields.hasErrors('startingCity')}" th:errors="*{startingCity}"></span> 
+    <br />
+  Destination City: <input type="text" th:field="*{destinationCity}" />
+    <span th:if="${#fields.hasErrors('destinationCity')}" th:errors="*{destinationCity}"></span> 
+    <br /> 
+  Departing Date: <input type="text" th:field="*{departureDate}" /> 
+    <span th:if="${#fields.hasErrors('departureDate')}" th:errors="*{departureDate}"></span>
+    <br /> 
+  Arrival Date: <input type="text" th:field="*{arrivalDate}" /> 
+    <span th:if="${#fields.hasErrors('arrivalDate')}" th:errors="*{arrivalDate}"></span>
+    <br /> 
+  <input type="submit" value="Submit" />
+  </form>
 </body>
 </html>

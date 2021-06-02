@@ -13,9 +13,7 @@ public class TripInfo {
    @NotNull
    @Size(min=1, max=45)
    String destinationCity;
-   @NotNull
    Date departureDate;
-   @NotNull
    Date arrivalDate;
    
    public TripInfo() {}

@@ -21,35 +21,36 @@ import cst438.service.PackageService;
 
 @Controller
 public class PackageController {
-	@Autowired
-	PackageService packageService;
-	
-	@GetMapping("/")  // localhost:8080/
-	public String getIndex(Model model) {
-		return "index";
-	}
-	
-	@GetMapping("/packages")  // localhost:8080/packages
-	public String getPackageForm(Model model) {
-	   TripInfo tripInfo = new TripInfo();
-      model.addAttribute("tripInfo", tripInfo);
-		return "trip_info_form";
-	}
+   @Autowired
+   PackageService packageService;
 
-	@PostMapping("/packages/search")
-	public String submitPackageForm(
-			@Valid TripInfo tripInfo,
-			BindingResult result,
-			Model model) {
-	  System.out.println("EXECUTED IN POST MAPPING /packages");
-		List<Package> packageList = packageService.getPackageList(tripInfo);
-		
-		if (packageList == null) {
-			return "packages_error";
-		}
-		
-		model.addAttribute("packageList", packageList);
-		
-		return "packages_show"; 
+   @GetMapping("/") // localhost:8080/
+   public String getIndex(Model model) {
+      return "index";
+   }
+
+   @GetMapping("/packages") // localhost:8080/packages
+   public String getPackageForm(Model model) {
+      TripInfo tripInfo = new TripInfo();
+      model.addAttribute("tripInfo", tripInfo);
+      return "trip_info_form";
+   }
+
+   // Package Form submission
+   @PostMapping("/packages")
+   public String getCityInfo(@Valid TripInfo tripInfo, BindingResult result,
+      Model model) {
+      if (result.hasErrors()) {
+         return "trip_info_form";
+      }
+      System.out.println("EXECUTED IN POST MAPPING /packages");
+
+      /* List<Package> packageList = packageService.getPackageList(tripInfo); */
+      /*
+       * if (packageList == null) return "packages_error";
+       */
+      /* model.addAttribute("packageList", packageList); */
+
+      return "packages_show";
    }
 }
