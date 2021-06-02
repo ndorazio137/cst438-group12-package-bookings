@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import cst438.domain.TripInfo;
-
+import cst438.domain.Package;
 import cst438.service.PackageService;
 
 @Controller
@@ -41,7 +41,7 @@ public class PackageController {
 			@Valid TripInfo tripInfo,
 			BindingResult result,
 			Model model) {
-		List<cst438.domain.Package> packageList = packageService.getPackageList(tripInfo);
+		List<Package> packageList = packageService.getPackageList(tripInfo);
 		
 		if (packageList == null) {
 			return "packages_error";
