@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import cst438.domain.TripInfo;
+import cst438.domain.Package;
 
 import cst438.service.PackageService;
 
@@ -36,12 +37,13 @@ public class PackageController {
 	}
 
 	// Package Form submission
-	@PostMapping("/packages")
+	@PostMapping("/packages/search")
 	public String getCityInfo(
 			@Valid TripInfo tripInfo,
 			BindingResult result,
 			Model model) {
-		List<cst438.domain.Package> packageList = packageService.getPackageList(tripInfo);
+	   System.out.println("EXECUTED IN POST MAPPING /packages");
+		List<Package> packageList = packageService.getPackageList(tripInfo);
 		
 		if (packageList == null) {
 			return "packages_error";
