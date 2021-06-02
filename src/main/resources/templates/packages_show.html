@@ -8,6 +8,13 @@
 </head>
 <body>
   <h2>Trip Deals</h2>
+  <table>
+  	<tr th:each="package: ${packageList}">
+  		<td th:text="${package.toString()}" />
+  	</tr>
+  </table>
+  
+  Title: <span th:inline="text"> [[${movieRating.title}]] </span> <br />
   
 </body>
 </html>
