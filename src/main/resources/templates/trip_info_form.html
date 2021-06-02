@@ -8,7 +8,7 @@
 </head>
 <body>
   <h2>Rate a Movie.</h2>
-  <form action="#" th:action="@{/package}" th:object="${tripInfo}" method="post">
+  <form action="#" th:action="@{/packages}" th:object="${tripInfo}" method="post">
   Departure City: <input type="text" th:field="*{startingCity}" /> 
     <span th:if="${#fields.hasErrors('startingCity')}" th:errors="*{startingCity}"> </span> <br />
   Destination City: <input type="text" th:field="*{destinationCity}" />
