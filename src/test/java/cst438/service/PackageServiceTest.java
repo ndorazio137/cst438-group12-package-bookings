@@ -5,11 +5,15 @@ import static org.mockito.BDDMockito.given;
 import static org.assertj.core.api.Assertions.assertThat;
 //******** Non-Static imports ***********
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+
+import cst438.domain.Package;
+import cst438.domain.TripInfo;
 
 @WebMvcTest(PackageServiceTest.class)
 public class PackageServiceTest {
@@ -20,13 +24,99 @@ public class PackageServiceTest {
    private HotelService hotelService;
    @MockBean
    private FlightService flightService;
-
+   @Autowired
+   private PackageService packageService;
+   
+   
+   
    //*********TEST CASES***********
    @Test
    public void testNullPackage() throws Exception {
       // Create an empty response array
       
-      
    }
+   
+   // All three return valid
+   @Test
+   public void testAllGoodResponses() throws Exception {
+      
+      String startingCity = "Chicago";
+      String destinationCity = "Miami";
+      Date departureDate = new Date("2020-06-03");
+      Date arrivalDate = new Date("2020-06-04");
+      
+      TripInfo tripInfo = new TripInfo(startingCity, destinationCity, departureDate, arrivalDate);
+      
+      ArrayList<Object> carList = new ArrayList<Object>();
+      carList.add("Ford Fusion");
+      carList.add("Honda CR-V");
+      carList.add("Toyota Camry");
+      given(carService.getAvailableCars(startingCity,departureDate)).willReturn(carList);
+      
+      ArrayList<Object> hotelList = new ArrayList<Object>();
+      hotelList.add("Sheraton");
+      hotelList.add("Motel 6");
+      hotelList.add("Best Western");
+      hotelList.add("Hilton");
+      given(hotelService.getAvailableHotels(startingCity,departureDate)).willReturn(hotelList);
+      
+      ArrayList<Object> flightList = new ArrayList<Object>();
+      flightList.add("Allegiant");
+      flightList.add("Delta");
+      given(flightService.getAvailableFlights(startingCity,destinationCity,departureDate)).willReturn(flightList);
+      
+      // Have the package service use our trip info to generate a list of packages
+      List<Package> actualPackageList = packageService.getPackageList(tripInfo);
+      
+      // Generate the expected output
+      List<Package> expectedPackageList = new ArrayList<Package>();
+      expectedPackageList.add(new Package(carList.get(0), hotelList.get(0), flightList.get(0)));
+      expectedPackageList.add(new Package(carList.get(1), hotelList.get(1), flightList.get(1)));
+      
+      // Check if actual result matches expected result
+      // assertEquals(expected, actual);
+      assertThat(expectedPackageList).equals(actualPackageList);
+   }
+   
+   // Test when some services return good responses and some bad
+   public void testMixedResponses() throws Exception {
+      
+      String startingCity = "Chicago";
+      String destinationCity = "Miami";
+      Date departureDate = new Date("2020-06-03");
+      Date arrivalDate = new Date("2020-06-04");
+      
+      TripInfo tripInfo = new TripInfo(startingCity, destinationCity, departureDate, arrivalDate);
+      
+      ArrayList<Object> carList = new ArrayList<Object>();
+      carList.add("Ford Fusion");
+      carList.add("Honda CR-V");
+      carList.add("Toyota Camry");
+      given(carService.getAvailableCars(startingCity,departureDate)).willReturn(carList);
+      
+      ArrayList<Object> hotelList = new ArrayList<Object>();
+      hotelList.add("Sheraton");
+      hotelList.add("Motel 6");
+      hotelList.add("Best Western");
+      hotelList.add("Hilton");
+      given(hotelService.getAvailableHotels(startingCity,departureDate)).willReturn(hotelList);
+      
+      ArrayList<Object> flightList = new ArrayList<Object>();
+      flightList.add("Allegiant");
+      flightList.add("Delta");
+      // Return null for flight service
+      given(flightService.getAvailableFlights(startingCity,destinationCity,departureDate)).willReturn(null);
+      
+      // Have the package service use our trip info to generate a list of packages
+      List<Package> actualPackageList = packageService.getPackageList(tripInfo);
+      
+      // Generate the expected output, an empty list
+      List<Package> expectedPackageList = new ArrayList<Package>();
+      
+      // Check if actual result matches expected result
+      // assertEquals(expected, actual);
+      assertThat(expectedPackageList).equals(actualPackageList);
+   }
+   
    
 }

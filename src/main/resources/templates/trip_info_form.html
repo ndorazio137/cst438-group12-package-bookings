@@ -23,11 +23,11 @@
 			</div>
 			<div class="form-row">
 			  <span class="form-field-title">Departing Date: </span>
-			    <input type="text" th:field="*{departureDate}" /> 
+			    <input type="date" th:field="*{departureDate}" /> 
 			      <span th:if="${#fields.hasErrors('departureDate')}" th:errors="*{departureDate}"></span>
 			    <br /> 
 			  <span class="form-field-title">Arrival Date: </span>
-			    <input type="text" th:field="*{arrivalDate}" /> 
+			    <input type="date" th:field="*{arrivalDate}" /> 
 			      <span th:if="${#fields.hasErrors('arrivalDate')}" th:errors="*{arrivalDate}"></span>
 			    <br /> 
 			</div>

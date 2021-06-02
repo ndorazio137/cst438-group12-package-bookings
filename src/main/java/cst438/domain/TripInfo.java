@@ -5,6 +5,8 @@ import java.util.Date;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 //Helper class.
 public class TripInfo {
    @NotNull
@@ -13,7 +15,9 @@ public class TripInfo {
    @NotNull
    @Size(min=1, max=45)
    String destinationCity;
+   @DateTimeFormat(pattern = "yyyy-dd-mm")
    Date departureDate;
+   @DateTimeFormat(pattern = "yyyy-dd-mm")
    Date arrivalDate;
    
    public TripInfo() {}
