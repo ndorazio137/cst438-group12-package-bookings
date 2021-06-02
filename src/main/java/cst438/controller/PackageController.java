@@ -30,17 +30,16 @@ public class PackageController
 	
 	@GetMapping("/packages")  // localhost:8080/packages
 	public String getPackageForm(Model model) {
-		return "packageForm";
+		return "trip_info_form";
 	}
 
 	// Package Form submission
-	@PostMapping("/packages/from/{cityFrom}/to/{cityTo}/date/{date}")
+	@PostMapping("/packages")
 	public String getCityInfo(
-			@PathVariable("cityFrom") String cityFromName,
-			@PathVariable("cityTo") String cityToName, 
-			@PathVariable("date") Date date, 
+			@Valid TripInfo tripInfo,
+			BindingResult result,
 			Model model) {
-		List<cst438.domain.Package> packageList = packageService.getPackageList(cityFromName, cityToName, date);
+		List<cst438.domain.Package> packageList = packageService.getPackageList(tripInfo);
 		
 		if (packageList == null) {
 			return "packageserror";
