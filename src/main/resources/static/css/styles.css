@@ -1,10 +1,32 @@
 @charset "utf-8";
 
+.form-container {
+	border: 2px solid black;
+}
+
 .header {
-	
+	text-align:center;
 }
 
 .form {
 	justify-content: center;
-	background-color: red;
+}
+
+.form-field-title {
+	font-size: 1.5em;
+}
+
+.form-row {
+	
+}
+
+.submit {
+	width:100%
+}
+
+.center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
