@@ -21,7 +21,7 @@ public class PackageService {
 	
 	public PackageService( ) { }
 	
-	public List<Package> getInfo(String fromCityName, String cityName, Date date) {
+	public List<Package> getPackageList(String fromCityName, String cityName, Date date) {
 		
 		ArrayList<Package> packageList = new ArrayList<Package>();
 		
