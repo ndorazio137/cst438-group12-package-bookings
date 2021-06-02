@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import cst438.domain.TripInfo;
 
 import cst438.service.PackageService;
 
 @Controller
-public class PackageController
-{
+public class PackageController {
 	@Autowired
 	PackageService packageService;
 	
@@ -30,6 +30,8 @@ public class PackageController
 	
 	@GetMapping("/packages")  // localhost:8080/packages
 	public String getPackageForm(Model model) {
+	   TripInfo tripInfo = new TripInfo();
+      model.addAttribute("tripInfo", tripInfo);
 		return "trip_info_form";
 	}
 
@@ -42,11 +44,11 @@ public class PackageController
 		List<cst438.domain.Package> packageList = packageService.getPackageList(tripInfo);
 		
 		if (packageList == null) {
-			return "packageserror";
+			return "packages_error";
 		}
 		
 		model.addAttribute("packageList", packageList);
 		
-		return "packagesshow"; 
+		return "packages_show"; 
      }
 }
