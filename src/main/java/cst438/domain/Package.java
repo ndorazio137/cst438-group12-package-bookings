@@ -7,7 +7,7 @@ public class Package {
    
    Package() {}
    
-   Package(Object car, Object hotel, Object flight) {
+   public Package(Object car, Object hotel, Object flight) {
       
    }
 }
