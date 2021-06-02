@@ -13,7 +13,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class CarService
+@Service
+public class CarService 
 {
       private static final Logger log =
             LoggerFactory.getLogger(CarService.class);
@@ -31,9 +32,10 @@ public class CarService
                restTemplate.getForEntity(
                      carUrl + "?q=" + cityName + "&date=" + date, 
                      JsonNode.class);
-            JsonNode json = response.getBody(); // 2
+            JsonNode json = response.getBody();
             log.info("Status code from car server:" +
-            response.getStatusCodeValue());
+                  response.getStatusCodeValue());
+            //TODO: finish when known api structure exists
             return null;
       }
 }
