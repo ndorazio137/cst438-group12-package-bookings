@@ -1,10 +1,20 @@
 @charset "utf-8";
 
 .header {
-	
+	text-align: center;
+}
+
+.form_container {
+	justify-content: center;
+	text-align: center;
+	margin:0 auto;	
 }
 
 .form {
 	justify-content: center;
-	background-color: red;
+	text-align: center;
+	margin:0 auto;
+	border: 2px solid black;
+	max-width: 40%;
+	border-radius: 15px;
 }

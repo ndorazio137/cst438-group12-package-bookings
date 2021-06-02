@@ -36,9 +36,8 @@ public class PackageController {
 		return "trip_info_form";
 	}
 
-	// Package Form submission
 	@PostMapping("/packages/search")
-	public String getCityInfo(
+	public String submitPackageForm(
 			@Valid TripInfo tripInfo,
 			BindingResult result,
 			Model model) {
@@ -52,5 +51,5 @@ public class PackageController {
 		model.addAttribute("packageList", packageList);
 		
 		return "packages_show"; 
-     }
+   }
 }
