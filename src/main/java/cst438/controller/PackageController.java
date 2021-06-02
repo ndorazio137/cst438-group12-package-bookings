@@ -42,7 +42,7 @@ public class PackageController {
 			@Valid TripInfo tripInfo,
 			BindingResult result,
 			Model model) {
-	   System.out.println("EXECUTED IN POST MAPPING /packages");
+	  System.out.println("EXECUTED IN POST MAPPING /packages");
 		List<Package> packageList = packageService.getPackageList(tripInfo);
 		
 		if (packageList == null) {
