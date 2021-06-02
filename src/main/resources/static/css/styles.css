@@ -1,5 +1,10 @@
 @charset "utf-8";
 
+.header {
+	
+}
+
 .form {
 	justify-content: center;
+	background-color: red;
 }

@@ -7,10 +7,11 @@
       rel="stylesheet"
       integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" 
       crossorigin="anonymous" />
+    <link href="css/styles.css" rel="stylesheet"/>
 </head>
 <body>
-  <h2>Trip Deals</h2>
-  <form action="#" th:action="@{/packages}" th:object="${tripInfo}" method="post">
+  <h2 class="header">Trip Deals</h2>
+  <form class="form" action="#" th:action="@{/packages}" th:object="${tripInfo}" method="post">
   Departure City: <input type="text" th:field="*{startingCity}" /> 
     <span th:if="${#fields.hasErrors('startingCity')}" th:errors="*{startingCity}"></span> 
     <br />
