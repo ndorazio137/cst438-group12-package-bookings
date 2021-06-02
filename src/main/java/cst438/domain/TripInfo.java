@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+//Helper class.
 public class TripInfo {
    @NotNull
    @Size(min=1, max=45)
@@ -17,9 +18,9 @@ public class TripInfo {
    @NotNull
    Date arrivalDate;
    
-   TripInfo() {}
+   public TripInfo() {}
    
-   TripInfo(String startingCity, String destinationCity, Date departureDate,
+   public TripInfo(String startingCity, String destinationCity, Date departureDate,
          Date arrivalDate) {
       this.startingCity = startingCity;
       this.destinationCity = destinationCity;
