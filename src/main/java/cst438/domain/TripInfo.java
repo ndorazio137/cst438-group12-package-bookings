@@ -2,16 +2,25 @@ package cst438.domain;
 
 import java.util.Date;
 
-public class TripInfo
-{
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+//Helper class.
+public class TripInfo {
+   @NotNull
+   @Size(min=1, max=45)
    String startingCity;
+   @NotNull
+   @Size(min=1, max=45)
    String destinationCity;
+   @NotNull
    Date departureDate;
+   @NotNull
    Date arrivalDate;
    
-   TripInfo() {}
+   public TripInfo() {}
    
-   TripInfo(String startingCity, String destinationCity, Date departureDate,
+   public TripInfo(String startingCity, String destinationCity, Date departureDate,
          Date arrivalDate) {
       this.startingCity = startingCity;
       this.destinationCity = destinationCity;
