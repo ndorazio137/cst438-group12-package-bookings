@@ -7,8 +7,5 @@ import org.springframework.web.server.ResponseStatusException;
 
 public class PackageRestController
 {
-   @GetMapping("/api/{service}")
-   public Object getAvailableCars(@PathVariable("service") String serviceName) {
-     return null;
-   }
+   
 }
