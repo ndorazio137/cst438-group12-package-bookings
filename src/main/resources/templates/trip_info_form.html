@@ -34,15 +34,13 @@
 			<div class="form-row">
 			  <!-- Departure Date -->
 			  <span class="form-field-title">Departing Date: </span>
-			  <input type="text" th:field="*{departureDate}" /> 
-			  <span th:if="${#fields.hasErrors('departureDate')}" th:errors="*{departureDate}"></span>
-			  
-			  <br /> 
-			  
-			  <!-- Arrival Date -->
+			    <input type="date" th:field="*{departureDate}" /> 
+			      <span th:if="${#fields.hasErrors('departureDate')}" th:errors="*{departureDate}"></span>
+			    <br /> 
 			  <span class="form-field-title">Arrival Date: </span>
-			  <input type="text" th:field="*{arrivalDate}" /> 
-			  <span th:if="${#fields.hasErrors('arrivalDate')}" th:errors="*{arrivalDate}"></span>
+			    <input type="date" th:field="*{arrivalDate}" /> 
+			      <span th:if="${#fields.hasErrors('arrivalDate')}" th:errors="*{arrivalDate}"></span>
+			    <br /> 
 			</div>
 			
 			<br />
