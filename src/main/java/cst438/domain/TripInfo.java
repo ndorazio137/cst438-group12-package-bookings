@@ -117,4 +117,12 @@ public class TripInfo {
       
       return true;
    }
+
+   @Override
+   public String toString() {
+      return "TripInfo [startingCity=" + startingCity + ", destinationCity=" + destinationCity + ", departureDate="
+            + departureDate + ", arrivalDate=" + arrivalDate + "]";
+   }
+   
+   
 }

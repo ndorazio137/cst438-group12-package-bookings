@@ -7,14 +7,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import cst438.domain.TripInfo;
 
 import cst438.domain.Package;
-import cst438.domain.TripInfo;
 
 @SpringBootTest
 public class PackageServiceTest {
@@ -27,8 +27,13 @@ public class PackageServiceTest {
    private FlightService flightService;
    @Autowired
    private PackageService packageService;
-   
-   
+
+   // Not needed???
+//   @BeforeEach
+//   public void setUpEach() {
+//      MockitoAnnotations.initMocks( this);
+//    
+//   }
    
    //*********TEST CASES***********
    @Test
@@ -39,8 +44,8 @@ public class PackageServiceTest {
       Date randomDepartureDate = new Date(1995, 11, 17);
       Date randomArrivalDate = new Date(1995, 11, 17);
       
-      given(carService.getAvailableCars(destinationCity, randomDepartureDate)).willReturn(null);
-      given(hotelService.getAvailableHotels(destinationCity, randomDepartureDate)).willReturn(null);
+      given(carService.getAvailableCars(destinationCity, randomArrivalDate)).willReturn(null);
+      given(hotelService.getAvailableHotels(destinationCity, randomArrivalDate)).willReturn(null);
       given(flightService.getAvailableFlights(startingCity, destinationCity, randomDepartureDate)).willReturn(null);
 
       PackageService packageService = new PackageService(carService, hotelService, flightService);
@@ -52,11 +57,10 @@ public class PackageServiceTest {
    // All three return valid
    @Test
    public void testAllGoodResponses() throws Exception {
-      
       String startingCity = "Chicago";
       String destinationCity = "Miami";
-      Date departureDate = new Date("2020-06-03");
-      Date arrivalDate = new Date("2020-06-04");
+      Date departureDate = new Date(2020, 06, 03);
+      Date arrivalDate = new Date(2020, 06, 04);
       
       TripInfo tripInfo = new TripInfo(startingCity, destinationCity, departureDate, arrivalDate);
       
@@ -64,19 +68,19 @@ public class PackageServiceTest {
       carList.add("Ford Fusion");
       carList.add("Honda CR-V");
       carList.add("Toyota Camry");
-      given(carService.getAvailableCars(startingCity,departureDate)).willReturn(carList);
+      given(carService.getAvailableCars(destinationCity, arrivalDate)).willReturn(carList);
       
       ArrayList<Object> hotelList = new ArrayList<Object>();
       hotelList.add("Sheraton");
       hotelList.add("Motel 6");
       hotelList.add("Best Western");
       hotelList.add("Hilton");
-      given(hotelService.getAvailableHotels(startingCity,departureDate)).willReturn(hotelList);
+      given(hotelService.getAvailableHotels(destinationCity, arrivalDate)).willReturn(hotelList);
       
       ArrayList<Object> flightList = new ArrayList<Object>();
       flightList.add("Allegiant");
       flightList.add("Delta");
-      given(flightService.getAvailableFlights(startingCity,destinationCity,departureDate)).willReturn(flightList);
+      given(flightService.getAvailableFlights(startingCity, destinationCity, departureDate)).willReturn(flightList);
       
       // Have the package service use our trip info to generate a list of packages
       List<Package> actualPackageList = packageService.getPackageList(tripInfo);
@@ -88,18 +92,17 @@ public class PackageServiceTest {
       
       // Check if actual result matches expected result
       // assertEquals(expected, actual);
-      assertThat(expectedPackageList).isEqualTo(actualPackageList);
+      assertThat(actualPackageList).isEqualTo(expectedPackageList);
    }
    
    // Test when some services return good responses and some bad.
    // In this case, we'll see what happens if Car and Hotel Services are good but FlightService returns null
    @Test
-   public void testOneServiceResponseNull() throws Exception {
-      
+   public void testFlightServiceResponseNull() throws Exception {
       String startingCity = "Chicago";
       String destinationCity = "Miami";
-      Date departureDate = new Date("2020-06-03");
-      Date arrivalDate = new Date("2020-06-04");
+      Date departureDate = new Date(2020, 06, 03);
+      Date arrivalDate = new Date(2020, 06, 04);
       
       TripInfo tripInfo = new TripInfo(startingCity, destinationCity, departureDate, arrivalDate);
       
@@ -129,22 +132,22 @@ public class PackageServiceTest {
       List<Package> actualPackageList = packageService.getPackageList(tripInfo);
       
       // Generate the expected output, an empty list
-      List<Package> expectedPackageList = new ArrayList<Package>();
+//      List<Package> expectedPackageList = new ArrayList<Package>();
+      List<Package> expectedPackageList = null;
       
       // Check if actual result matches expected result
       // assertEquals(expected, actual);
-      assertThat(expectedPackageList).isEqualTo(actualPackageList);
+      assertThat(actualPackageList).isEqualTo(expectedPackageList);
    }
    
    // Test the case where there are no cars, hotels, or flights available
    @Test
    public void testNoAvailability() throws Exception {
-      
       // Define some trip info
       String startingCity = "Chicago";
       String destinationCity = "Miami";
-      Date departureDate = new Date("2020-06-03");
-      Date arrivalDate = new Date("2020-06-04");
+      Date departureDate = new Date(2020, 06, 03);
+      Date arrivalDate = new Date(2020, 06, 04);
       // Set up the helper object to store our trip info
       TripInfo tripInfo = new TripInfo(startingCity, destinationCity, departureDate, arrivalDate);
       
@@ -168,6 +171,6 @@ public class PackageServiceTest {
       
       // Check if actual result matches expected result
       // assertEquals(expected, actual);
-      assertThat(expectedPackageList).isEqualTo(actualPackageList);
+      assertThat(actualPackageList).isEqualTo(expectedPackageList);
    }
 }
