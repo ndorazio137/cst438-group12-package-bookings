@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cst438.domain.Package;
-import cst438.domain.PackageRepository;
 import cst438.domain.TripInfo;
 
 @Service
@@ -21,13 +20,6 @@ public class PackageService {
 	private FlightService flightService;
 	
 	public PackageService( ) { }
-	
-	public PackageService(CarService carService, HotelService hotelService,
-      FlightService flightService) {
-      this.carService = carService;
-      this.hotelService = hotelService;
-      this.flightService = flightService;
-   }
 
    public List<Package> getPackageList(TripInfo tripInfo) {
 		
@@ -36,17 +28,21 @@ public class PackageService {
 		Date departureDate = tripInfo.getDepartureDate();
 		Date arrivalDate = tripInfo.getArrivalDate();
 		
-		ArrayList<Package> packageList = new ArrayList<Package>();
+		List<Package> packageList = new ArrayList<Package>();
 		
 		List<Object> availableCarList = carService.getAvailableCars(destinationCity, arrivalDate);
+		System.out.println(availableCarList);
 		List<Object> availableHotelList = hotelService.getAvailableHotels(destinationCity, arrivalDate);
+		System.out.println(availableHotelList);
 		List<Object> availableFlightList = flightService.getAvailableFlights(startingCity, destinationCity, departureDate);
+		System.out.println(availableFlightList);
 		
-		if (!exists(availableCarList) | !exists(availableHotelList) | !exists(availableFlightList)) {
+		if (!exists(availableCarList) || !exists(availableHotelList) || !exists(availableFlightList)) {
 		   return null;
 		}
 		
-      int shortestListSize = availableCarList.size(); 
+		int shortestListSize = availableCarList.size(); 
+		System.out.println(shortestListSize);
       if (availableHotelList.size() < shortestListSize) 
          shortestListSize = availableHotelList.size(); 
       if (availableFlightList.size() < shortestListSize) 
