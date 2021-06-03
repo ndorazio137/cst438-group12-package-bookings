@@ -7,6 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -58,6 +59,7 @@ public class PackageServiceTest {
       Date departureDate = new Date(1995, 11, 17);
       Date arrivalDate = new Date(1995, 11, 17);
       // Set up the helper object to store our trip info
+
       TripInfo tripInfo = new TripInfo(startingCity, destinationCity, departureDate, arrivalDate);
       
       // the list returned by the service will be an empty list
@@ -201,6 +203,7 @@ public class PackageServiceTest {
       String destinationCity = "Miami";
       Date departureDate = new Date(1995, 11, 17);
       Date arrivalDate = new Date(1995, 11, 18);
+
       TripInfo tripInfo = new TripInfo(startingCity, destinationCity, departureDate, arrivalDate);
       
       // this service will return a list of size > 0

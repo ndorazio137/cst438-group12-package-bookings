@@ -23,6 +23,9 @@ public class PackageService {
 
    public List<Package> getPackageList(TripInfo tripInfo) {
 		
+      System.out.println("Trip Info: ");
+      System.out.println(tripInfo);
+      
 		String startingCity = tripInfo.getStartingCity();
 		String destinationCity = tripInfo.getDestinationCity();
 		Date departureDate = tripInfo.getDepartureDate();
@@ -44,14 +47,14 @@ public class PackageService {
          shortestListSize = availableHotelList.size(); 
       if (availableFlightList.size() < shortestListSize) 
          shortestListSize = availableFlightList.size();
-       
+      System.out.println(shortestListSize);
       for (int i = 0; i < shortestListSize; i++) { 
          Package currentPackage = new Package( availableCarList.get(i), 
                                                availableHotelList.get(i),
                                                availableFlightList.get(i)); 
          packageList.add(currentPackage); 
       }
-       
+      System.out.println(packageList);
 		return packageList;
 	}
 	
