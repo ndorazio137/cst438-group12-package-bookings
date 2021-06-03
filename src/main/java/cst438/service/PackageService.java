@@ -22,7 +22,14 @@ public class PackageService {
 	
 	public PackageService( ) { }
 	
-	public List<Package> getPackageList(TripInfo tripInfo) {
+	public PackageService(CarService carService, HotelService hotelService,
+      FlightService flightService) {
+      this.carService = carService;
+      this.hotelService = hotelService;
+      this.flightService = flightService;
+   }
+
+   public List<Package> getPackageList(TripInfo tripInfo) {
 		
 		String startingCity = tripInfo.getStartingCity();
 		String destinationCity = tripInfo.getDestinationCity();
@@ -35,19 +42,31 @@ public class PackageService {
 		List<Object> availableHotelList = hotelService.getAvailableHotels(destinationCity, arrivalDate);
 		List<Object> availableFlightList = flightService.getAvailableFlights(startingCity, destinationCity, departureDate);
 		
-		int shortestListSize = availableCarList.size();
-		if (availableHotelList.size() < shortestListSize) { shortestListSize = availableHotelList.size(); }
-		if (availableFlightList.size() < shortestListSize) { shortestListSize = availableFlightList.size(); }
-		
-		for ( int i = 0; i < shortestListSize; i++) {
-			Package currentPackage = new Package(
-					availableCarList.get(i), 
-					availableHotelList.get(i), 
-					availableFlightList.get(i));
-			packageList.add(currentPackage);
+		if (!exists(availableCarList) | !exists(availableHotelList) | !exists(availableFlightList)) {
+		   return null;
 		}
 		
+      int shortestListSize = availableCarList.size(); 
+      if (availableHotelList.size() < shortestListSize) 
+         shortestListSize = availableHotelList.size(); 
+      if (availableFlightList.size() < shortestListSize) 
+         shortestListSize = availableFlightList.size();
+       
+      for (int i = 0; i < shortestListSize; i++) { 
+         Package currentPackage = new Package( availableCarList.get(i), 
+                                               availableHotelList.get(i),
+                                               availableFlightList.get(i)); 
+         packageList.add(currentPackage); 
+      }
+       
 		return packageList;
 	}
 	
+   private boolean exists(List<Object> list) {
+      if (list != null) {
+         return true;
+      }
+      
+      return false;
+   }
 }

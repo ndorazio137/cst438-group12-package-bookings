@@ -8,7 +8,6 @@ public class Package {
    Package() {}
 
    public Package(Object car, Object hotel, Object flight) {
-      super();
       this.car = car;
       this.hotel = hotel;
       this.flight = flight;
@@ -79,6 +78,4 @@ public class Package {
    public String toString() {
       return "Package [car=" + car + ", hotel=" + hotel + ", flight=" + flight + "]";
    }
-   
-   
 }
