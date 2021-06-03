@@ -4,10 +4,21 @@
 	border: 2px solid black;
 }
 
+
 .card-title {
 	text-align:center;
 	margin-top: .2em;
 	color: black;
+}
+
+.header {
+	text-align: center;
+}
+
+.form_container {
+	justify-content: center;
+	text-align: center;
+	margin:0 auto;	
 }
 
 .form {
