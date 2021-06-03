@@ -5,7 +5,7 @@ public class Package {
    Object hotel;
    Object flight;
    
-   Package() {}
+   public Package() {}
 
    public Package(Object car, Object hotel, Object flight) {
       this.car = car;
