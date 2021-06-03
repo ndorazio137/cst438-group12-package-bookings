@@ -38,19 +38,27 @@ public class PackageController {
 
    // Package Form submission
    @PostMapping("/packages")
-   public String getCityInfo(@Valid TripInfo tripInfo, BindingResult result,
-      Model model) {
+   public String getCityInfo(@Valid TripInfo tripInfo, 
+         BindingResult result, Model model) {
       if (result.hasErrors()) {
          return "trip_info_form";
       }
-      System.out.println("EXECUTED IN POST MAPPING /packages");
 
-      /* List<Package> packageList = packageService.getPackageList(tripInfo); */
       /*
+       * List<Package> packageList = packageService.getPackageList(tripInfo);
+       * 
        * if (packageList == null) return "packages_error";
+       * 
+       * model.addAttribute("packageList", packageList);
        */
-      /* model.addAttribute("packageList", packageList); */
-
+      List<Package> packageList = new ArrayList<Package>();
+      
+      int i;
+      for (i = 0; i < 10; i++) {
+         Package pkge = new Package("Car", "Hotel", "Flight");
+         packageList.add(pkge);
+      }
+      model.addAttribute("packageList", packageList);
       return "packages_show";
    }
 }
