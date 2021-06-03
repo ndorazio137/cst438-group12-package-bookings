@@ -10,18 +10,29 @@
     <link href="css/styles.css" rel="stylesheet"/>
 </head>
 <body>
-	<div class="form-container center">
-	  <h2 class="header">Trip Info</h2>
-	  <form class="form" action="#" th:action="@{/packages}" th:object="${tripInfo}" method="post">
+	<div class="card form-container center">
+	  <h2 class="card-title">Trip Info</h2>
+	  <br />
+	  <form class="card-body form" action="#" th:action="@{/packages}" th:object="${tripInfo}" method="post">
 	     <div class="form-row">
-			  <span class="form-field-title">Departure City: </span><input type="text" th:field="*{startingCity}" /> 
-			    <span th:if="${#fields.hasErrors('startingCity')}" th:errors="*{startingCity}"></span> 
-			    <br />
-			  <span class="form-field-title">Destination City: </span><input type="text" th:field="*{destinationCity}" />
-			    <span th:if="${#fields.hasErrors('destinationCity')}" th:errors="*{destinationCity}"></span> 
-			    <br /> 
+	        <!-- Departure City -->
+			  <span class="form-field-title">Departure City: </span>
+		     <input type="text" th:field="*{startingCity}" /> 
+		     <span th:if="${#fields.hasErrors('startingCity')}" th:errors="*{startingCity}">
+			  </span> 
+			  
+			  <br />
+			  
+			  <!-- Destination City -->
+			  <span class="form-field-title">Destination City: </span>
+			  <input type="text" th:field="*{destinationCity}" />
+			  <span th:if="${#fields.hasErrors('destinationCity')}" th:errors="*{destinationCity}"></span> 
 			</div>
+			
+			<br /> 
+			
 			<div class="form-row">
+			  <!-- Departure Date -->
 			  <span class="form-field-title">Departing Date: </span>
 			    <input type="date" th:field="*{departureDate}" /> 
 			      <span th:if="${#fields.hasErrors('departureDate')}" th:errors="*{departureDate}"></span>
@@ -31,10 +42,13 @@
 			      <span th:if="${#fields.hasErrors('arrivalDate')}" th:errors="*{arrivalDate}"></span>
 			    <br /> 
 			</div>
-			  <div>
-			    <input type="submit" value="Submit" />
-			  </div>
-		  </div>
+			
+			<br />
+			
+			<!-- Submit -->
+		   <div>
+		     <input class="btn btn-success submit" type="submit" value="Submit" />
+		   </div>
 	  </form>
   </div>
 </body>
