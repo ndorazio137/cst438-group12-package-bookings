@@ -31,11 +31,8 @@ public class PackageService {
 		List<Package> packageList = new ArrayList<Package>();
 		
 		List<Object> availableCarList = carService.getAvailableCars(destinationCity, arrivalDate);
-		System.out.println(availableCarList);
 		List<Object> availableHotelList = hotelService.getAvailableHotels(destinationCity, arrivalDate);
-		System.out.println(availableHotelList);
 		List<Object> availableFlightList = flightService.getAvailableFlights(startingCity, destinationCity, departureDate);
-		System.out.println(availableFlightList);
 		
 		if (!exists(availableCarList) || !exists(availableHotelList) || !exists(availableFlightList)) {
 		   return null;
