@@ -27,10 +27,10 @@ public class CarService
          this.carUrl = carUrl;
       }
       
-      public List<Object> getAvailableCars(String cityName, Date date) {
+      public List<Object> getAvailableCars(String cityName, Date startDate, Date endDate) {
          ResponseEntity<JsonNode> response =
                restTemplate.getForEntity(
-                     carUrl + "?q=" + cityName + "&date=" + date, 
+                     carUrl + "/" + cityName + "/" + startDate + "/" + endDate, 
                      JsonNode.class);
             JsonNode json = response.getBody();
             log.info("Status code from car server:" +

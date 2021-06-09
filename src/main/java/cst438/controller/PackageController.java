@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import cst438.domain.TripInfo;
 import cst438.domain.Package;
-
+import cst438.service.CarService;
 import cst438.service.PackageService;
 
 @Controller
@@ -35,7 +35,7 @@ public class PackageController {
       model.addAttribute("tripInfo", tripInfo);
       return "trip_info_form";
    }
-
+   
    // Package Form submission
    @PostMapping("/packages")
    public String getCityInfo(@Valid TripInfo tripInfo, 
