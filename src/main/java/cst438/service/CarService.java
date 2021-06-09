@@ -73,9 +73,9 @@ public class CarService
          ObjectMapper objectMapper = new ObjectMapper();
          HttpEntity<String> request = 
                new HttpEntity<String>(reservationJsonObject.toString(), headers);
-             
          ResponseEntity<String> response = restTemplate.
                postForEntity(postReservationUrl, request, String.class);
+         
          JsonNode json = objectMapper.readTree(response.getBody());
          
          log.info("Status code from car server:" +
