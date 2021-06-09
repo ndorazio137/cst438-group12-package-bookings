@@ -38,4 +38,18 @@ public class CarService
             //TODO: finish when known api structure exists
             return null;
       }
+      
+      public List<Object> getReservationById(String reservationId) {
+         ResponseEntity<JsonNode> response =
+               restTemplate.getForEntity(
+                     carUrl + "/reservations/details/" + reservationId, 
+                     JsonNode.class);
+            JsonNode json = response.getBody();
+            log.info("Status code from car server:" +
+                  response.getStatusCodeValue());
+            //TODO: finish when known api structure exists
+            return null;
+      }
+      
+      
 }
