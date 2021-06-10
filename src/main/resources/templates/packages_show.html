@@ -13,7 +13,7 @@
   <h2>Trip Deals</h2>
   
   <table>
-  	 <tr th:each="package: ${packageList}">
+  	 <tr class="columns" th:each="package: ${packageList}">
   		<td th:text="${package.getCar()}" />
   		<td th:text="${package.getHotel()}" />
   		<td th:text="${package.getFlight()}" />
