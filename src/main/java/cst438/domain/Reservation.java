@@ -5,20 +5,37 @@ import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Type;
 import org.json.JSONObject;
 
 @Entity
 @Table(name="reservations")
 public class Reservation {
+   
+   private String reservationId;
    @Id
-   String reservationId;
-   int userId;
-   String carReservationId;
-   String hotelReservationId;
-   String flightReservationId;
-   JSONObject carReservationJson;
-   JSONObject hotelReservationJson;
-   JSONObject flightReservationJson;
+   private int userId;
+   private String carReservationId;
+   private String hotelReservationId;
+   private String flightReservationId;
+   private String  carReservationJson;
+   private String hotelReservationJson;
+   private String flightReservationJson;
+
+   public Reservation(String reservationId, int userId, String carReservationId,
+      String hotelReservationId, String flightReservationId,
+      String carReservationJson, String hotelReservationJson,
+      String flightReservationJson) {
+      this.reservationId = reservationId;
+      this.userId = userId;
+      this.carReservationId = carReservationId;
+      this.hotelReservationId = hotelReservationId;
+      this.flightReservationId = flightReservationId;
+      this.carReservationJson = carReservationJson;
+      this.hotelReservationJson = hotelReservationJson;
+      this.flightReservationJson = flightReservationJson;
+   }
 
    public String getReservationId() {
       return reservationId;
@@ -60,27 +77,27 @@ public class Reservation {
       this.flightReservationId = flightReservationId;
    }
    
-   public JSONObject getCarReservationJson() {
+   public String getCarReservationJson() {
       return carReservationJson;
    }
    
-   public void setCarReservationJson(JSONObject carReservationJson) {
+   public void setCarReservationJson(String carReservationJson) {
       this.carReservationJson = carReservationJson;
    }
    
-   public JSONObject getHotelReservationJson() {
+   public String getHotelReservationJson() {
       return hotelReservationJson;
    }
    
-   public void setHotelReservationJson(JSONObject hotelReservationJson) {
+   public void setHotelReservationJson(String hotelReservationJson) {
       this.hotelReservationJson = hotelReservationJson;
    }
    
-   public JSONObject getFlightReservationJson() {
+   public String getFlightReservationJson() {
       return flightReservationJson;
    }
    
-   public void setFlightReservationJson(JSONObject flightReservationJson) {
+   public void setFlightReservationJson(String flightReservationJson) {
       this.flightReservationJson = flightReservationJson;
    }
 

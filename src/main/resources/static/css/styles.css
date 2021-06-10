@@ -39,3 +39,10 @@
   top: 50%;
   transform: translate(-50%, -50%);
 }
+
+.columns {
+   margin: 5rems auto;
+   width: min(90%, 75rem);
+   display: grid;	
+   grid-auto-flow: column; 
+}
