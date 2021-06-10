@@ -41,7 +41,7 @@ public class PackageServiceTest {
       TripInfo tripInfo = new TripInfo(startingCity, destinationCity, randomDepartureDate, randomArrivalDate);
       
       // Mock null responses from the services
-      given(carService.getAvailableCars(destinationCity, randomArrivalDate)).willReturn(null);
+      given(carService.getAvailableCars(destinationCity, randomDepartureDate, randomArrivalDate)).willReturn(null);
       given(hotelService.getAvailableHotels(destinationCity, randomArrivalDate)).willReturn(null);
       given(flightService.getAvailableFlights(startingCity, destinationCity, randomDepartureDate)).willReturn(null);
       
@@ -64,15 +64,15 @@ public class PackageServiceTest {
       
       // the list returned by the service will be an empty list
       ArrayList<Object> carList = new ArrayList<Object>();
-      given(carService.getAvailableCars(startingCity,departureDate)).willReturn(carList);
+      given(carService.getAvailableCars(startingCity, departureDate, arrivalDate)).willReturn(carList);
       
       // the list returned by the service will be an empty list
       ArrayList<Object> hotelList = new ArrayList<Object>();
-      given(hotelService.getAvailableHotels(startingCity,departureDate)).willReturn(hotelList);
+      given(hotelService.getAvailableHotels(startingCity, departureDate)).willReturn(hotelList);
       
       // the list returned by the service will be an empty list
       ArrayList<Object> flightList = new ArrayList<Object>();
-      given(flightService.getAvailableFlights(startingCity,destinationCity,departureDate)).willReturn(flightList);
+      given(flightService.getAvailableFlights(startingCity, destinationCity, departureDate)).willReturn(flightList);
       
       // Have the package service use our trip info to generate a list of packages
       List<Package> actualPackageList = packageService.getPackageList(tripInfo);
@@ -95,7 +95,7 @@ public class PackageServiceTest {
       TripInfo tripInfo = new TripInfo(startingCity, destinationCity, departureDate, arrivalDate);
       
       // this service will return a null value
-      given(carService.getAvailableCars(destinationCity, arrivalDate)).willReturn(null);
+      given(carService.getAvailableCars(destinationCity, departureDate, arrivalDate)).willReturn(null);
       
       // this service will return a list of size > 0
       ArrayList<Object> hotelList = new ArrayList<Object>();
@@ -136,7 +136,7 @@ public class PackageServiceTest {
       carList.add("Ford Fusion");
       carList.add("Honda CR-V");
       carList.add("Toyota Camry");
-      given(carService.getAvailableCars(destinationCity, arrivalDate)).willReturn(carList);
+      given(carService.getAvailableCars(destinationCity, departureDate, arrivalDate)).willReturn(carList);
       
       // this service will return a null value
       given(hotelService.getAvailableHotels(destinationCity, arrivalDate)).willReturn(null);
@@ -172,7 +172,7 @@ public class PackageServiceTest {
       carList.add("Ford Fusion");
       carList.add("Honda CR-V");
       carList.add("Toyota Camry");
-      given(carService.getAvailableCars(destinationCity, arrivalDate)).willReturn(carList);
+      given(carService.getAvailableCars(destinationCity, departureDate, arrivalDate)).willReturn(carList);
       
       // this service will return a list of size > 0
       ArrayList<Object> hotelList = new ArrayList<Object>();
@@ -211,7 +211,7 @@ public class PackageServiceTest {
       carList.add("Ford Fusion");
       carList.add("Honda CR-V");
       carList.add("Toyota Camry");
-      given(carService.getAvailableCars(destinationCity, arrivalDate)).willReturn(carList);
+      given(carService.getAvailableCars(destinationCity, departureDate, arrivalDate)).willReturn(carList);
       
       // this service will return a list of size > 0
       List<Object> hotelList = new ArrayList<Object>();

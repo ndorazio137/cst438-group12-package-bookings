@@ -33,7 +33,7 @@ public class PackageService {
 		
 		List<Package> packageList = new ArrayList<Package>();
 		
-		List<Object> availableCarList = carService.getAvailableCars(destinationCity, arrivalDate);
+		List<Object> availableCarList = carService.getAvailableCars(destinationCity, departureDate, arrivalDate);
 		List<Object> availableHotelList = hotelService.getAvailableHotels(destinationCity, arrivalDate);
 		List<Object> availableFlightList = flightService.getAvailableFlights(startingCity, destinationCity, departureDate);
 		
