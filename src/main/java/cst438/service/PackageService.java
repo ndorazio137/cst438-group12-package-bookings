@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cst438.domain.Package;
+import cst438.domain.Reservation;
+import cst438.domain.ReservationRepository;
 import cst438.domain.TripInfo;
 
 @Service
@@ -18,6 +20,8 @@ public class PackageService {
 	private HotelService hotelService;
 	@Autowired
 	private FlightService flightService;
+	@Autowired
+	private ReservationRepository reservationRepository;
 	
 	public PackageService( ) { }
 
@@ -64,5 +68,10 @@ public class PackageService {
       }
       
       return false;
+   }
+   
+   public List<Reservation> getReservationsByUser(int userId) {
+      List<Reservation> reservationList = reservationRepository.findByUserId(userId);
+      return reservationList;
    }
 }

@@ -15,6 +15,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import cst438.domain.TripInfo;
 
 import cst438.domain.Package;
+import cst438.domain.ReservationRepository;
 
 @SpringBootTest
 public class PackageServiceTest {
@@ -25,6 +26,8 @@ public class PackageServiceTest {
    private HotelService hotelService;
    @MockBean
    private FlightService flightService;
+   @MockBean
+   private ReservationRepository reservationRepository;
    @Autowired
    private PackageService packageService;
    
