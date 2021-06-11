@@ -14,6 +14,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import cst438.domain.TripInfo;
 import cst438.domain.CarInfo;
+import cst438.domain.FlightInfo;
+import cst438.domain.HotelInfo;
 import cst438.domain.Package;
 import cst438.domain.ReservationRepository;
 
@@ -73,12 +75,12 @@ public class PackageServiceTest {
          arrivalDate)).willReturn(carList);
   
       // the list returned by the service will be an empty list
-      ArrayList<Object> hotelList = new ArrayList<Object>();
+      ArrayList<HotelInfo> hotelList = new ArrayList<HotelInfo>();
       given(hotelService.getAvailableHotels(startingCity,
          departureDate)).willReturn(hotelList);
   
       // the list returned by the service will be an empty list
-      ArrayList<Object> flightList = new ArrayList<Object>();
+      ArrayList<FlightInfo> flightList = new ArrayList<FlightInfo>();
       given(flightService.getAvailableFlights(startingCity, destinationCity,
          departureDate)).willReturn(flightList);
   
@@ -108,18 +110,20 @@ public class PackageServiceTest {
          arrivalDate)).willReturn(null);
      
       // this service will return a list of size > 0 
-      ArrayList<Object> hotelList = 
-         new ArrayList<Object>(); hotelList.add("Sheraton");
-      hotelList.add("Motel 6"); 
-      hotelList.add("Best Western");
-      hotelList.add("Hilton");
+      ArrayList<HotelInfo> hotelList = 
+         new ArrayList<HotelInfo>(); 
+      hotelList.add(new HotelInfo(1));
+      hotelList.add(new HotelInfo(2)); 
+      hotelList.add(new HotelInfo(3));
+      hotelList.add(new HotelInfo(4));
       given(hotelService.getAvailableHotels(destinationCity,
          arrivalDate)).willReturn(hotelList);
      
       // this service will return a list of size > 0 
-      ArrayList<Object> flightList = 
-         new ArrayList<Object>(); flightList.add("Allegiant");
-      flightList.add("Delta");
+      ArrayList<FlightInfo> flightList = 
+         new ArrayList<FlightInfo>(); 
+      flightList.add(new FlightInfo(1));
+      flightList.add(new FlightInfo(2));
       given(flightService.getAvailableFlights(startingCity, destinationCity,
          departureDate)).willReturn(flightList);
      
@@ -157,9 +161,10 @@ public class PackageServiceTest {
          arrivalDate)).willReturn(null);
      
       // this service will return a list of size > 0 
-      ArrayList<Object> flightList = 
-         new ArrayList<Object>(); flightList.add("Allegiant");
-      flightList.add("Delta");
+      ArrayList<FlightInfo> flightList = 
+         new ArrayList<FlightInfo>(); 
+      flightList.add(new FlightInfo(1));
+      flightList.add(new FlightInfo(2));
       given(flightService.getAvailableFlights(startingCity, destinationCity,
          departureDate)).willReturn(flightList);
      
@@ -192,10 +197,11 @@ public class PackageServiceTest {
          arrivalDate)).willReturn(carList);
   
       // this service will return a list of size > 0 
-      ArrayList<Object> hotelList = new ArrayList<Object>(); 
-      hotelList.add("Sheraton");
-      hotelList.add("Motel 6"); hotelList.add("Best Western");
-      hotelList.add("Hilton");
+      ArrayList<HotelInfo> hotelList = new ArrayList<HotelInfo>(); 
+      hotelList.add(new HotelInfo(1));
+      hotelList.add(new HotelInfo(2)); 
+      hotelList.add(new HotelInfo(3));
+      hotelList.add(new HotelInfo(4));
       given(hotelService.getAvailableHotels(destinationCity,
          arrivalDate)).willReturn(hotelList);
   
@@ -233,18 +239,18 @@ public class PackageServiceTest {
          arrivalDate)).willReturn(carList);
   
       // this service will return a list of size > 0 
-      List<Object> hotelList = new ArrayList<Object>(); 
-      hotelList.add("Sheraton");
-      hotelList.add("Motel 6"); 
-      hotelList.add("Best Western");
-      hotelList.add("Hilton");
+      List<HotelInfo> hotelList = new ArrayList<HotelInfo>(); 
+      hotelList.add(new HotelInfo(1));
+      hotelList.add(new HotelInfo(2)); 
+      hotelList.add(new HotelInfo(3));
+      hotelList.add(new HotelInfo(4));
       given(hotelService.getAvailableHotels(destinationCity,
          arrivalDate)).willReturn(hotelList);
   
       // this service will return a list of size > 0 
-      List<Object> flightList = new ArrayList<Object>(); 
-      flightList.add("Allegiant");
-      flightList.add("Delta");
+      List<FlightInfo> flightList = new ArrayList<FlightInfo>(); 
+      flightList.add(new FlightInfo(1));
+      flightList.add(new FlightInfo(2));
       given(flightService.getAvailableFlights(startingCity, destinationCity,
          departureDate)).willReturn(flightList);
   
