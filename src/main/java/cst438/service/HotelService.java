@@ -46,7 +46,24 @@ public class HotelService {
          { 
              int id = item.get("hotelId").asInt();
              String hotelName = item.get("hotelName").toString();
-             HotelInfo hotelInfo = new HotelInfo(id);
+             String hotelAddress = item.get("hotelAddress").toString();
+             int hotelStars = item.get("hotelStars").asInt();
+             String hotelCity = item.get("hotelCity").toString();
+             String hotelState = item.get("hotelState").toString();
+             int hotelPricePerDay = item.get("hotelPricePerDay").asInt();
+             String availableDate = item.get("availableDate").toString();
+             int roomsAvailable = item.get("roomsAvailable").asInt();
+             HotelInfo hotelInfo = new HotelInfo(
+                   id, 
+                   hotelName, 
+                   hotelAddress, 
+                   hotelStars, 
+                   hotelCity, 
+                   hotelState, 
+                   hotelPricePerDay, 
+                   availableDate, 
+                   roomsAvailable
+             );
              hotelList.add(hotelInfo);
              System.out.println("new hotelName added: name= " + hotelName);
              System.out.println("new HotelInfo added: " + hotelInfo);
