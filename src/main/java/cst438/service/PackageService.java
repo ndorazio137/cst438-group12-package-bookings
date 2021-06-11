@@ -49,7 +49,7 @@ public class PackageService {
 		List<HotelInfo> availableHotelList = hotelService.getAvailableHotels(destinationCity, arrivalDate);
 		List<FlightInfo> availableFlightList = flightService.getAvailableFlights(startingCity, destinationCity, departureDate);
 		
-		if (!exists(availableCarList) || !exists(availableHotelList) || !exists(availableFlightList)) {
+		if (isNullCarList(availableCarList) || isNullHotelList(availableHotelList) || isNullFlightList(availableFlightList)) {
 		   return null;
 		}
 		
@@ -70,12 +70,16 @@ public class PackageService {
 		return packageList;
 	}
 	
-   private boolean exists(Object list) {
-      if (list != null) {
-         return true;
-      }
-      
-      return false;
+   private boolean isNullCarList(List<CarInfo> list) {
+      return (list == null);
+   }
+   
+   private boolean isNullHotelList(List<HotelInfo> list) {
+      return (list == null);
+   }
+   
+   private boolean isNullFlightList(List<FlightInfo> list) {
+      return (list == null);
    }
    
    public List<Reservation> getReservationsByUser(int userId) {

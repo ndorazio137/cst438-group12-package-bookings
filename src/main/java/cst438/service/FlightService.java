@@ -47,10 +47,10 @@ public class FlightService {
       for (JsonNode item : json)
       { 
           long id = item.get("flightId").asInt();
-          String flightName = item.get("flightName").toString();
+//          String flightName = item.get("flightNumber").toString();
           FlightInfo flightInfo = new FlightInfo(id);
           flightList.add(flightInfo);
-          System.out.println("new flightName added: name= " + flightName);
+//          System.out.println("new flightNumber added: " + flightNumber);
           System.out.println("new HotelInfo added: " + flightInfo);
           
       }
