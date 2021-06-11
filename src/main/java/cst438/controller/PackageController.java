@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import cst438.domain.TripInfo;
 import cst438.domain.Package;
-import cst438.service.CarService;
 import cst438.service.PackageService;
 
 @Controller
