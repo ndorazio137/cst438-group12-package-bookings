@@ -70,6 +70,8 @@ public class PackageController {
 //      return "packages_show";
 //   }
    
+   
+   // Testing API endpoint
    @PostMapping("/packages")
    public String getCarList(@Valid TripInfo tripInfo, 
       BindingResult result,
@@ -81,6 +83,20 @@ public class PackageController {
       Date endDate = formatter.parse(dateInString);
       List<CarInfo> carList = carService.getAvailableCars(cityName, startDate, endDate);
       System.out.println(carList);
+      model.addAttribute("carList", carList);
+      return "test";
+   }
+   
+   // Testing API endpoint
+   @GetMapping("/packages/details")
+   public String getCarDetails(
+      Model model) {
+      int carId = 383;
+      CarInfo carInfo = carService.getCarDetails(carId);
+      System.out.println(carInfo.toString());
+      List<CarInfo> carList = new ArrayList<CarInfo>();
+      carList.add(carInfo);
+      
       model.addAttribute("carList", carList);
       return "test";
    }
