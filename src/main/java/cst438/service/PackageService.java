@@ -42,16 +42,19 @@ public class PackageService {
 		
 		List<CarInfo> availableCarList = 
 		   carService.getAvailableCars(destinationCity, departureDate, arrivalDate);
-		
 		System.out.println("availableCarList: " + availableCarList);
 		
-		List<Object> availableHotelList = 
+		List<HotelInfo> availableHotelList = 
 		   hotelService.getAvailableHotels(destinationCity, arrivalDate);
-		List<Object> availableFlightList = 
-		   flightService.getAvailableFlights(startingCity, destinationCity, departureDate);
+		System.out.println("availableHotelList: " + availableCarList);
 		
-		if (isNullCarList(availableCarList) || isNull(availableHotelList) 
-		      || isNull(availableFlightList)) {
+		List<FlightInfo> availableFlightList = 
+		   flightService.getAvailableFlights(startingCity, destinationCity, departureDate);
+		System.out.println("availableFlightList: " + availableCarList);
+		
+		if (isNullCarList(availableCarList) 
+		      || isNullHotelList(availableHotelList) 
+		      || isNullFlightList(availableFlightList)) {
 		   return null;
 		}
 		
