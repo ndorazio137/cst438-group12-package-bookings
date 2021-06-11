@@ -47,8 +47,27 @@ public class FlightService {
       for (JsonNode item : json)
       { 
           long id = item.get("flightId").asInt();
-//          String flightName = item.get("flightNumber").toString();
-          FlightInfo flightInfo = new FlightInfo(id);
+          String flightNumber = item.get("flightNumber").toString();
+          String departureCity = item.get("departureCity").toString();
+          String arrivalCity = item.get("arrivalCity").toString();
+          String departureDate = item.get("departureDate").toString();
+          String arrivalDate = item.get("arrivalDate").toString();
+          String duration = item.get("duration").toString();
+          int distance = item.get("distance").asInt();
+          int cost = item.get("cost").asInt();
+          int totalSeats = item.get("totalSeats").asInt();
+          FlightInfo flightInfo = new FlightInfo(
+                id,
+                flightNumber, 
+                departureCity, 
+                arrivalCity, 
+                departureDate,
+                arrivalDate, 
+                duration, 
+                distance, 
+                cost, 
+                totalSeats
+          );
           flightList.add(flightInfo);
 //          System.out.println("new flightNumber added: " + flightNumber);
           System.out.println("new HotelInfo added: " + flightInfo);

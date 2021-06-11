@@ -122,8 +122,8 @@ public class PackageServiceTest {
       // this service will return a list of size > 0 
       ArrayList<FlightInfo> flightList = 
          new ArrayList<FlightInfo>(); 
-      flightList.add(new FlightInfo(1));
-      flightList.add(new FlightInfo(2));
+      flightList.add(new FlightInfo(1, "some flight number", "Los Angeles", "Sacramento", "2021-07-01", "2021-07-07", "some duration", 1, 1, 1));
+      flightList.add(new FlightInfo(2, "some other flight number", "Los Angeles", "Sacramento", "2021-07-01", "2021-07-07", "some duration", 1, 1, 1));
       given(flightService.getAvailableFlights(startingCity, destinationCity,
          departureDate)).willReturn(flightList);
      
@@ -163,8 +163,8 @@ public class PackageServiceTest {
       // this service will return a list of size > 0 
       ArrayList<FlightInfo> flightList = 
          new ArrayList<FlightInfo>(); 
-      flightList.add(new FlightInfo(1));
-      flightList.add(new FlightInfo(2));
+      flightList.add(new FlightInfo(1, "some flight number", "Los Angeles", "Sacramento", "2021-07-01", "2021-07-07", "some duration", 1, 1, 1));
+      flightList.add(new FlightInfo(2, "some other flight number", "Los Angeles", "Sacramento", "2021-07-01", "2021-07-07", "some duration", 1, 1, 1));
       given(flightService.getAvailableFlights(startingCity, destinationCity,
          departureDate)).willReturn(flightList);
      
@@ -249,8 +249,8 @@ public class PackageServiceTest {
   
       // this service will return a list of size > 0 
       List<FlightInfo> flightList = new ArrayList<FlightInfo>(); 
-      flightList.add(new FlightInfo(1));
-      flightList.add(new FlightInfo(2));
+      flightList.add(new FlightInfo(1, "some flight number", "Los Angeles", "Sacramento", "2021-07-01", "2021-07-07", "some duration", 1, 1, 1));
+      flightList.add(new FlightInfo(2, "some other flight number", "Los Angeles", "Sacramento", "2021-07-01", "2021-07-07", "some duration", 1, 1, 1));
       given(flightService.getAvailableFlights(startingCity, destinationCity,
          departureDate)).willReturn(flightList);
   
