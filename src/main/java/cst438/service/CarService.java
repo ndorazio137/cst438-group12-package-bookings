@@ -1,5 +1,6 @@
 package cst438.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -20,6 +21,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import cst438.domain.CarInfo;
+
 @Service
 public class CarService 
 {
@@ -34,19 +37,29 @@ public class CarService
          this.carUrl = carUrl;
       }
       
-      public List<Object> getAvailableCars(String cityName, Date startDate, Date endDate) {
+      public List<CarInfo> getAvailableCars(String cityName, Date startDate, Date endDate) {
          System.out.println("CarService.getAvailableCars(...): Getting available cars...");
          ResponseEntity<JsonNode> response =
                restTemplate.getForEntity(
-                     carUrl + "/" + cityName + "/" + startDate + "/" + endDate, 
+                     carUrl + "/carsByCity/" + cityName + "/" + startDate + "/" + endDate, 
                      JsonNode.class);
          JsonNode json = response.getBody();
-         System.out.println("Status code from car server: " + 
-               response.getStatusCodeValue());
          log.info("Status code from car server:" +
                response.getStatusCodeValue());
-         //TODO: finish when known api structure exists
-         return null;
+         List<CarInfo> carList = new ArrayList<CarInfo>();
+         for (JsonNode car : json)
+         { 
+             String carModel = car.get("model").textValue();
+             int carId = car.get("id").asInt();
+             CarInfo carInfo = new CarInfo(carId, carModel);
+             carList.add(carInfo);
+             System.out.println("new carModel added: model=" + carModel);
+             System.out.println("new CarInfo added: " + carInfo);
+             
+         }
+         System.out.println("carList added: " + carList);
+         
+         return carList;
       }
       
       public Object getReservationById(String reservationId) {
