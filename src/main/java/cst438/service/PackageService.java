@@ -38,18 +38,24 @@ public class PackageService {
 		
 		List<Package> packageList = new ArrayList<Package>();
 		
-		List<CarInfo> availableCarList = carService.getAvailableCars(destinationCity, departureDate, arrivalDate);
-		System.out.println("availableCarList Address: " + availableCarList);
+		List<CarInfo> availableCarList = 
+		   carService.getAvailableCars(destinationCity, departureDate, arrivalDate);
 		
-		for (CarInfo car: availableCarList) {
-		   System.out.println(car.getId());
-		}
-		List<Object> availableHotelList = hotelService.getAvailableHotels(destinationCity, arrivalDate);
-		List<Object> availableFlightList = flightService.getAvailableFlights(startingCity, destinationCity, departureDate);
+		System.out.println("availableCarList: " + availableCarList);
 		
-		if (!exists(availableCarList) || !exists(availableHotelList) || !exists(availableFlightList)) {
+		List<Object> availableHotelList = 
+		   hotelService.getAvailableHotels(destinationCity, arrivalDate);
+		List<Object> availableFlightList = 
+		   flightService.getAvailableFlights(startingCity, destinationCity, departureDate);
+		
+		if (isNullCarList(availableCarList) || isNull(availableHotelList) 
+		      || isNull(availableFlightList)) {
 		   return null;
 		}
+		
+		for (CarInfo car: availableCarList) {
+         System.out.println(car.getId());
+      }
 		
 		int shortestListSize = availableCarList.size(); 
       if (availableHotelList.size() < shortestListSize) 
@@ -68,10 +74,16 @@ public class PackageService {
 		return packageList;
 	}
 	
-   private boolean exists(Object list) {
-      if (list != null) {
+   private boolean isNullCarList(List<CarInfo> list) {
+      if (list == null) 
          return true;
-      }
+      
+      return false;
+   }
+   
+   private boolean isNull(List<Object> list) {
+      if (list == null) 
+         return true;
       
       return false;
    }
