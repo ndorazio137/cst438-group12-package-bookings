@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cst438.domain.CarInfo;
+import cst438.domain.FlightInfo;
+import cst438.domain.HotelInfo;
 import cst438.domain.Package;
 import cst438.domain.Reservation;
 import cst438.domain.ReservationRepository;
@@ -44,8 +46,8 @@ public class PackageService {
 		for (CarInfo car: availableCarList) {
 		   System.out.println(car.getId());
 		}
-		List<Object> availableHotelList = hotelService.getAvailableHotels(destinationCity, arrivalDate);
-		List<Object> availableFlightList = flightService.getAvailableFlights(startingCity, destinationCity, departureDate);
+		List<HotelInfo> availableHotelList = hotelService.getAvailableHotels(destinationCity, arrivalDate);
+		List<FlightInfo> availableFlightList = flightService.getAvailableFlights(startingCity, destinationCity, departureDate);
 		
 		if (!exists(availableCarList) || !exists(availableHotelList) || !exists(availableFlightList)) {
 		   return null;

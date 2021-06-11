@@ -13,6 +13,9 @@ import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
+import cst438.domain.FlightInfo;
+import cst438.domain.HotelInfo;
+
 @Service
 public class HotelService {
    
@@ -27,7 +30,7 @@ public class HotelService {
       this.hotelUrl = hotelUrl;
    }
    
-   public List<Object> getAvailableHotels(String city, Date date) {
+   public List<HotelInfo> getAvailableHotels(String city, Date date) {
       System.out.println("HotelService.getAvailableHotels(...): Getting available hotels...");
       ResponseEntity<JsonNode> response =
             restTemplate.getForEntity(
@@ -38,8 +41,18 @@ public class HotelService {
                response.getStatusCodeValue());
          log.info("Status code from hotel server:" +
                response.getStatusCodeValue());
-         //TODO: finish when known api structure exists
-         return null;
+         List<HotelInfo> hotelList = new ArrayList<HotelInfo>();
+         for (JsonNode item : json)
+         { 
+             int id = item.get("id").asInt();
+             HotelInfo hotelInfo = new HotelInfo(id);
+             hotelList.add(hotelInfo);
+             System.out.println("new carModel added: model=");
+             System.out.println("new CarInfo added: " + hotelInfo);
+             
+         }
+         System.out.println("hotelList added: " + hotelList);
+         return hotelList;
    }
 
 }
