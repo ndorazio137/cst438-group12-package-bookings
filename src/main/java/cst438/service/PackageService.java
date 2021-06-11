@@ -40,18 +40,24 @@ public class PackageService {
 		
 		List<Package> packageList = new ArrayList<Package>();
 		
-		List<CarInfo> availableCarList = carService.getAvailableCars(destinationCity, departureDate, arrivalDate);
-		System.out.println("availableCarList Address: " + availableCarList);
+		List<CarInfo> availableCarList = 
+		   carService.getAvailableCars(destinationCity, departureDate, arrivalDate);
 		
-		for (CarInfo car: availableCarList) {
-		   System.out.println(car.getId());
-		}
-		List<HotelInfo> availableHotelList = hotelService.getAvailableHotels(destinationCity, arrivalDate);
-		List<FlightInfo> availableFlightList = flightService.getAvailableFlights(startingCity, destinationCity, departureDate);
+		System.out.println("availableCarList: " + availableCarList);
 		
-		if (isNullCarList(availableCarList) || isNullHotelList(availableHotelList) || isNullFlightList(availableFlightList)) {
+		List<Object> availableHotelList = 
+		   hotelService.getAvailableHotels(destinationCity, arrivalDate);
+		List<Object> availableFlightList = 
+		   flightService.getAvailableFlights(startingCity, destinationCity, departureDate);
+		
+		if (isNullCarList(availableCarList) || isNull(availableHotelList) 
+		      || isNull(availableFlightList)) {
 		   return null;
 		}
+		
+		for (CarInfo car: availableCarList) {
+         System.out.println(car.getId());
+      }
 		
 		int shortestListSize = availableCarList.size(); 
       if (availableHotelList.size() < shortestListSize) 
