@@ -122,7 +122,6 @@ public class CarService {
          int reservationId = json.get("id").asInt();
          log.info("Status code from car server:" +
                response.getStatusCodeValue());
-         int reservationId = json.get("id").asInt();
          return reservationId;
       }
 }
