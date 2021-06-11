@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cst438.domain.CarInfo;
+import cst438.domain.FlightInfo;
+import cst438.domain.HotelInfo;
 import cst438.domain.Package;
 import cst438.domain.Reservation;
 import cst438.domain.ReservationRepository;
@@ -75,17 +77,15 @@ public class PackageService {
 	}
 	
    private boolean isNullCarList(List<CarInfo> list) {
-      if (list == null) 
-         return true;
-      
-      return false;
+      return (list == null);
    }
    
-   private boolean isNull(List<Object> list) {
-      if (list == null) 
-         return true;
-      
-      return false;
+   private boolean isNullHotelList(List<HotelInfo> list) {
+      return (list == null);
+   }
+   
+   private boolean isNullFlightList(List<FlightInfo> list) {
+      return (list == null);
    }
    
    public List<Reservation> getReservationsByUser(int userId) {

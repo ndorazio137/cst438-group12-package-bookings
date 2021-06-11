@@ -1,5 +1,6 @@
 package cst438.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -11,6 +12,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.JsonNode;
+
+import cst438.domain.CarInfo;
+import cst438.domain.FlightInfo;
+import cst438.domain.HotelInfo;
 
 @Service
 public class FlightService {
@@ -26,7 +31,7 @@ public class FlightService {
       this.flightUrl = flightUrl;
    }
    
-   public List<Object> getAvailableFlights(String fromCity, String toCity, Date date) {
+   public List<FlightInfo> getAvailableFlights(String fromCity, String toCity, Date date) {
       System.out.println("FlightService.getAvailableFlights(...): Getting available flights...");
       ResponseEntity<JsonNode> response =
             restTemplate.getForEntity(
@@ -38,8 +43,19 @@ public class FlightService {
             response.getStatusCodeValue());
       log.info("Status code from flight server:" +
             response.getStatusCodeValue());
-      //TODO: finish when known api structure exists
-      return null;
+      List<FlightInfo> flightList = new ArrayList<FlightInfo>();
+      for (JsonNode item : json)
+      { 
+          long id = item.get("flightId").asInt();
+//          String flightName = item.get("flightNumber").toString();
+          FlightInfo flightInfo = new FlightInfo(id);
+          flightList.add(flightInfo);
+//          System.out.println("new flightNumber added: " + flightNumber);
+          System.out.println("new HotelInfo added: " + flightInfo);
+          
+      }
+      System.out.println("hotelList added: " + flightList);
+      return flightList;
    }
 
 }
