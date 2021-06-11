@@ -74,7 +74,7 @@ public class CarService
          return null;
       }
       
-      public Object postReservation(String email, String carId, String dateStart, String dateEnd) throws JsonMappingException, JsonProcessingException {
+      public int postReservation(String email, String carId, String dateStart, String dateEnd) throws JsonMappingException, JsonProcessingException {
          
          String postReservationUrl = carUrl + "/reserve";
          
@@ -96,7 +96,7 @@ public class CarService
          
          log.info("Status code from car server:" +
                response.getStatusCodeValue());
-         //TODO: finish when known api structure exists
-         return null;
+         int reservationId = json.get("id").asInt();
+         return reservationId;
       }
 }
