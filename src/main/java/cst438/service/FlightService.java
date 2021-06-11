@@ -70,10 +70,10 @@ public class FlightService {
           );
           flightList.add(flightInfo);
 //          System.out.println("new flightNumber added: " + flightNumber);
-          System.out.println("new HotelInfo added: " + flightInfo);
+          System.out.println("new FlightInfo added: " + flightInfo);
           
       }
-      System.out.println("hotelList added: " + flightList);
+      System.out.println("flightList added: " + flightList);
       return flightList;
    }
 
