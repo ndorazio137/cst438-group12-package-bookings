@@ -62,6 +62,14 @@ public class PackageService {
          System.out.println(car.getId());
       }
 		
+		for (HotelInfo hotel: availableHotelList) {
+         System.out.println(hotel.getId());
+      }
+		
+		for (FlightInfo flight: availableFlightList) {
+         System.out.println(flight.getId());
+      }
+		
 		int shortestListSize = availableCarList.size(); 
       if (availableHotelList.size() < shortestListSize) 
          shortestListSize = availableHotelList.size(); 
