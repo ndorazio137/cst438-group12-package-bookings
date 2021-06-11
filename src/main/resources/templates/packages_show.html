@@ -10,15 +10,14 @@
     <link href="css/styles.css" rel="stylesheet"/></head>
 <body>
    <div class="center">
-  <h2>Trip Deals</h2>
-  
-  <table>
-  	 <tr class="columns" th:each="package: ${packageList}">
-  		<td th:text="${package.getCar()}" />
-  		<td th:text="${package.getHotel()}" />
-  		<td th:text="${package.getFlight()}" />
-  	 </tr>
-  </table>
+	  <h2 class="package-list-header">Trip Deals</h2>
+	  <table>
+	  	 <tr class="columns package" th:each="package: ${packageList}">
+	  		<td th:text="${package.getCar()}" class="package-item"/>
+	  		<td th:text="${package.getHotel()}" class="package-item"/>
+	  		<td th:text="${package.getFlight()}" class="package-item"/>
+	  	 </tr>
+	  </table>
   </div>
 </body>
 </html>

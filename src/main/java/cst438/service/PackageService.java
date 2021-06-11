@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import cst438.domain.CarInfo;
 import cst438.domain.Package;
 import cst438.domain.Reservation;
 import cst438.domain.ReservationRepository;
@@ -37,7 +38,12 @@ public class PackageService {
 		
 		List<Package> packageList = new ArrayList<Package>();
 		
-		List<Object> availableCarList = carService.getAvailableCars(destinationCity, departureDate, arrivalDate);
+		List<CarInfo> availableCarList = carService.getAvailableCars(destinationCity, departureDate, arrivalDate);
+		System.out.println("availableCarList Address: " + availableCarList);
+		
+		for (CarInfo car: availableCarList) {
+		   System.out.println(car.getId());
+		}
 		List<Object> availableHotelList = hotelService.getAvailableHotels(destinationCity, arrivalDate);
 		List<Object> availableFlightList = flightService.getAvailableFlights(startingCity, destinationCity, departureDate);
 		
@@ -62,7 +68,7 @@ public class PackageService {
 		return packageList;
 	}
 	
-   private boolean exists(List<Object> list) {
+   private boolean exists(Object list) {
       if (list != null) {
          return true;
       }

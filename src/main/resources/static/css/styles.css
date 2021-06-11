@@ -46,3 +46,12 @@
    display: grid;	
    grid-auto-flow: column; 
 }
+
+.package-list-header {
+	text-align: center;
+}
+
+.package-item {
+	width:100%;
+	border: 1px solid black;
+}
