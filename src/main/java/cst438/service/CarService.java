@@ -35,11 +35,14 @@ public class CarService
       }
       
       public List<Object> getAvailableCars(String cityName, Date startDate, Date endDate) {
+         System.out.println("CarService.getAvailableCars(...): Getting available cars...");
          ResponseEntity<JsonNode> response =
                restTemplate.getForEntity(
                      carUrl + "/" + cityName + "/" + startDate + "/" + endDate, 
                      JsonNode.class);
          JsonNode json = response.getBody();
+         System.out.println("Status code from car server: " + 
+               response.getStatusCodeValue());
          log.info("Status code from car server:" +
                response.getStatusCodeValue());
          //TODO: finish when known api structure exists

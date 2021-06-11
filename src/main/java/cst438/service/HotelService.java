@@ -28,11 +28,14 @@ public class HotelService {
    }
    
    public List<Object> getAvailableHotels(String city, Date date) {
+      System.out.println("HotelService.getAvailableHotels(...): Getting available hotels...");
       ResponseEntity<JsonNode> response =
             restTemplate.getForEntity(
                   hotelUrl + "?fromCity=" + city + "&date=" + date, 
                   JsonNode.class);
          JsonNode json = response.getBody();
+         System.out.println("Status code from hotel server: " + 
+               response.getStatusCodeValue());
          log.info("Status code from hotel server:" +
                response.getStatusCodeValue());
          //TODO: finish when known api structure exists
