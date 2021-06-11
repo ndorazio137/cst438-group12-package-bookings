@@ -44,11 +44,12 @@ public class HotelService {
          List<HotelInfo> hotelList = new ArrayList<HotelInfo>();
          for (JsonNode item : json)
          { 
-             int id = item.get("id").asInt();
+             int id = item.get("hotelId").asInt();
+             String hotelName = item.get("hotelName").toString();
              HotelInfo hotelInfo = new HotelInfo(id);
              hotelList.add(hotelInfo);
-             System.out.println("new carModel added: model=");
-             System.out.println("new CarInfo added: " + hotelInfo);
+             System.out.println("new hotelName added: name= " + hotelName);
+             System.out.println("new HotelInfo added: " + hotelInfo);
              
          }
          System.out.println("hotelList added: " + hotelList);

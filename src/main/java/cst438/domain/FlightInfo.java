@@ -2,14 +2,14 @@ package cst438.domain;
 
 //Helper class.
 public class FlightInfo {
-   int id;
+   long id;
    
-   public FlightInfo(int id) {
+   public FlightInfo(long id) {
       this.id = id;
    }
    
    
-   public int getId() {
+   public long getId() {
       return id;
    }
    
@@ -19,10 +19,11 @@ public class FlightInfo {
 
    @Override
    public int hashCode() {
-      final int prime = 31;
-      int result = 1;
+      final long prime = 31;
+      long result = 1;
       result = prime * result + id;
-      return result;
+      
+      return (int)result;
    }
 
    @Override

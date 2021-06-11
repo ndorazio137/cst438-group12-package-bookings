@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import cst438.domain.CarInfo;
 import cst438.domain.FlightInfo;
+import cst438.domain.HotelInfo;
 
 @Service
 public class FlightService {
@@ -45,14 +46,15 @@ public class FlightService {
       List<FlightInfo> flightList = new ArrayList<FlightInfo>();
       for (JsonNode item : json)
       { 
-          int id = item.get("id").asInt();
+          long id = item.get("flightId").asInt();
+          String flightName = item.get("flightName").toString();
           FlightInfo flightInfo = new FlightInfo(id);
           flightList.add(flightInfo);
-          System.out.println("new carModel added: model=");
-          System.out.println("new CarInfo added: " + flightInfo);
+          System.out.println("new flightName added: name= " + flightName);
+          System.out.println("new HotelInfo added: " + flightInfo);
           
       }
-      System.out.println("flightList added: " + flightList);
+      System.out.println("hotelList added: " + flightList);
       return flightList;
    }
 
