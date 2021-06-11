@@ -27,7 +27,7 @@ public class PackageService {
 
    public List<Package> getPackageList(TripInfo tripInfo) {
 		
-      System.out.println("Trip Info: ");
+      System.out.println("getPackageList(...): Trip Info: ");
       System.out.println(tripInfo);
       
 		String startingCity = tripInfo.getStartingCity();
@@ -46,18 +46,18 @@ public class PackageService {
 		}
 		
 		int shortestListSize = availableCarList.size(); 
-		System.out.println(shortestListSize);
       if (availableHotelList.size() < shortestListSize) 
          shortestListSize = availableHotelList.size(); 
       if (availableFlightList.size() < shortestListSize) 
          shortestListSize = availableFlightList.size();
-      System.out.println(shortestListSize);
+      System.out.println("Shortest list out of the three: " + shortestListSize);
       for (int i = 0; i < shortestListSize; i++) { 
          Package currentPackage = new Package( availableCarList.get(i), 
                                                availableHotelList.get(i),
                                                availableFlightList.get(i)); 
          packageList.add(currentPackage); 
       }
+      System.out.println("Package List: ");
       System.out.println(packageList);
 		return packageList;
 	}

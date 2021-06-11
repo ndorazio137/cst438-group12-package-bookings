@@ -27,16 +27,19 @@ public class FlightService {
    }
    
    public List<Object> getAvailableFlights(String fromCity, String toCity, Date date) {
+      System.out.println("FlightService.getAvailableFlights(...): Getting available flights...");
       ResponseEntity<JsonNode> response =
             restTemplate.getForEntity(
                   flightUrl + "?fromCity=" + fromCity + "&toCity=" + toCity 
                      + "&arrivalDate=" + date, 
                   JsonNode.class);
-         JsonNode json = response.getBody();
-         log.info("Status code from flight server:" +
-               response.getStatusCodeValue());
-         //TODO: finish when known api structure exists
-         return null;
+      JsonNode json = response.getBody();
+      System.out.println("Status code from flight server: " + 
+            response.getStatusCodeValue());
+      log.info("Status code from flight server:" +
+            response.getStatusCodeValue());
+      //TODO: finish when known api structure exists
+      return null;
    }
 
 }
