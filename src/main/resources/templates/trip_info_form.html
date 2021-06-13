@@ -18,8 +18,10 @@
 	        <!-- Departure City -->
 			  <span class="form-field-title">Departure City: </span>
 		     <input type="text" th:field="*{startingCity}" /> 
-		     <span th:if="${#fields.hasErrors('startingCity')}" th:errors="*{startingCity}">
-			  </span> 
+		     <span th:if="${#fields.hasErrors('startingCity')}" th:errors="*{startingCity}"></span> 
+			  <span class="form-field-title">State: </span>
+			  <input type="text" th:field="*{startingState}" />
+			  <span th:if="${#fields.hasErrors('startingState')}" th:errors="*{startingState}"></span>
 			  
 			  <br />
 			  
@@ -27,6 +29,9 @@
 			  <span class="form-field-title">Destination City: </span>
 			  <input type="text" th:field="*{destinationCity}" />
 			  <span th:if="${#fields.hasErrors('destinationCity')}" th:errors="*{destinationCity}"></span> 
+			  <span class="form-field-title">State: </span>
+           <input type="text" th:field="*{destinationState}" />
+           <span th:if="${#fields.hasErrors('destinationState')}" th:errors="*{destinationState}"></span>
 			</div>
 			
 			<br /> 

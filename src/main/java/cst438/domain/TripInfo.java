@@ -13,8 +13,14 @@ public class TripInfo {
    @Size(min=1, max=45)
    String startingCity;
    @NotNull
+   @Size(min=1, max=2)
+   String startingState;
+   @NotNull
    @Size(min=1, max=45)
    String destinationCity;
+   @NotNull
+   @Size(min=1, max=2)
+   String destinationState;
    @DateTimeFormat(pattern = "yyyy-dd-mm")
    Date departureDate;
    @DateTimeFormat(pattern = "yyyy-dd-mm")
@@ -38,12 +44,28 @@ public class TripInfo {
       this.startingCity = startingCity;
    }
 
+   public String getStartingState() {
+      return startingState;
+   }
+
+   public void setStartingState(String startingState) {
+      this.startingState = startingState;
+   }
+
    public String getDestinationCity() {
       return destinationCity;
    }
 
    public void setDestinationCity(String destinationCity) {
       this.destinationCity = destinationCity;
+   }
+   
+   public String getDestinationState() {
+      return destinationState;
+   }
+   
+   public void setDestinationState(String destinationState) {
+      this.destinationState = destinationState;
    }
 
    public Date getDepartureDate() {
@@ -63,8 +85,7 @@ public class TripInfo {
    }
 
    @Override
-   public int hashCode()
-   {
+   public int hashCode() {
       final int prime = 31;
       int result = 1;
       result = prime * result
@@ -123,6 +144,4 @@ public class TripInfo {
       return "TripInfo [startingCity=" + startingCity + ", destinationCity=" + destinationCity + ", departureDate="
             + departureDate + ", arrivalDate=" + arrivalDate + "]";
    }
-   
-   
 }

@@ -30,11 +30,11 @@ public class HotelService {
       this.hotelUrl = hotelUrl;
    }
    
-   public List<HotelInfo> getAvailableHotels(String city, Date date) {
+   public List<HotelInfo> getAvailableHotels(String city, Date date, String state) {
       System.out.println("HotelService.getAvailableHotels(...): Getting available hotels...");
       ResponseEntity<JsonNode> response =
             restTemplate.getForEntity(
-                  hotelUrl + "?fromCity=" + city + "&date=" + date, 
+                  hotelUrl + "?fromCity=" + city + "&date=" + date + "&state=" + state, 
                   JsonNode.class);
          JsonNode json = response.getBody();
          System.out.println("Status code from hotel server: " + 

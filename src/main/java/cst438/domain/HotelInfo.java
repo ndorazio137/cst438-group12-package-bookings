@@ -27,6 +27,61 @@ public class HotelInfo {
       this.availableDate = availableDate;
       this.roomsAvailable = roomsAvailable;
    }
+
+   public int getId() {
+      return id;
+   }
+   public void setId(int id) {
+      this.id = id;
+   }
+   public String getName() {
+      return name;
+   }
+   public void setName(String name) {
+      this.name = name;
+   }
+   public String getAddress() {
+      return address;
+   }
+   public void setAddress(String address) {
+      this.address = address;
+   }
+   public int getStars() {
+      return stars;
+   }
+   public void setStars(int stars) {
+      this.stars = stars;
+   }
+   public String getCity() {
+      return city;
+   }
+   public void setCity(String city) {
+      this.city = city;
+   }
+   public String getState() {
+      return state;
+   }
+   public void setState(String state) {
+      this.state = state;
+   }
+   public int getPricePerDay() {
+      return pricePerDay;
+   }
+   public void setPricePerDay(int pricePerDay) {
+      this.pricePerDay = pricePerDay;
+   }
+   public String getAvailableDate() {
+      return availableDate;
+   }
+   public void setAvailableDate(String availableDate) {
+      this.availableDate = availableDate;
+   }
+   public int getRoomsAvailable() {
+      return roomsAvailable;
+   }
+   public void setRoomsAvailable(int roomsAvailable) {
+      this.roomsAvailable = roomsAvailable;
+   }
    
    @Override
    public int hashCode() {
@@ -95,61 +150,4 @@ public class HotelInfo {
             + ", state=" + state + ", pricePerDay=" + pricePerDay + ", availableDate=" + availableDate
             + ", roomsAvailable=" + roomsAvailable + "]";
    }
-
-   public int getId() {
-      return id;
-   }
-   public void setId(int id) {
-      this.id = id;
-   }
-   public String getName() {
-      return name;
-   }
-   public void setName(String name) {
-      this.name = name;
-   }
-   public String getAddress() {
-      return address;
-   }
-   public void setAddress(String address) {
-      this.address = address;
-   }
-   public int getStars() {
-      return stars;
-   }
-   public void setStars(int stars) {
-      this.stars = stars;
-   }
-   public String getCity() {
-      return city;
-   }
-   public void setCity(String city) {
-      this.city = city;
-   }
-   public String getState() {
-      return state;
-   }
-   public void setState(String state) {
-      this.state = state;
-   }
-   public int getPricePerDay() {
-      return pricePerDay;
-   }
-   public void setPricePerDay(int pricePerDay) {
-      this.pricePerDay = pricePerDay;
-   }
-   public String getAvailableDate() {
-      return availableDate;
-   }
-   public void setAvailableDate(String availableDate) {
-      this.availableDate = availableDate;
-   }
-   public int getRoomsAvailable() {
-      return roomsAvailable;
-   }
-   public void setRoomsAvailable(int roomsAvailable) {
-      this.roomsAvailable = roomsAvailable;
-   }
-   
-   
 }
