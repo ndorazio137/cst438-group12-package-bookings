@@ -39,6 +39,7 @@ public class PackageService {
 		String destinationState = tripInfo.getDestinationState();
 		Date departureDate = tripInfo.getDepartureDate();
 		Date arrivalDate = tripInfo.getArrivalDate();
+		int passengers = tripInfo.getNumPassengers();
 		
 		List<Package> packageList = new ArrayList<Package>();
 		
@@ -51,7 +52,7 @@ public class PackageService {
 		System.out.println("availableHotelList: " + availableCarList);
 		
 		List<FlightInfo> availableFlightList = 
-		   flightService.getAvailableFlights(startingCity, destinationCity, departureDate);
+		   flightService.getAvailableFlights(startingCity, destinationCity, departureDate, passengers);
 		System.out.println("availableFlightList: " + availableCarList);
 		
 		if (isNullCarList(availableCarList) 

@@ -16,7 +16,6 @@ public class RabbitMQFanoutWebController {
    @GetMapping(value = "/producer")
    public String producer(@RequestParam("exchangeName") String exchange,
          @RequestParam("messageData") String messageData) {
-
       amqpTemplate.convertAndSend(exchange, "", messageData);
 
       return "Message sent to the RabbitMQ Fanout Exchange Successfully";

@@ -1,14 +1,17 @@
 package cst438.service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -39,11 +42,13 @@ public class FlightService {
       this.flightUrl = flightUrl;
    }
    
-   public List<FlightInfo> getAvailableFlights(String fromCity, String toCity, String date, int passengers) {
+   public List<FlightInfo> getAvailableFlights(String fromCity, String toCity, Date date, int passengers) {
       System.out.println("FlightService.getAvailableFlights(...): Getting available flights...");
+      SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+      String dateString = formatter.format(date);
       ResponseEntity<JsonNode> response =
             restTemplate.getForEntity(
-                  flightUrl + "/searchflights" + "?date=" + date + "&departureCity=" + fromCity + "&arrivalCity=" + toCity + "&passengers=" + passengers, 
+                  flightUrl + "/searchflights" + "?date=" + dateString + "&departureCity=" + fromCity + "&arrivalCity=" + toCity + "&passengers=" + passengers, 
                   JsonNode.class);
       System.out.println(response);
       JsonNode json = response.getBody();
@@ -95,7 +100,7 @@ public class FlightService {
       return flightList;
    }
 
-   public List<FlightInfo> bookFlight(String email, String password, String site, 
+   public JsonNode bookFlight(String email, String password, String site, 
          String firstName, String lastName, long flightId, int passengers) {
       System.out.println("FlightService.getAvailableFlights(...): booking flights...");
       
@@ -124,6 +129,7 @@ public class FlightService {
       try {
          json = objectMapper.readTree(response.getBody());
          System.out.println(json);
+         return json;
       } catch (JsonMappingException e) {
          // TODO Auto-generated catch block
          e.printStackTrace();
@@ -132,5 +138,39 @@ public class FlightService {
          e.printStackTrace();
       }
       return null;
+   }
+   
+   public JsonNode deleteReservation(Long id, String email, String password, String site) {
+      System.out.println("FlightService.getAvailableFlights(...): deleting reservation...");
+      String deleteReservationUrl = flightUrl + "/cancel/" + id;
+      restTemplate = new RestTemplate();
+      
+      HttpHeaders headers = new HttpHeaders();
+      headers.setContentType(MediaType.APPLICATION_JSON);
+      JsonNodeFactory jsonNodeFactory = JsonNodeFactory.instance;
+      ObjectNode reservationJsonObject = new ObjectNode(jsonNodeFactory);
+      reservationJsonObject.put("id", id);
+      reservationJsonObject.put("email", email);
+      reservationJsonObject.put("password", password);
+      reservationJsonObject.put("site", site);
+      ObjectMapper objectMapper = new ObjectMapper();
+      HttpEntity<String> entity = new HttpEntity<String>(reservationJsonObject.toString(), headers);
+      ResponseEntity<String> response = restTemplate.exchange(deleteReservationUrl, HttpMethod.DELETE, entity, String.class);
+
+      JsonNode json;
+      
+      try {
+         json = objectMapper.readTree(response.getBody());
+         System.out.println(json);
+         return json;
+      } catch (JsonMappingException e) {
+         // TODO Auto-generated catch block
+         e.printStackTrace();
+      } catch (JsonProcessingException e) {
+         // TODO Auto-generated catch block
+         e.printStackTrace();
+      }
+      return null;
+      
    }
 }
