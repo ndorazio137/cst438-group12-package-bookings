@@ -31,22 +31,24 @@ public class FlightService {
       this.flightUrl = flightUrl;
    }
    
-   public List<FlightInfo> getAvailableFlights(String fromCity, String toCity, Date date) {
+   public List<FlightInfo> getAvailableFlights(String fromCity, String toCity, Date date, int passengers) {
       System.out.println("FlightService.getAvailableFlights(...): Getting available flights...");
+      String stringDate = "2021-07-01";
       ResponseEntity<JsonNode> response =
             restTemplate.getForEntity(
-                  flightUrl + "?fromCity=" + fromCity + "&toCity=" + toCity 
-                     + "&arrivalDate=" + date, 
+                  flightUrl + "/searchflights" + "?date=" + stringDate + "&departureCity=" + fromCity + "&arrivalCity=" + toCity + "&passengers=" + passengers, 
                   JsonNode.class);
       JsonNode json = response.getBody();
       System.out.println("Status code from flight server: " + 
             response.getStatusCodeValue());
       log.info("Status code from flight server:" +
             response.getStatusCodeValue());
+      System.out.println(json);
       List<FlightInfo> flightList = new ArrayList<FlightInfo>();
-      for (JsonNode item : json)
+      JsonNode flights = json.get("flights");
+      for (JsonNode item : flights)
       { 
-          long id = item.get("flightId").asInt();
+          Long id = item.get("id").asLong();
           String flightNumber = item.get("flightNumber").toString();
           String departureCity = item.get("departureCity").toString();
           String arrivalCity = item.get("arrivalCity").toString();
@@ -56,6 +58,8 @@ public class FlightService {
           int distance = item.get("distance").asInt();
           int cost = item.get("cost").asInt();
           int totalSeats = item.get("totalSeats").asInt();
+          int reservedSeats = item.get("reservedSeats").asInt();
+          int remainingSeats = item.get("remainingSeats").asInt();
           FlightInfo flightInfo = new FlightInfo(
                 id,
                 flightNumber, 
@@ -66,7 +70,9 @@ public class FlightService {
                 duration, 
                 distance, 
                 cost, 
-                totalSeats
+                totalSeats,
+                reservedSeats,
+                remainingSeats
           );
           flightList.add(flightInfo);
 //          System.out.println("new flightNumber added: " + flightNumber);

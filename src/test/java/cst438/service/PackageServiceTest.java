@@ -39,7 +39,8 @@ public class PackageServiceTest {
    @Test public void testAllServiceResponsesNull() throws Exception { 
       // Create TripInfo Object 
       String startingCity = "startingCity"; 
-      String destinationCity = "DestinationCity"; 
+      String destinationCity = "destinationCity"; 
+      String destinationState = "destinationState"; 
       Date randomDepartureDate = new Date(1995, 11, 17); 
       Date randomArrivalDate = new Date(1995, 11, 17);
       TripInfo tripInfo = new TripInfo(startingCity, destinationCity,
@@ -49,7 +50,7 @@ public class PackageServiceTest {
       given(carService.getAvailableCars(destinationCity, randomDepartureDate,
          randomArrivalDate)).willReturn(null);
       given(hotelService.getAvailableHotels(destinationCity,
-         randomArrivalDate)).willReturn(null);
+         randomArrivalDate, destinationState)).willReturn(null);
       given(flightService.getAvailableFlights(startingCity, destinationCity,
          randomDepartureDate)).willReturn(null);
      
@@ -62,6 +63,7 @@ public class PackageServiceTest {
       // Create TripInfo Object 
       String startingCity = "Chicago"; 
       String destinationCity = "Miami"; 
+      String destinationState = "FL"; 
       Date departureDate = new Date(1995, 11, 17);
       Date arrivalDate = new Date(1995, 11, 17); 
   
@@ -77,7 +79,7 @@ public class PackageServiceTest {
       // the list returned by the service will be an empty list
       ArrayList<HotelInfo> hotelList = new ArrayList<HotelInfo>();
       given(hotelService.getAvailableHotels(startingCity,
-         departureDate)).willReturn(hotelList);
+         departureDate, destinationState)).willReturn(hotelList);
   
       // the list returned by the service will be an empty list
       ArrayList<FlightInfo> flightList = new ArrayList<FlightInfo>();
@@ -100,6 +102,7 @@ public class PackageServiceTest {
       // Create TripInfo Object 
       String startingCity = "Chicago"; 
       String destinationCity = "Miami"; 
+      String destinationState = "FL"; 
       Date departureDate = new Date(1995, 11, 17);
       Date arrivalDate = new Date(1995, 11, 17); 
       TripInfo tripInfo = 
@@ -117,7 +120,7 @@ public class PackageServiceTest {
       hotelList.add(new HotelInfo(2, "Hampton Inn", "12456 some address",
             2, "Sacramento", "CA", 200, "2021-06-01", 2));
       given(hotelService.getAvailableHotels(destinationCity,
-         arrivalDate)).willReturn(hotelList);
+         arrivalDate, destinationState)).willReturn(hotelList);
      
       // this service will return a list of size > 0 
       ArrayList<FlightInfo> flightList = 
@@ -143,6 +146,7 @@ public class PackageServiceTest {
       // Create TripInfo Object 
       String startingCity = "Chicago"; 
       String destinationCity = "Miami"; 
+      String destinationState = "FL"; 
       Date departureDate = new Date(1995, 11, 17);
       Date arrivalDate = new Date(1995, 11, 17); 
       TripInfo tripInfo = 
@@ -158,7 +162,7 @@ public class PackageServiceTest {
      
       // this service will return a null value
       given(hotelService.getAvailableHotels(destinationCity,
-         arrivalDate)).willReturn(null);
+         arrivalDate, destinationState)).willReturn(null);
      
       // this service will return a list of size > 0 
       ArrayList<FlightInfo> flightList = 
@@ -183,6 +187,7 @@ public class PackageServiceTest {
       // Create TripInfo Object 
       String startingCity = "Chicago"; 
       String destinationCity = "Miami"; 
+      String destinationState = "FL"; 
       Date departureDate = new Date(1995, 11, 17);
       Date arrivalDate = new Date(1995, 11, 17); 
       TripInfo tripInfo = 
@@ -203,7 +208,7 @@ public class PackageServiceTest {
       hotelList.add(new HotelInfo(2, "Hampton Inn", "12456 some address",
             2, "Sacramento", "CA", 200, "2021-06-01", 2));
       given(hotelService.getAvailableHotels(destinationCity,
-         arrivalDate)).willReturn(hotelList);
+         arrivalDate, destinationState)).willReturn(hotelList);
   
       // this service will return a null value
       given(flightService.getAvailableFlights(startingCity, destinationCity,
@@ -224,6 +229,7 @@ public class PackageServiceTest {
       // Create TripInfo Object 
       String startingCity = "Chicago"; 
       String destinationCity = "Miami"; 
+      String destinationState = "FL"; 
       Date departureDate = new Date(1995, 11, 17); 
       Date arrivalDate = new Date(1995, 11, 18);
   
@@ -245,7 +251,7 @@ public class PackageServiceTest {
       hotelList.add(new HotelInfo(2, "Hampton Inn", "12456 some address",
             2, "Sacramento", "CA", 200, "2021-06-01", 2));
       given(hotelService.getAvailableHotels(destinationCity,
-         arrivalDate)).willReturn(hotelList);
+         arrivalDate, destinationState)).willReturn(hotelList);
   
       // this service will return a list of size > 0 
       List<FlightInfo> flightList = new ArrayList<FlightInfo>(); 

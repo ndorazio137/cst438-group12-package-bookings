@@ -10,11 +10,11 @@
     <link href="css/styles.css" rel="stylesheet"/></head>
 <body>
    <div class="center">
-     <h2>Car List Test</h2>
+     <h2>Flight List Test</h2>
      <table>
-       <tr class="columns" th:each="carInfo: ${carList}">
-         <td th:text="${carInfo.getId()}"/>
-         <td th:text="${carInfo.getCarModel()}"/>
+       <tr class="columns" th:each="flightInfo: ${flightList}">
+         <td th:text="${flightInfo.getId()}"/>
+         <td th:text="${flightInfo.getFlightNumber()}"/>
        </tr>
      </table>
   </div>

@@ -34,7 +34,7 @@ public class HotelService {
       System.out.println("HotelService.getAvailableHotels(...): Getting available hotels...");
       ResponseEntity<JsonNode> response =
             restTemplate.getForEntity(
-                  hotelUrl + "?fromCity=" + city + "&date=" + date + "&state=" + state, 
+                  hotelUrl + "/search" + "?city=" + city + "&date=" + date + "&state=" + state, 
                   JsonNode.class);
          JsonNode json = response.getBody();
          System.out.println("Status code from hotel server: " + 

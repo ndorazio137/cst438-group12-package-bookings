@@ -2,7 +2,6 @@ package cst438.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,9 +19,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import cst438.domain.TripInfo;
-import cst438.domain.CarInfo;
+import cst438.domain.User;
+import cst438.domain.UserRepository;
 import cst438.domain.Package;
 import cst438.service.CarService;
+import cst438.service.FlightService;
+import cst438.domain.CarInfo;
+import cst438.domain.FlightInfo;
+import cst438.service.HotelService;
+import cst438.domain.HotelInfo;
 import cst438.service.PackageService;
 
 @Controller
@@ -31,14 +36,33 @@ public class PackageController {
    private PackageService packageService;
    @Autowired
    private CarService carService;
+   @Autowired
+   private HotelService hotelService;
+   @Autowired
+   private FlightService flightService;
+
 
    @GetMapping("/") // localhost:8080/
-   public String getIndex(Model model) {
+   public String getIndex( Model model ) {
+      User user = new User();
+      model.addAttribute("user", user);
       return "index";
+   }
+   
+   // Authentication
+   @PostMapping("/")
+   public String signIn( @Valid User user, BindingResult result,
+      Model model ) throws ParseException {
+      if (result.hasErrors()) {
+         return "index";
+      }
+      TripInfo tripInfo = new TripInfo();
+      model.addAttribute("tripInfo", tripInfo);
+      return "trip_info_form";
    }
 
    @GetMapping("/packages") // localhost:8080/packages
-   public String getPackageForm(Model model) {
+   public String getPackageForm( Model model ) {
       TripInfo tripInfo = new TripInfo();
       model.addAttribute("tripInfo", tripInfo);
       return "trip_info_form";
@@ -46,8 +70,8 @@ public class PackageController {
    
 //   // Package Form submission
 //   @PostMapping("/packages")
-//   public String getPackageInfo(@Valid TripInfo tripInfo, 
-//         BindingResult result, Model model) {
+//   public String getPackageInfo( @Valid TripInfo tripInfo, 
+//         BindingResult result, Model model ) {
 //      if (result.hasErrors()) {
 //         return "trip_info_form";
 //      }
@@ -70,12 +94,44 @@ public class PackageController {
 //      return "packages_show";
 //   }
    
+   // Testing Hotel API endpoint /search
+//   @PostMapping("/packages")
+//   public String getHotelList(@Valid TripInfo tripInfo, BindingResult result,
+//      Model model ) throws ParseException {
+//      
+//      SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
+//      String cityName = "Los Angeles";
+//      String state = "CA";
+//      String dateInString = "1-Jul-2021";
+//      Date startDate = formatter.parse(dateInString);
+//      List<HotelInfo> hotelList = hotelService.getAvailableHotels(cityName, startDate, state);
+//      System.out.println(hotelList);
+//      model.addAttribute("hotelList", hotelList);
+//      return "test";
+//   }
    
    // Testing API endpoint
    @PostMapping("/packages")
-   public String getCarList(@Valid TripInfo tripInfo, 
-      BindingResult result,
-      Model model) throws ParseException {
+   public String getFlightList(@Valid TripInfo tripInfo, BindingResult result,
+      Model model ) throws ParseException {
+      
+      SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
+      String fromCity = "Los Angeles";
+      String toCity = "New York";
+      String dateInString = "1-Jul-2021";
+      int passengers = 1;
+      Date date = formatter.parse(dateInString);
+      List<FlightInfo> flightList = flightService.getAvailableFlights(fromCity, toCity, date, passengers);
+      System.out.println(flightList);
+      model.addAttribute("flightList", flightList);
+      return "test";
+   }
+   
+   // Testing API endpoint
+   @PostMapping("/packages/car")
+   public String getCarList( @Valid TripInfo tripInfo, BindingResult result,
+      Model model ) throws ParseException {
+      
       SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
       String cityName = "Los Angeles";
       String dateInString = "1-Jul-2021";
@@ -88,9 +144,8 @@ public class PackageController {
    }
    
    // Testing API endpoint
-   @GetMapping("/packages/details")
-   public String getCarDetails(
-      Model model) {
+   @GetMapping("/packages/car/details")
+   public String getCarDetails( Model model ) {
       int carId = 383;
       CarInfo carInfo = carService.getCarDetails(carId);
       System.out.println(carInfo.toString());
