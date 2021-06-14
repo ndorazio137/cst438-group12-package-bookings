@@ -39,6 +39,7 @@ public class PackageService {
 		String destinationState = tripInfo.getDestinationState();
 		Date departureDate = tripInfo.getDepartureDate();
 		Date arrivalDate = tripInfo.getArrivalDate();
+		int passengers = tripInfo.getNumPassengers();
 		
 		List<Package> packageList = new ArrayList<Package>();
 		
@@ -47,16 +48,18 @@ public class PackageService {
 		System.out.println("availableCarList: " + availableCarList);
 		
 		List<HotelInfo> availableHotelList = 
-		   hotelService.getAvailableHotels(destinationCity, arrivalDate, destinationState);
-		System.out.println("availableHotelList: " + availableCarList);
+		      hotelService.getAvailableHotels(destinationCity, arrivalDate, destinationState);
+		System.out.println("availableHotelList: " + availableHotelList);
 		
 		List<FlightInfo> availableFlightList = 
-		   flightService.getAvailableFlights(startingCity, destinationCity, departureDate);
-		System.out.println("availableFlightList: " + availableCarList);
+		      flightService.getAvailableFlights(startingCity, destinationCity, departureDate, passengers);
+		System.out.println("availableFlightList: " + availableFlightList);
 		
 		if (isNullCarList(availableCarList) 
 		      || isNullHotelList(availableHotelList) 
 		      || isNullFlightList(availableFlightList)) {
+		   System.out.println("PackageService: one or more of the availability"
+		         + "lists came back null");
 		   return null;
 		}
 		

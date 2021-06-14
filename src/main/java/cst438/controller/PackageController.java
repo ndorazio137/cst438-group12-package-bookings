@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+
 import cst438.domain.TripInfo;
 import cst438.domain.User;
 import cst438.domain.UserRepository;
@@ -154,5 +157,25 @@ public class PackageController {
       
       model.addAttribute("carList", carList);
       return "testCars";
+   }
+   
+   
+   // Testing API endpoint
+   @PostMapping("/packages/testHotelService")
+   public String getHotelList(@Valid TripInfo tripInfo, BindingResult result,
+      Model model ) throws ParseException, JsonMappingException, JsonProcessingException {
+      
+      SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
+      String city = "Sacramento";
+      String dateString = "1-Jul-2021";
+      String state = "CA";
+      Date date = formatter.parse(dateString);
+//      String date = formatter.format(dateDate);
+//      String date = "2021-06-01";
+      List<HotelInfo> hotelList = hotelService.getAvailableHotels(city, date, state);
+      System.out.println("Hotel list: ");
+      System.out.println(hotelList);
+      model.addAttribute("hotelList", hotelList);
+      return "testHotels";
    }
 }
