@@ -107,11 +107,11 @@ public class PackageController {
 //      List<HotelInfo> hotelList = hotelService.getAvailableHotels(cityName, startDate, state);
 //      System.out.println(hotelList);
 //      model.addAttribute("hotelList", hotelList);
-//      return "test";
+//      return "testHotels";
 //   }
    
    // Testing API endpoint
-   @PostMapping("/packages")
+   @PostMapping("/packages/flights")
    public String getFlightList(@Valid TripInfo tripInfo, BindingResult result,
       Model model ) throws ParseException {
       
@@ -124,11 +124,11 @@ public class PackageController {
       List<FlightInfo> flightList = flightService.getAvailableFlights(fromCity, toCity, date, passengers);
       System.out.println(flightList);
       model.addAttribute("flightList", flightList);
-      return "test";
+      return "testFlights";
    }
    
    // Testing API endpoint
-   @PostMapping("/packages/car")
+   @PostMapping("/packages/cars")
    public String getCarList( @Valid TripInfo tripInfo, BindingResult result,
       Model model ) throws ParseException {
       
@@ -140,11 +140,11 @@ public class PackageController {
       List<CarInfo> carList = carService.getAvailableCars(cityName, startDate, endDate);
       System.out.println(carList);
       model.addAttribute("carList", carList);
-      return "test";
+      return "testCars";
    }
    
    // Testing API endpoint
-   @GetMapping("/packages/car/details")
+   @GetMapping("/packages/cars/details")
    public String getCarDetails( Model model ) {
       int carId = 383;
       CarInfo carInfo = carService.getCarDetails(carId);
@@ -153,6 +153,6 @@ public class PackageController {
       carList.add(carInfo);
       
       model.addAttribute("carList", carList);
-      return "test";
+      return "testCars";
    }
 }
