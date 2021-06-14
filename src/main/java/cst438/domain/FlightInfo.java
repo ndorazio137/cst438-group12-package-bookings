@@ -134,15 +134,22 @@ public class FlightInfo {
    public int hashCode() {
       final int prime = 31;
       int result = 1;
-      result = prime * result + ((arrivalCity == null) ? 0 : arrivalCity.hashCode());
-      result = prime * result + ((arrivalDate == null) ? 0 : arrivalDate.hashCode());
+      result = prime * result
+         + ((arrivalCity == null) ? 0 : arrivalCity.hashCode());
+      result = prime * result
+         + ((arrivalDate == null) ? 0 : arrivalDate.hashCode());
       result = prime * result + cost;
-      result = prime * result + ((departureCity == null) ? 0 : departureCity.hashCode());
-      result = prime * result + ((departureDate == null) ? 0 : departureDate.hashCode());
+      result = prime * result
+         + ((departureCity == null) ? 0 : departureCity.hashCode());
+      result = prime * result
+         + ((departureDate == null) ? 0 : departureDate.hashCode());
       result = prime * result + distance;
       result = prime * result + ((duration == null) ? 0 : duration.hashCode());
-      result = prime * result + ((flightNumber == null) ? 0 : flightNumber.hashCode());
+      result = prime * result
+         + ((flightNumber == null) ? 0 : flightNumber.hashCode());
       result = prime * result + (int) (id ^ (id >>> 32));
+      result = prime * result + remainingSeats;
+      result = prime * result + reservedSeats;
       result = prime * result + totalSeats;
       return result;
    }
@@ -192,6 +199,10 @@ public class FlightInfo {
          return false;
       if (id != other.id)
          return false;
+      if (remainingSeats != other.remainingSeats)
+         return false;
+      if (reservedSeats != other.reservedSeats)
+         return false;
       if (totalSeats != other.totalSeats)
          return false;
       return true;
@@ -199,9 +210,11 @@ public class FlightInfo {
 
    @Override
    public String toString() {
-      return "FlightInfo [id=" + id + ", flightNumber=" + flightNumber + ", departureCity=" + departureCity
-            + ", arrivalCity=" + arrivalCity + ", departureDate=" + departureDate + ", arrivalDate=" + arrivalDate
-            + ", duration=" + duration + ", distance=" + distance + ", cost=" + cost + ", totalSeats=" + totalSeats
-            + "]";
+      return "FlightInfo [id=" + id + ", flightNumber=" + flightNumber
+         + ", departureCity=" + departureCity + ", arrivalCity=" + arrivalCity
+         + ", departureDate=" + departureDate + ", arrivalDate=" + arrivalDate
+         + ", duration=" + duration + ", distance=" + distance + ", cost="
+         + cost + ", totalSeats=" + totalSeats + ", remainingSeats="
+         + remainingSeats + ", reservedSeats=" + reservedSeats + "]";
    }
 }
