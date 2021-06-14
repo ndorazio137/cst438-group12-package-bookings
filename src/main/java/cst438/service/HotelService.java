@@ -53,7 +53,7 @@ public class HotelService {
       JsonNodeFactory jsonNodeFactory = JsonNodeFactory.instance;
       
       ObjectNode searchJsonObject = new ObjectNode(jsonNodeFactory);
-      SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
+      SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
       String date = formatter.format(dateDate);
       searchJsonObject.put("date", date);
       searchJsonObject.put("city", city);
