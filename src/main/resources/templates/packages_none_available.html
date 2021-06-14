@@ -12,10 +12,8 @@
    <div class="center">
 	  <h2 class="package-list-header">Trip Deals</h2>
 	  <table>
-	  	 <tr class="columns package" th:each="package: ${packageList}">
-	  		<td th:text="${package.getCar()}" class="package-item"/>
-	  		<td th:text="${package.getHotel()}" class="package-item"/>
-	  		<td th:text="${package.getFlight()}" class="package-item"/>
+	  	 <tr class="columns package">
+	  		<td class="package-item">No packages are available at this time</td>
 	  	 </tr>
 	  </table>
   </div>
