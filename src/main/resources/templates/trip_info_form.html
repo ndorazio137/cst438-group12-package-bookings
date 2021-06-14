@@ -23,9 +23,11 @@
 			  <span class="form-field-title">State: </span>
 			  <input type="text" th:field="*{startingState}" />
 			  <span th:if="${#fields.hasErrors('startingState')}" th:errors="*{startingState}"></span>
-			  
-			  <br />
-			  
+		  </div>
+		  
+		  <br />
+		  
+		  <div class="form-row">
 			  <!-- Destination City -->
 			  <span class="form-field-title">Destination City: </span>
 			  <input type="text" th:field="*{destinationCity}" />
