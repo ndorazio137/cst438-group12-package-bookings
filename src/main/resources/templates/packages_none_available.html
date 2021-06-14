@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+<head>
+    <title>Let us help schedule your next trip!</title>
+    
+     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" 
+      rel="stylesheet"
+      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" 
+      crossorigin="anonymous" />
+    <link href="css/styles.css" rel="stylesheet"/></head>
+<body>
+   <div class="center">
+	  <h2 class="package-list-header">Trip Deals</h2>
+	  <table>
+	  	 <tr class="columns package" th:each="package: ${packageList}">
+	  		<td th:text="${package.getCar()}" class="package-item"/>
+	  		<td th:text="${package.getHotel()}" class="package-item"/>
+	  		<td th:text="${package.getFlight()}" class="package-item"/>
+	  	 </tr>
+	  </table>
+  </div>
+</body>
+</html>

@@ -83,6 +83,7 @@ public class PackageController {
 //       * List<Package> packageList = packageService.getPackageList(tripInfo);
 //       * 
 //       * if (packageList == null) return "packages_error";
+//       * if (packageList.size() <= 0) return "packages_none_available";
 //       * 
 //       * model.addAttribute("packageList", packageList);
 //       */
