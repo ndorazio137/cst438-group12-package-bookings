@@ -18,8 +18,11 @@
 	        <!-- Departure City -->
 			  <span class="form-field-title">Departure City: </span>
 		     <input type="text" th:field="*{startingCity}" /> 
-		     <span th:if="${#fields.hasErrors('startingCity')}" th:errors="*{startingCity}">
-			  </span> 
+		     <span th:if="${#fields.hasErrors('startingCity')}" th:errors="*{startingCity}"></span> 
+		     <!-- Departure State -->
+			  <span class="form-field-title">State: </span>
+			  <input type="text" th:field="*{startingState}" />
+			  <span th:if="${#fields.hasErrors('startingState')}" th:errors="*{startingState}"></span>
 			  
 			  <br />
 			  
@@ -27,6 +30,10 @@
 			  <span class="form-field-title">Destination City: </span>
 			  <input type="text" th:field="*{destinationCity}" />
 			  <span th:if="${#fields.hasErrors('destinationCity')}" th:errors="*{destinationCity}"></span> 
+			  <!-- Destination State -->
+			  <span class="form-field-title">State: </span>
+           <input type="text" th:field="*{destinationState}" />
+           <span th:if="${#fields.hasErrors('destinationState')}" th:errors="*{destinationState}"></span>
 			</div>
 			
 			<br /> 
@@ -37,11 +44,19 @@
 			    <input type="date" th:field="*{departureDate}" /> 
 			      <span th:if="${#fields.hasErrors('departureDate')}" th:errors="*{departureDate}"></span>
 			    <br /> 
+			  <!-- Arrival Date -->
 			  <span class="form-field-title">Arrival Date: </span>
 			    <input type="date" th:field="*{arrivalDate}" /> 
 			      <span th:if="${#fields.hasErrors('arrivalDate')}" th:errors="*{arrivalDate}"></span>
 			    <br /> 
 			</div>
+			
+			<div class="form-row">
+           <!-- Number of Passengers -->
+           <span class="form-field-title">Passengers: </span>
+           <input type="text" th:field="*{numPassengers}" />
+           <span th:if="${#fields.hasErrors('numPassengers')}" th:errors="*{numPassengers}"></span>
+         </div>
 			
 			<br />
 			

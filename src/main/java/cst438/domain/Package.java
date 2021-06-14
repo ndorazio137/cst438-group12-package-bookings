@@ -1,39 +1,39 @@
 package cst438.domain;
 
 public class Package {
-   Object car;
-   Object hotel;
-   Object flight;
+   CarInfo car;
+   HotelInfo hotel;
+   FlightInfo flight;
    
    public Package() {}
 
-   public Package(Object car, Object hotel, Object flight) {
+   public Package(CarInfo car, HotelInfo hotel, FlightInfo flight) {
       this.car = car;
       this.hotel = hotel;
       this.flight = flight;
    }
-
-   public Object getCar() {
+   
+   public CarInfo getCar() {
       return car;
    }
 
-   public void setCar(Object car) {
+   public void setCar(CarInfo car) {
       this.car = car;
    }
 
-   public Object getHotel() {
+   public HotelInfo getHotel() {
       return hotel;
    }
 
-   public void setHotel(Object hotel) {
+   public void setHotel(HotelInfo hotel) {
       this.hotel = hotel;
    }
 
-   public Object getFlight() {
+   public FlightInfo getFlight() {
       return flight;
    }
 
-   public void setFlight(Object flight) {
+   public void setFlight(FlightInfo flight) {
       this.flight = flight;
    }
 
@@ -76,6 +76,7 @@ public class Package {
 
    @Override
    public String toString() {
-      return "Package [car=" + car + ", hotel=" + hotel + ", flight=" + flight + "]";
+      return "Package [car=" + car + ", hotel=" + hotel + ", flight=" + flight
+         + "]";
    }
 }

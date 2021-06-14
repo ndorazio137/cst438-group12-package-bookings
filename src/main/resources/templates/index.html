@@ -1,15 +1,40 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Travel Deals Site</title>
+    <meta charset="UTF-8"/>
+    <title>TripInfo</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" 
+      rel="stylesheet"
+      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" 
+      crossorigin="anonymous" />
+    <link href="css/styles.css" rel="stylesheet"/>
 </head>
 <body>
-	<h3>Travel Site 3</h3>
-	<p>Welcome!</p>
-	<a href="/packages">Package Reservations</a>
-	<a href="url_of_cars_site">Car Reservations</a>
-	<a href="url_of_hotels_site">Hotel Reservations</a>
-	<a href="url_of_flights_site">Flight Reservations</a>
+   <div class="card form-container center">
+     <h2 class="card-title">Trip Info</h2>
+     <br />
+     <form class="card-body form" action="#" th:action="@{/}" th:object="${user}" method="post">
+         <div class="form-row">
+         <!-- Username -->
+            <span class="form-field-title">Username: </span>
+               <input type="text" th:field="*{username}" /> 
+            <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
+         </div>
+         <br /> 
+         <div class="form-row">
+            <!-- Password -->  
+            <span class="form-field-title">Password: </span>
+               <input type="text" th:field="*{password}" /> 
+            <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+         </div>
+         
+         <br />
+         
+         <!-- Submit -->
+         <div>
+           <input class="btn btn-success submit" type="submit" value="Submit" />
+         </div>
+     </form>
+  </div>
 </body>
 </html>
