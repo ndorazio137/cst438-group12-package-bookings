@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
@@ -97,6 +98,8 @@ public class PackageController {
       return "packages_show";
    }
    
+   
+   /***************** HOTELS *************/
    // Testing Hotel API endpoint /search
 //   @PostMapping("/packages")
 //   public String getHotelList(@Valid TripInfo tripInfo, BindingResult result,
@@ -113,6 +116,9 @@ public class PackageController {
 //      return "testHotels";
 //   }
    
+   
+   /************* FLIGHTS ****************/
+   
    // Testing API endpoint
    @GetMapping("/packages/flights/getAvailableFlights") // localhost:8080/packages
    public String getAvailableFlights( Model model ) {
@@ -123,10 +129,10 @@ public class PackageController {
    @PostMapping("/packages/flights/getAvailableFlights")
    public String postAvailableFlight( Model model ) throws ParseException {
       
-      SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
-      String fromCity = "Los Angeles, CA";
-      String toCity = "New York, NY";
-      String date = "7-Jul-2021";
+      SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+      String fromCity = "Los Angeles";
+      String toCity = "New York";
+      Date date = new Date(2021-07-01);
       int passengers = 1;
       
       List<FlightInfo> flightList = flightService.getAvailableFlights(fromCity, toCity, date, passengers);
@@ -137,27 +143,53 @@ public class PackageController {
    
    @GetMapping("/packages/flights/bookFlight") // localhost:8080/packages
    public String getBookFlight( Model model ) {
-      return "availableFlights";
+      return "bookFlight";
    }
    
    // Testing API endpoint
    @PostMapping("/packages/flights/bookFlight")
    public String postBookFlight( Model model ) throws ParseException {
       
-      SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
+      SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
       String email = "ndorazio@csumb.edu";
       String password = "Nicholasdorazio1*";
       String site = "PACKAGE";
       String firstName = "Nick";
       String lastName = "Dorazio";
-      long flightId = 1;
+      long flightId = 271;
       int passengers = 1;
-      List<FlightInfo> flightList = flightService.bookFlight(email, password, site, 
+      JsonNode reservationBooking = flightService.bookFlight(email, password, site, 
          firstName, lastName, flightId, passengers);
-      System.out.println(flightList);
-      model.addAttribute("flightList", flightList);
-      return "testFlights";
+      System.out.println(reservationBooking);
+      int reservationId = reservationBooking.get("reservation").get("id").asInt();
+      model.addAttribute("reservationId", reservationId);
+      return "testFlightBooking";
    }
+   
+   
+   @GetMapping("/packages/flights/deleteBooking") // localhost:8080/packages
+   public String deleteBookedFlight( Model model ) {
+      return "deleteBookedFlight";
+   }
+   
+   // Testing API endpoint
+   @PostMapping("/packages/flights/deleteBooking")
+   public String postDeleteBookedFlight( Model model ) {
+      Long id = new Long(286);
+      String email = "ndorazio@csumb.edu";
+      String password = "Nicholasdorazio1*";
+      String site = "PACKAGE";
+      
+      JsonNode deletedBooking = flightService.deleteReservation(id, email, password, site);
+      System.out.println(deletedBooking);
+      int reservationId = deletedBooking.get("reservation").get("id").asInt();
+      String cancellationMessage = deletedBooking.get("message").asText();
+      model.addAttribute("reservationId", reservationId);
+      model.addAttribute("cancellationMessage", cancellationMessage);
+      return "testDeleteBookedFlight";
+   }
+   
+   /************ CARS ******************/
    
    @GetMapping("/packages/cars/getAvailableCars") // localhost:8080/packages
    public String getAvailableCars( Model model ) {
