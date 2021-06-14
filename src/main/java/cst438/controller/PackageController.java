@@ -162,17 +162,15 @@ public class PackageController {
    
    
    // Testing API endpoint
-   @PostMapping("/packages/testHotelService")
+   @PostMapping("/packages")
    public String getHotelList(@Valid TripInfo tripInfo, BindingResult result,
       Model model ) throws ParseException, JsonMappingException, JsonProcessingException {
       
       SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
       String city = "Sacramento";
-      String dateString = "1-Jul-2021";
+      String dateString = "1-Jun-2021";
       String state = "CA";
       Date date = formatter.parse(dateString);
-//      String date = formatter.format(dateDate);
-//      String date = "2021-06-01";
       List<HotelInfo> hotelList = hotelService.getAvailableHotels(city, date, state);
       System.out.println("Hotel list: ");
       System.out.println(hotelList);

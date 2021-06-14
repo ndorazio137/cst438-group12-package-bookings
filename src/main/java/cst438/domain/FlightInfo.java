@@ -17,8 +17,9 @@ public class FlightInfo {
    private int remainingSeats;
    private int reservedSeats;
    
-   public FlightInfo(long id, String flightNumber, String departureCity, String arrivalCity, String departureDate,
-         String arrivalDate, String duration, int distance, int cost, int totalSeats, int remainingSeats, int reservedSeats) {
+   public FlightInfo(long id, String flightNumber, String departureCity, String arrivalCity, 
+         String departureDate, String arrivalDate, String duration, int distance, 
+         int cost, int totalSeats, int remainingSeats, int reservedSeats) {
       super();
       this.id = id;
       this.flightNumber = flightNumber;
