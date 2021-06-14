@@ -14,6 +14,11 @@ public class HotelInfo {
    
    public HotelInfo() { }
    
+   public HotelInfo(int id, String name) {
+      this.id = id;
+      this.name = name;
+   }
+   
    public HotelInfo(int id, String name, String address, int stars, 
          String city, String state, int pricePerDay,
          String availableDate, int roomsAvailable) {
