@@ -192,9 +192,14 @@ public class PackageController {
    }
    
    
+   @GetMapping("/packages/hotels/getAvailableHotels") // localhost:8080/packages
+   public String getAvailableHotels( Model model ) {
+      return "availableHotels";
+   }
+   
    // Testing API endpoint
-   @PostMapping("/packages")
-   public String getHotelList(@Valid TripInfo tripInfo, BindingResult result,
+   @PostMapping("/packages/hotels/getAvailableHotels")
+   public String getAvailableHotels(@Valid TripInfo tripInfo, BindingResult result,
       Model model ) throws ParseException, JsonMappingException, JsonProcessingException {
       
       SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
