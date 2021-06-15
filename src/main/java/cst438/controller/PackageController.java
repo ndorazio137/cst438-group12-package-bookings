@@ -245,4 +245,18 @@ public class PackageController {
       model.addAttribute("carList", carList);
       return "testCars";
    }
+   
+   // Testing API endpoint
+   @GetMapping("/reservation")
+   public String postReservation( Model model ) {
+      String email = "ndorazio@csumb.edu";
+      String id = "383";
+      String startDate = "1-Jul-2021";
+      String endDate = "1-Jul-2021";
+      int reservationId = carService.postReservation(email, id, startDate, endDate);
+      System.out.println(reservationId);
+      
+      model.addAttribute("reservationId", reservationId);
+      return "testCars";
+   }
 }
