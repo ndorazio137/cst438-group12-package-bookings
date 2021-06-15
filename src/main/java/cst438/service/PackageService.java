@@ -1,11 +1,15 @@
 package cst438.service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.fasterxml.jackson.databind.JsonNode;
 
 import cst438.domain.CarInfo;
 import cst438.domain.FlightInfo;
@@ -14,6 +18,7 @@ import cst438.domain.Package;
 import cst438.domain.Reservation;
 import cst438.domain.ReservationRepository;
 import cst438.domain.TripInfo;
+import cst438.domain.User;
 
 @Service
 public class PackageService {
@@ -107,5 +112,42 @@ public class PackageService {
    public List<Reservation> getReservationsByUser(int userId) {
       List<Reservation> reservationList = reservationRepository.findByUserId(userId);
       return reservationList;
+   }
+   
+   public void bookPackage(Package pckage, User user, TripInfo tripInfo) {
+      CarInfo car = pckage.getCar();
+      FlightInfo flight = pckage.getFlight();
+      HotelInfo hotel = pckage.getHotel();
+      
+      SimpleDateFormat dateFormatter = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
+      
+      String carId = String.valueOf(car.getId());
+      String dateStart = dateFormatter.format(tripInfo.getDepartureDate());
+      String dateEnd = dateFormatter.format(tripInfo.getArrivalDate());
+      String email = user.getUsername();
+      String password = user.getPassword();
+      String firstName = user.getFirstName();
+      String lastName = user.getLastName();
+      long flightId = flight.getId();
+      int passengers = tripInfo.getNumPassengers();
+      String site = "PACKAGES";
+      String date = hotel.getAvailableDate();
+      int hotelId = hotel.getId();
+      String authToken = "123456";
+      int userId = 1;
+      
+      JsonNode carResponse = carService.bookCar(email, carId, dateStart, dateEnd);
+      JsonNode flightResponse = flightService.bookFlight(email, password, site, firstName, lastName, flightId, passengers);
+      JsonNode hotelResponse = hotelService.bookHotel(date, hotelId, authToken, userId);
+      
+      int carReservationId = carResponse.get("id").asInt();
+      int flightReservationId = flightResponse.get("id").asInt();
+      int hotelReservationId = hotelResponse.get("id").asInt();
+      
+      // TODO: finish creating reservation object and save in DB
+//      Reservation reservation = new Reservation(reservationId, userId, carReservationId,
+//            hotelReservationId, flightReservationId,
+//            carReservationJson, hotelReservationJson,
+//            flightReservationJson);
    }
 }

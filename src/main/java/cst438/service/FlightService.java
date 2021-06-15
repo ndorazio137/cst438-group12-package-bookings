@@ -102,7 +102,7 @@ public class FlightService {
 
    public JsonNode bookFlight(String email, String password, String site, 
          String firstName, String lastName, long flightId, int passengers) {
-      System.out.println("FlightService.getAvailableFlights(...): booking flights...");
+      System.out.println("FlightService.bookFlight(...): booking flights...");
       
       String postReservationUrl = flightUrl + "/book";
       
@@ -141,7 +141,7 @@ public class FlightService {
    }
    
    public JsonNode deleteReservation(Long id, String email, String password, String site) {
-      System.out.println("FlightService.getAvailableFlights(...): deleting reservation...");
+      System.out.println("FlightService.deleteReservation(...): deleting reservation...");
       String deleteReservationUrl = flightUrl + "/cancel/" + id;
       restTemplate = new RestTemplate();
       
