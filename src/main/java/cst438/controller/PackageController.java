@@ -198,7 +198,7 @@ public class PackageController {
    // Testing API endpoint
    @PostMapping("/packages/flights/deleteBooking")
    public String postDeleteBookedFlight( Model model ) {
-      Long id = new Long(286);
+      String id = "286";
       String email = "ndorazio@csumb.edu";
       String password = "Nicholasdorazio1*";
       String site = "PACKAGE";
