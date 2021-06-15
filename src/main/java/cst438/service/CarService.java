@@ -22,6 +22,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import cst438.domain.CarInfo;
@@ -100,14 +101,17 @@ public class CarService {
          return null;
       }
       
-      public int postReservation(String email, String carId, String dateStart, String dateEnd) throws JsonMappingException, JsonProcessingException {
+      public JsonNode bookCar(String email, String carId, String dateStart, String dateEnd) {
          
-         String postReservationUrl = carUrl + "/reserve";
+         System.out.println("carService.bookCar(...): booking car...");
+         
+         String postReservationUrl = carUrl + "/book";
          
          restTemplate = new RestTemplate();
          HttpHeaders headers = new HttpHeaders();
          headers.setContentType(MediaType.APPLICATION_JSON);
-         ObjectNode reservationJsonObject = new ObjectNode(null);
+         JsonNodeFactory jsonNodeFactory = JsonNodeFactory.instance;
+         ObjectNode reservationJsonObject = new ObjectNode(jsonNodeFactory);
          reservationJsonObject.put("email", email);
          reservationJsonObject.put("car_id", carId);
          reservationJsonObject.put("date_start", dateStart);
@@ -118,10 +122,19 @@ public class CarService {
          ResponseEntity<String> response = restTemplate.
                postForEntity(postReservationUrl, request, String.class);
          
-         JsonNode json = objectMapper.readTree(response.getBody());
-         int reservationId = json.get("id").asInt();
-         log.info("Status code from car server:" +
-               response.getStatusCodeValue());
-         return reservationId;
+         JsonNode json;
+         
+         try {
+            json = objectMapper.readTree(response.getBody());
+            System.out.println(json);
+            return json;
+         } catch (JsonMappingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+         } catch (JsonProcessingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+         }
+         return null;
       }
 }

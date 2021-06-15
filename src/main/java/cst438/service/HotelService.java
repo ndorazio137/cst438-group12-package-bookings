@@ -108,4 +108,40 @@ public class HotelService {
       }
       return hotelList;
    }
+   
+   public JsonNode bookHotel(String date, int hotelId, String authToken, int userId) {
+      System.out.println("HotelService.bookHotel(...): booking hotel...");
+      
+      String postReservationUrl = hotelUrl + "/reservation";
+      
+      restTemplate = new RestTemplate();
+      HttpHeaders headers = new HttpHeaders();
+      headers.setContentType(MediaType.APPLICATION_JSON);
+      JsonNodeFactory jsonNodeFactory = JsonNodeFactory.instance;
+      ObjectNode reservationJsonObject = new ObjectNode(jsonNodeFactory);
+      reservationJsonObject.put("date", date);
+      reservationJsonObject.put("hotelId", hotelId);
+      reservationJsonObject.put("authToken", authToken);
+      reservationJsonObject.put("userId", userId);
+      ObjectMapper objectMapper = new ObjectMapper();
+      HttpEntity<String> request = 
+            new HttpEntity<String>(reservationJsonObject.toString(), headers);
+      ResponseEntity<String> response = restTemplate.
+            postForEntity(postReservationUrl, request, String.class);
+      
+      JsonNode json;
+      
+      try {
+         json = objectMapper.readTree(response.getBody());
+         System.out.println(json);
+         return json;
+      } catch (JsonMappingException e) {
+         // TODO Auto-generated catch block
+         e.printStackTrace();
+      } catch (JsonProcessingException e) {
+         // TODO Auto-generated catch block
+         e.printStackTrace();
+      }
+      return null;
+   }
 }
