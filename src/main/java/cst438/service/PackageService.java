@@ -114,7 +114,7 @@ public class PackageService {
       return reservationList;
    }
    
-   public void bookPackage(Package pckage, User user, TripInfo tripInfo) {
+   public String bookPackage(Package pckage, User user, TripInfo tripInfo) {
       CarInfo car = pckage.getCar();
       FlightInfo flight = pckage.getFlight();
       HotelInfo hotel = pckage.getHotel();
@@ -136,18 +136,45 @@ public class PackageService {
       String authToken = "123456";
       int userId = 1;
       
+      // Attempt to book car
       JsonNode carResponse = carService.bookCar(email, carId, dateStart, dateEnd);
+      // If car fails, return.
+      if (carResponse == null) { 
+         System.out.println("Car Reservation failed.");
+         return "Car reservation failed.";
+      }
+      // Car was booked successfully, so get the reservation ID
+      String carReservationId = carResponse.get("id").asText();
+      // Attempt to book the flight
       JsonNode flightResponse = flightService.bookFlight(email, password, site, firstName, lastName, flightId, passengers);
-      JsonNode hotelResponse = hotelService.bookHotel(date, hotelId, authToken, userId);
-      
-      int carReservationId = carResponse.get("id").asInt();
-      int flightReservationId = flightResponse.get("id").asInt();
+      // If flight booking fails, cancel car booking and return.
+      if (flightResponse == null) { 
+         System.out.println("Flight Reservation failed.");
+         carService.cancelReservation(carReservationId, email);
+         return "Flight reservation failed.";
+      }
+      // Flight was booked successfully, so get the reservation ID
+      long flightReservationId = flightResponse.get("id").asLong();
+      // Attempt to book hotel
+      JsonNode hotelResponse = hotelService.bookHotel(date, hotelId, userId);
+      // If hotel booking fails, cancel car & flight, then return.
+      if (hotelResponse == null) { 
+         System.out.println("hotel Reservation failed.");
+         carService.cancelReservation(carReservationId, email);
+         flightService.deleteReservation(flightReservationId, email, password, site);
+         return "Flight reservation failed.";
+      }
+      // Hotel was booked successfully, so get the reservation ID
       int hotelReservationId = hotelResponse.get("id").asInt();
+      
       
       // TODO: finish creating reservation object and save in DB
 //      Reservation reservation = new Reservation(reservationId, userId, carReservationId,
 //            hotelReservationId, flightReservationId,
 //            carReservationJson, hotelReservationJson,
 //            flightReservationJson);
+      
+      
+      return "Package booking successful.";
    }
 }

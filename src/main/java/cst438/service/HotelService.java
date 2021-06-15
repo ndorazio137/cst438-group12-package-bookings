@@ -23,7 +23,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import cst438.domain.FlightInfo;
 import cst438.domain.HotelInfo;
 
 @Service
@@ -109,7 +108,7 @@ public class HotelService {
       return hotelList;
    }
    
-   public JsonNode bookHotel(String date, int hotelId, String authToken, int userId) {
+   public JsonNode bookHotel(String date, int hotelId, int userId) {
       System.out.println("HotelService.bookHotel(...): booking hotel...");
       
       String postReservationUrl = hotelUrl + "/reservation";
