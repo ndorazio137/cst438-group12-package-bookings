@@ -116,6 +116,29 @@ public class PackageController {
 //      return "testHotels";
 //   }
    
+
+   @GetMapping("/packages/hotels/getAvailableHotels") // localhost:8080/packages
+   public String getAvailableHotels( Model model ) {
+      return "availableHotels";
+   }
+   
+   // Testing API endpoint
+   @PostMapping("/packages/hotels/getAvailableHotels")
+   public String getAvailableHotels(@Valid TripInfo tripInfo, BindingResult result,
+      Model model ) throws ParseException, JsonMappingException, JsonProcessingException {
+      
+      SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
+      String city = "Chicago";
+      String dateString = "1-Jun-2021";
+      String state = "IL";
+      Date date = formatter.parse(dateString);
+      List<HotelInfo> hotelList = hotelService.getAvailableHotels(city, date, state);
+      System.out.println("Hotel list: ");
+      System.out.println(hotelList);
+      model.addAttribute("hotelList", hotelList);
+      return "testHotels";
+   }
+   
    
    /************* FLIGHTS ****************/
    
@@ -151,11 +174,11 @@ public class PackageController {
    public String postBookFlight( Model model ) throws ParseException {
       
       SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-      String email = "ndorazio@csumb.edu";
-      String password = "Nicholasdorazio1*";
+      String email = "koakesndorazio@csumb.edu";
+      String password = "KyleOakesNickDorazio1*";
       String site = "PACKAGE";
-      String firstName = "Nick";
-      String lastName = "Dorazio";
+      String firstName = "NickKyle";
+      String lastName = "DorazioOakes";
       long flightId = 271;
       int passengers = 1;
       JsonNode reservationBooking = flightService.bookFlight(email, password, site, 
@@ -223,26 +246,51 @@ public class PackageController {
       return "testCars";
    }
    
-   
-   @GetMapping("/packages/hotels/getAvailableHotels") // localhost:8080/packages
-   public String getAvailableHotels( Model model ) {
-      return "availableHotels";
+   @GetMapping("/packages/cars/reserve") // localhost:8080/packages
+   public String bookCar( Model model ) {
+      return "bookCar";
    }
    
    // Testing API endpoint
-   @PostMapping("/packages/hotels/getAvailableHotels")
-   public String getAvailableHotels(@Valid TripInfo tripInfo, BindingResult result,
-      Model model ) throws ParseException, JsonMappingException, JsonProcessingException {
+   @PostMapping("/packages/cars/reserve")
+   public String postReservation( Model model ) {
+      String email = "ndorazio@csumb.edu";
+      String id = "261";
+      String startDate = "1-Jul-2021";
+      String endDate = "1-Jul-2021";
+      JsonNode reservationBooking = carService.bookCar(email, id, startDate, endDate);
+      System.out.println(reservationBooking);
+      if (reservationBooking != null) {
+         int reservationId = reservationBooking.get("id").asInt();
+         model.addAttribute("reservationId", reservationId);
+      } else {
+         String msg = "There was an error booking your car reservation.";
+         model.addAttribute("msg", msg);
+      }
+      return "testCarBooking";
+   }
+   
+   // Testing API endpoint
+   @GetMapping("/packages/cars/cancel") // localhost:8080/packages
+   public String cancelCar( Model model ) {
+      return "cancelCar";
+   }
+   
+   // Testing API endpoint
+   @PostMapping("/packages/cars/cancel")
+   public String cancelReservation( Model model ) {
+      String id = "8";
+      String email = "ndorazio@csumb.edu";
+      JsonNode reservationBooking = carService.cancelReservation(id, email);
+      System.out.println(reservationBooking);
       
-      SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
-      String city = "Chicago";
-      String dateString = "1-Jun-2021";
-      String state = "IL";
-      Date date = formatter.parse(dateString);
-      List<HotelInfo> hotelList = hotelService.getAvailableHotels(city, date, state);
-      System.out.println("Hotel list: ");
-      System.out.println(hotelList);
-      model.addAttribute("hotelList", hotelList);
-      return "testHotels";
+      if (reservationBooking != null) {
+         int reservationId = reservationBooking.get("id").asInt();
+         model.addAttribute("reservationId", reservationId);
+      } else {
+         String msg = "No reservation exists for this reservation id.";
+         model.addAttribute("msg", msg);
+      }
+      return "testCancelCarReservation";
    }
 }
