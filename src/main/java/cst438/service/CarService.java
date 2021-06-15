@@ -105,7 +105,7 @@ public class CarService {
          
          System.out.println("carService.bookCar(...): booking car...");
          
-         String postReservationUrl = carUrl + "/book";
+         String postReservationUrl = carUrl + "/reserve";
          
          restTemplate = new RestTemplate();
          HttpHeaders headers = new HttpHeaders();
