@@ -164,6 +164,7 @@ public class PackageController {
       return "testFlights";
    }
    
+   // Testing API endpoint
    @GetMapping("/packages/flights/bookFlight") // localhost:8080/packages
    public String getBookFlight( Model model ) {
       return "bookFlight";
@@ -189,7 +190,7 @@ public class PackageController {
       return "testFlightBooking";
    }
    
-   
+   // Testing API endpoint
    @GetMapping("/packages/flights/deleteBooking") // localhost:8080/packages
    public String deleteBookedFlight( Model model ) {
       return "deleteBookedFlight";
@@ -214,6 +215,7 @@ public class PackageController {
    
    /************ CARS ******************/
    
+   // Testing API endpoint
    @GetMapping("/packages/cars/getAvailableCars") // localhost:8080/packages
    public String getAvailableCars( Model model ) {
       return "availableCars";
@@ -246,6 +248,7 @@ public class PackageController {
       return "testCars";
    }
    
+   // Testing API endpoint
    @GetMapping("/packages/cars/reserve") // localhost:8080/packages
    public String bookCar( Model model ) {
       return "bookCar";
