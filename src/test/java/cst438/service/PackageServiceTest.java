@@ -38,13 +38,17 @@ public class PackageServiceTest {
    // Test the case where all services are down or otherwise return null
    @Test public void testAllServiceResponsesNull() throws Exception { 
       // Create TripInfo Object 
-      String startingCity = "startingCity"; 
+      String startingCity = "startingCity";
+      String startingState = "startingState";
       String destinationCity = "destinationCity"; 
       String destinationState = "destinationState"; 
       Date randomDepartureDate = new Date(1995, 11, 17); 
       Date randomArrivalDate = new Date(1995, 11, 17);
-      TripInfo tripInfo = new TripInfo(startingCity, destinationCity,
-         randomDepartureDate, randomArrivalDate);
+      int randomNumPassengers = 1;
+      TripInfo tripInfo = new TripInfo(startingCity, startingState,
+            destinationCity, destinationState,
+            randomDepartureDate, randomArrivalDate, 
+            randomNumPassengers);
      
       // Mock null responses from the services
       given(carService.getAvailableCars(destinationCity, randomDepartureDate,
@@ -52,7 +56,7 @@ public class PackageServiceTest {
       given(hotelService.getAvailableHotels(destinationCity,
          randomArrivalDate, destinationState)).willReturn(null);
       given(flightService.getAvailableFlights(startingCity, destinationCity,
-         randomDepartureDate)).willReturn(null);
+         randomDepartureDate, randomNumPassengers)).willReturn(null);
      
       // Check for null response package list
       assertThat(packageService.getPackageList(tripInfo)).isEqualTo(null); 
@@ -61,15 +65,17 @@ public class PackageServiceTest {
    // Test the case where there are no cars, hotels, or flights available
    @Test public void testNoAvailability() throws Exception {
       // Create TripInfo Object 
-      String startingCity = "Chicago"; 
-      String destinationCity = "Miami"; 
-      String destinationState = "FL"; 
-      Date departureDate = new Date(1995, 11, 17);
-      Date arrivalDate = new Date(1995, 11, 17); 
-  
-      // Set up the helper object to store our trip info
-      TripInfo tripInfo = new TripInfo(startingCity, destinationCity,
-         departureDate, arrivalDate);
+      String startingCity = "startingCity";
+      String startingState = "startingState";
+      String destinationCity = "destinationCity"; 
+      String destinationState = "destinationState"; 
+      Date departureDate = new Date(1995, 11, 17); 
+      Date arrivalDate = new Date(1995, 11, 17);
+      int numPassengers = 1;
+      TripInfo tripInfo = new TripInfo(startingCity, startingState,
+            destinationCity, destinationState,
+            departureDate, arrivalDate, 
+            numPassengers);
   
       // the list returned by the service will be an empty list
       ArrayList<CarInfo> carList = new ArrayList<CarInfo>();
@@ -84,7 +90,7 @@ public class PackageServiceTest {
       // the list returned by the service will be an empty list
       ArrayList<FlightInfo> flightList = new ArrayList<FlightInfo>();
       given(flightService.getAvailableFlights(startingCity, destinationCity,
-         departureDate)).willReturn(flightList);
+         departureDate, numPassengers)).willReturn(flightList);
   
       // Have the package service use our trip info to generate a list of packages 
       List<Package> actualPackageList = 
@@ -100,14 +106,17 @@ public class PackageServiceTest {
    // Test the case where only the car service response is null
    @Test public void testCarServiceResponseNull() throws Exception { 
       // Create TripInfo Object 
-      String startingCity = "Chicago"; 
-      String destinationCity = "Miami"; 
-      String destinationState = "FL"; 
-      Date departureDate = new Date(1995, 11, 17);
-      Date arrivalDate = new Date(1995, 11, 17); 
-      TripInfo tripInfo = 
-         new TripInfo(startingCity, destinationCity, departureDate, arrivalDate);
-     
+      String startingCity = "startingCity";
+      String startingState = "startingState";
+      String destinationCity = "destinationCity"; 
+      String destinationState = "destinationState"; 
+      Date departureDate = new Date(1995, 11, 17); 
+      Date arrivalDate = new Date(1995, 11, 17);
+      int numPassengers = 1;
+      TripInfo tripInfo = new TripInfo(startingCity, startingState,
+            destinationCity, destinationState,
+            departureDate, arrivalDate, 
+            numPassengers);
       // this service will return a null value
       given(carService.getAvailableCars(destinationCity, departureDate,
          arrivalDate)).willReturn(null);
