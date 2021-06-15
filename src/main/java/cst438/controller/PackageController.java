@@ -149,11 +149,11 @@ public class PackageController {
    public String postBookFlight( Model model ) throws ParseException {
       
       SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-      String email = "ndorazio@csumb.edu";
-      String password = "Nicholasdorazio1*";
+      String email = "koakesndorazio@csumb.edu";
+      String password = "KyleOakesNickDorazio1*";
       String site = "PACKAGE";
-      String firstName = "Nick";
-      String lastName = "Dorazio";
+      String firstName = "NickKyle";
+      String lastName = "DorazioOakes";
       long flightId = 271;
       int passengers = 1;
       JsonNode reservationBooking = flightService.bookFlight(email, password, site, 
