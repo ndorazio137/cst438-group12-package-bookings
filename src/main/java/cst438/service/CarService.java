@@ -33,12 +33,25 @@ public class CarService {
       private RestTemplate restTemplate;
       private String carUrl;
       
+      /**
+       * CarService Constructor. Sets the Car Rental Service url to be used for the CarService API.
+       * 
+       * @param carUrl The base url of the Car Rental Service.
+       */
       public CarService( 
             @Value("${car.url}") final String carUrl) {
          this.restTemplate = new RestTemplate();
          this.carUrl = carUrl;
       }
       
+      /**
+       * Gets a list of available cars to be rented.
+       * 
+       * @param cityName A String representing the destination city where the car will be available for pickup.
+       * @param startDate A String representing the date the car will be picked up on. Format "yyyy-mm-dd".
+       * @param endDate A String the date the car will be returned. Format "yyyy-mm-dd".
+       * @return An ArrayList of CarInfo objects.
+       */
       public List<CarInfo> getAvailableCars(String cityName, Date startDate, Date endDate) {
          System.out.println("CarService.getAvailableCars(...): Getting available cars...");
          ResponseEntity<JsonNode> response =
@@ -48,7 +61,7 @@ public class CarService {
          JsonNode json = response.getBody();
          log.info("Status code from car server:" +
                response.getStatusCodeValue());
-         List<CarInfo> carList = new ArrayList<CarInfo>();
+         ArrayList<CarInfo> carList = new ArrayList<CarInfo>();
          for (JsonNode car : json)
          { 
              String carModel = car.get("model").textValue();
@@ -63,6 +76,12 @@ public class CarService {
          return carList;
       }
       
+      /**
+       * Gets the details for a specific car available for rental.
+       * 
+       * @param id An int representing the id of a specific car.
+       * @return Info about a specific car on the form of a CarInfo object. 
+       */
       public CarInfo getCarDetails(int id) {
          System.out.println("CarService.getCarDetails(...): Getting available car details...");
          ResponseEntity<JsonNode> response =
@@ -79,6 +98,12 @@ public class CarService {
          return carDetails;
       }
       
+      /**
+       * Gets the reservation details of a specific car available for rental.
+       * @param String reservationId The id the car will be reserved under when requested.
+       * @return 
+       * @throws ParseException
+       */
       public Object getReservationById(String reservationId) throws ParseException {
          ResponseEntity<JsonNode> response =
                restTemplate.getForEntity(
@@ -100,6 +125,17 @@ public class CarService {
          return null;
       }
       
+      /**
+       * Requests a car to be reserved. 
+       * 
+       * @param email A String that represents the users email that is booking the reservation.
+       * @param carId A String that represents the id of the car to be reserved.
+       * @param dateStart A String that represents the date to pick up the reserved car. Format "yyyy-mm-dd".
+       * @param dateEnd A String that represents the date to return the reserved car. Format "yyyy-mm-dd".
+       * @return A reservation id in the form of an int.
+       * @throws JsonMappingException
+       * @throws JsonProcessingException
+       */
       public int postReservation(String email, String carId, String dateStart, String dateEnd) throws JsonMappingException, JsonProcessingException {
          
          String postReservationUrl = carUrl + "/reserve";
@@ -125,4 +161,26 @@ public class CarService {
          return reservationId;
       }
       
+      public int cancelReservation(int id, String username) throws JsonMappingException, JsonProcessingException {
+         
+         String postReservationUrl = carUrl + "/cancel";
+         
+         restTemplate = new RestTemplate();
+         HttpHeaders headers = new HttpHeaders();
+         headers.setContentType(MediaType.APPLICATION_JSON);
+         ObjectNode reservationJsonObject = new ObjectNode(null);
+         reservationJsonObject.put("reservationId", id);
+         reservationJsonObject.put("username", username);
+         ObjectMapper objectMapper = new ObjectMapper();
+         HttpEntity<String> request = 
+               new HttpEntity<String>(reservationJsonObject.toString(), headers);
+         ResponseEntity<String> response = restTemplate.
+               postForEntity(postReservationUrl, request, String.class);
+         
+         JsonNode json = objectMapper.readTree(response.getBody());
+         int reservationId = json.get("id").asInt();
+         log.info("Status code from car server:" +
+               response.getStatusCodeValue());
+         return reservationId;
+      }
 }

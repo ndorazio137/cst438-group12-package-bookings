@@ -116,6 +116,29 @@ public class PackageController {
 //      return "testHotels";
 //   }
    
+
+   @GetMapping("/packages/hotels/getAvailableHotels") // localhost:8080/packages
+   public String getAvailableHotels( Model model ) {
+      return "availableHotels";
+   }
+   
+   // Testing API endpoint
+   @PostMapping("/packages/hotels/getAvailableHotels")
+   public String getAvailableHotels(@Valid TripInfo tripInfo, BindingResult result,
+      Model model ) throws ParseException, JsonMappingException, JsonProcessingException {
+      
+      SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
+      String city = "Chicago";
+      String dateString = "1-Jun-2021";
+      String state = "IL";
+      Date date = formatter.parse(dateString);
+      List<HotelInfo> hotelList = hotelService.getAvailableHotels(city, date, state);
+      System.out.println("Hotel list: ");
+      System.out.println(hotelList);
+      model.addAttribute("hotelList", hotelList);
+      return "testHotels";
+   }
+   
    
    /************* FLIGHTS ****************/
    
@@ -221,28 +244,5 @@ public class PackageController {
       
       model.addAttribute("carList", carList);
       return "testCars";
-   }
-   
-   
-   @GetMapping("/packages/hotels/getAvailableHotels") // localhost:8080/packages
-   public String getAvailableHotels( Model model ) {
-      return "availableHotels";
-   }
-   
-   // Testing API endpoint
-   @PostMapping("/packages/hotels/getAvailableHotels")
-   public String getAvailableHotels(@Valid TripInfo tripInfo, BindingResult result,
-      Model model ) throws ParseException, JsonMappingException, JsonProcessingException {
-      
-      SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
-      String city = "Chicago";
-      String dateString = "1-Jun-2021";
-      String state = "IL";
-      Date date = formatter.parse(dateString);
-      List<HotelInfo> hotelList = hotelService.getAvailableHotels(city, date, state);
-      System.out.println("Hotel list: ");
-      System.out.println(hotelList);
-      model.addAttribute("hotelList", hotelList);
-      return "testHotels";
    }
 }
