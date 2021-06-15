@@ -133,12 +133,11 @@ public class PackageService {
       String site = "PACKAGES";
       String date = hotel.getAvailableDate();
       int hotelId = hotel.getId();
-      String authToken = "123456";
       int userId = 1;
       
       JsonNode carResponse = carService.bookCar(email, carId, dateStart, dateEnd);
       JsonNode flightResponse = flightService.bookFlight(email, password, site, firstName, lastName, flightId, passengers);
-      JsonNode hotelResponse = hotelService.bookHotel(date, hotelId, authToken, userId);
+      JsonNode hotelResponse = hotelService.bookHotel(date, hotelId, userId);
       
       int carReservationId = carResponse.get("id").asInt();
       int flightReservationId = flightResponse.get("id").asInt();
