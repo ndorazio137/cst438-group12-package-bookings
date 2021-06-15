@@ -246,17 +246,51 @@ public class PackageController {
       return "testCars";
    }
    
+   @GetMapping("/packages/cars/reserve") // localhost:8080/packages
+   public String bookCar( Model model ) {
+      return "bookCar";
+   }
+   
    // Testing API endpoint
-   @GetMapping("/packages/cars/reserve")
+   @PostMapping("/packages/cars/reserve")
    public String postReservation( Model model ) {
       String email = "ndorazio@csumb.edu";
-      String id = "383";
+      String id = "261";
       String startDate = "1-Jul-2021";
       String endDate = "1-Jul-2021";
       JsonNode reservationBooking = carService.bookCar(email, id, startDate, endDate);
       System.out.println(reservationBooking);
-      int reservationId = reservationBooking.get("reservation").get("id").asInt();
-      model.addAttribute("reservationId", reservationId);
-      return "testCars";
+      if (reservationBooking != null) {
+         int reservationId = reservationBooking.get("id").asInt();
+         model.addAttribute("reservationId", reservationId);
+      } else {
+         String msg = "There was an error booking your car reservation.";
+         model.addAttribute("msg", msg);
+      }
+      return "testCarBooking";
+   }
+   
+   // Testing API endpoint
+   @GetMapping("/packages/cars/cancel") // localhost:8080/packages
+   public String cancelCar( Model model ) {
+      return "cancelCar";
+   }
+   
+   // Testing API endpoint
+   @PostMapping("/packages/cars/cancel")
+   public String cancelReservation( Model model ) {
+      String id = "8";
+      String email = "ndorazio@csumb.edu";
+      JsonNode reservationBooking = carService.cancelReservation(id, email);
+      System.out.println(reservationBooking);
+      
+      if (reservationBooking != null) {
+         int reservationId = reservationBooking.get("id").asInt();
+         model.addAttribute("reservationId", reservationId);
+      } else {
+         String msg = "No reservation exists for this reservation id.";
+         model.addAttribute("msg", msg);
+      }
+      return "testCancelCarReservation";
    }
 }
