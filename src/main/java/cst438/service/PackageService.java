@@ -170,6 +170,8 @@ public class PackageService {
       Reservation reservation = new Reservation(userId, carReservationId,
             hotelReservationId, flightReservationId);
       
+      reservationRepository.save(reservation);
+      
       return "Package booking successful.";
    }
 }
