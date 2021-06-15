@@ -133,7 +133,6 @@ public class PackageService {
       String site = "PACKAGES";
       String date = hotel.getAvailableDate();
       int hotelId = hotel.getId();
-      String authToken = "123456";
       int userId = 1;
       
       // Attempt to book car
