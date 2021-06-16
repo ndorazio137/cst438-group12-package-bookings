@@ -66,12 +66,22 @@ public class CarService {
       ArrayList<CarInfo> carList = new ArrayList<CarInfo>();
       for (JsonNode car : json)
       { 
-          String carModel = car.get("model").textValue();
+          System.out.println("Car:");
+          System.out.println(car);
           int carId = car.get("id").asInt();
-          CarInfo carInfo = new CarInfo(carId, carModel);
+          String model = car.get("model").textValue();
+          String make = car.get("make").textValue();
+          int year = car.get("year").asInt();
+          String trany = car.get("trany").textValue();
+          double rentalPrice = car.get("rentalPrice").asInt();
+          String state = car.get("state").textValue();
+          String city = car.get("city").textValue();
+          
+          CarInfo carInfo = new CarInfo(carId, model, make, year, trany, 
+                rentalPrice, state, city);
           carList.add(carInfo);
-          System.out.println("new carModel added: model=" + carModel);
-          System.out.println("new CarInfo added: " + carInfo);
+//          System.out.println("new carModel added: model=" + carModel);
+//          System.out.println("new CarInfo added: " + carInfo);
       }
       System.out.println("carList added: " + carList);
       
@@ -94,8 +104,16 @@ public class CarService {
       log.info("Status code from car server:" +
             response.getStatusCodeValue());
       int carId = json.get("id").asInt();
-      String carModel = json.get("model").textValue();
-      CarInfo carDetails = new CarInfo(carId, carModel);
+      String model = json.get("model").textValue();
+      String make = json.get("make").textValue();
+      int year = json.get("year").asInt();
+      String trany = json.get("trany").textValue();
+      double rentalPrice = json.get("rentalPrice").asInt();
+      String state = json.get("state").textValue();
+      String city = json.get("city").textValue();
+      
+      CarInfo carDetails = new CarInfo(carId, model, make, year, trany, 
+            rentalPrice, state, city);
       System.out.println(carDetails.toString());
       return carDetails;
    }
