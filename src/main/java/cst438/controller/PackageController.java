@@ -89,22 +89,6 @@ public class PackageController {
    
    
    /***************** HOTELS *************/
-   // Testing Hotel API endpoint /search
-//   @PostMapping("/packages")
-//   public String getHotelList(@Valid TripInfo tripInfo, BindingResult result,
-//      Model model ) throws ParseException {
-//      
-//      SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
-//      String cityName = "Los Angeles";
-//      String state = "CA";
-//      String dateInString = "2021-07-01";
-//      Date startDate = formatter.parse(dateInString);
-//      List<HotelInfo> hotelList = hotelService.getAvailableHotels(cityName, startDate, state);
-//      System.out.println(hotelList);
-//      model.addAttribute("hotelList", hotelList);
-//      return "testHotels";
-//   }
-   
 
    // Testing API endpoint
    @GetMapping("/packages/hotels/getAvailableHotels") // localhost:8080/packages
