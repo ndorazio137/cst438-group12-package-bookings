@@ -38,12 +38,12 @@ public class PackageServiceTest {
    // Test the case where all services are down or otherwise return null
    @Test public void testAllServiceResponsesNull() throws Exception { 
       // Create TripInfo Object 
-      String startingCity = "Chicago"; 
-      String startingState = "IL";
-      String destinationCity = "Miami"; 
-      String destinationState = "FL"; 
+      String startingCity = "Los Angeles"; 
+      String startingState = "CA";
+      String destinationCity = "New York"; 
+      String destinationState = "NY"; 
       Date departureDate = new Date(2021, 07, 01); 
-      Date arrivalDate = new Date(2021, 07, 01);
+      Date arrivalDate = new Date(2021, 07, 07);
       int numPassengers = 1;
       TripInfo tripInfo = new TripInfo(startingCity, startingState,
             destinationCity, destinationState,
@@ -65,12 +65,12 @@ public class PackageServiceTest {
    // Test the case where there are no cars, hotels, or flights available
    @Test public void testNoAvailability() throws Exception {
       // Create TripInfo Object 
-      String startingCity = "Chicago"; 
-      String startingState = "IL";
-      String destinationCity = "Miami"; 
-      String destinationState = "FL"; 
+      String startingCity = "Los Angeles"; 
+      String startingState = "CA";
+      String destinationCity = "New York"; 
+      String destinationState = "NY"; 
       Date departureDate = new Date(2021, 07, 01); 
-      Date arrivalDate = new Date(2021, 07, 01);
+      Date arrivalDate = new Date(2021, 07, 07);
       int numPassengers = 1;
       TripInfo tripInfo = new TripInfo(startingCity, startingState,
             destinationCity, destinationState,
@@ -108,10 +108,10 @@ public class PackageServiceTest {
       // Create TripInfo Object 
       String startingCity = "Los Angeles"; 
       String startingState = "CA";
-      String destinationCity = "Sacramento"; 
-      String destinationState = "CA"; 
+      String destinationCity = "New York"; 
+      String destinationState = "NY"; 
       Date departureDate = new Date(2021, 07, 01); 
-      Date arrivalDate = new Date(2021, 07, 01);
+      Date arrivalDate = new Date(2021, 07, 07);
       int numPassengers = 1;
       TripInfo tripInfo = new TripInfo(startingCity, startingState,
             destinationCity, destinationState,
@@ -156,10 +156,10 @@ public class PackageServiceTest {
       // Create TripInfo Object 
       String startingCity = "Los Angeles"; 
       String startingState = "CA";
-      String destinationCity = "Sacramento"; 
-      String destinationState = "CA"; 
+      String destinationCity = "New York"; 
+      String destinationState = "NY"; 
       Date departureDate = new Date(2021, 07, 01); 
-      Date arrivalDate = new Date(2021, 07, 01);
+      Date arrivalDate = new Date(2021, 07, 07);
       int numPassengers = 1;
       TripInfo tripInfo = new TripInfo(startingCity, startingState,
             destinationCity, destinationState,
@@ -168,9 +168,11 @@ public class PackageServiceTest {
       
       // this service will return a list of size > 0 
       List<CarInfo> carList = new ArrayList<CarInfo>(); 
-      carList.add(new CarInfo(1, "Ford Fusion"));
-      carList.add(new CarInfo(2, "Honda CR-V")); 
-      carList.add(new CarInfo(3, "Toyota Camry"));
+      
+      // params: carId, model, make, year, trany, rentalPrice, state, city
+      carList.add(new CarInfo(5, "Cruze Premier", "Chevrolet", 2018, "Automatic", 557.0, "CA", "Los Angeles"));
+      carList.add(new CarInfo(7, "Impala", "Chevrolet", 2018, "Automatic", 677.0, "CA", "Los Angeles"));
+      carList.add(new CarInfo(19, "Charger AWD", "Dodge", 2018, "Automatic", 921.0, "CA", "Los Angeles"));
       given(carService.getAvailableCars(destinationCity, departureDate,
          arrivalDate)).willReturn(carList);
      
@@ -201,10 +203,10 @@ public class PackageServiceTest {
       // Create TripInfo Object 
       String startingCity = "Los Angeles"; 
       String startingState = "CA";
-      String destinationCity = "Sacramento"; 
-      String destinationState = "CA"; 
+      String destinationCity = "New York"; 
+      String destinationState = "NY"; 
       Date departureDate = new Date(2021, 07, 01); 
-      Date arrivalDate = new Date(2021, 07, 01);
+      Date arrivalDate = new Date(2021, 07, 07);
       int numPassengers = 1;
       TripInfo tripInfo = new TripInfo(startingCity, startingState,
             destinationCity, destinationState,
@@ -213,9 +215,10 @@ public class PackageServiceTest {
   
       // this service will return a list of size > 0 
       ArrayList<CarInfo> carList = new ArrayList<CarInfo>(); 
-      carList.add(new CarInfo(1, "Ford Fusion"));
-      carList.add(new CarInfo(2, "Honda CR-V")); 
-      carList.add(new CarInfo(3, "Toyota Camry"));
+      // params: carId, model, make, year, trany, rentalPrice, state, city
+      carList.add(new CarInfo(5, "Cruze Premier", "Chevrolet", 2018, "Automatic", 557.0, "CA", "Los Angeles"));
+      carList.add(new CarInfo(7, "Impala", "Chevrolet", 2018, "Automatic", 677.0, "CA", "Los Angeles"));
+      carList.add(new CarInfo(19, "Charger AWD", "Dodge", 2018, "Automatic", 921.0, "CA", "Los Angeles"));
       given(carService.getAvailableCars(destinationCity, departureDate,
          arrivalDate)).willReturn(carList);
   
@@ -247,10 +250,10 @@ public class PackageServiceTest {
       // Create TripInfo Object 
       String startingCity = "Los Angeles"; 
       String startingState = "CA";
-      String destinationCity = "Sacramento"; 
-      String destinationState = "CA"; 
+      String destinationCity = "New York"; 
+      String destinationState = "NY"; 
       Date departureDate = new Date(2021, 07, 01); 
-      Date arrivalDate = new Date(2021, 07, 01);
+      Date arrivalDate = new Date(2021, 07, 07);
       int numPassengers = 1;
       TripInfo tripInfo = new TripInfo(startingCity, startingState,
             destinationCity, destinationState,
@@ -259,9 +262,10 @@ public class PackageServiceTest {
   
       // this service will return a list of size > 0 
       List<CarInfo> carList = new ArrayList<CarInfo>(); 
-      carList.add(new CarInfo(1, "Ford Fusion"));
-      carList.add(new CarInfo(2, "Honda CR-V")); 
-      carList.add(new CarInfo(3, "Toyota Camry"));
+      // params: carId, model, make, year, trany, rentalPrice, state, city
+      carList.add(new CarInfo(5, "Cruze Premier", "Chevrolet", 2018, "Automatic", 557.0, "CA", "Los Angeles"));
+      carList.add(new CarInfo(7, "Impala", "Chevrolet", 2018, "Automatic", 677.0, "CA", "Los Angeles"));
+      carList.add(new CarInfo(19, "Charger AWD", "Dodge", 2018, "Automatic", 921.0, "CA", "Los Angeles"));
       given(carService.getAvailableCars(destinationCity, departureDate,
          arrivalDate)).willReturn(carList);
   

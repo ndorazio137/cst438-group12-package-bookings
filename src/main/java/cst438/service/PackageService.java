@@ -64,7 +64,7 @@ public class PackageService {
 		System.out.println("availableFlightList: " + availableFlightList);
 		
 		if (isNullCarList(availableCarList) 
-		     // || isNullHotelList(availableHotelList) 
+		      || isNullHotelList(availableHotelList) 
 		      || isNullFlightList(availableFlightList)) {
 		   System.out.println("PackageService: one or more of the availability"
 		         + "lists came back null");
@@ -108,10 +108,9 @@ public class PackageService {
       return (list == null);
    }
    
-   /*
-    * private boolean isNullHotelList(List<HotelInfo> list) { return (list ==
-    * null); }
-    */
+   private boolean isNullHotelList(List<HotelInfo> list) { 
+      return (list == null); 
+   }
    
    private boolean isNullFlightList(List<FlightInfo> list) {
       return (list == null);
