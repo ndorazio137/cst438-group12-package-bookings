@@ -59,7 +59,6 @@ public class PackageController {
    @PostMapping("/")
    public String logIn( @Valid User user, BindingResult result,
       Model model ) throws ParseException {
-      // Error! Error! Errr...Err.Er...rrrrrrrrrrrrr
       if (result.hasErrors()) {
          return "index";
       }
@@ -67,13 +66,11 @@ public class PackageController {
       // look up user
       List<User> users = userRepository.findByUsername(user.getUsername());
       // no user found with the username provided
-      // This is not the droid you are looking for.
       if (users.size() <= 0) {
          return "signup";
       }
       
       // found user but wrong password
-      // I'm sorry Dave, I can't do that.
       User userInfo = users.get(0);
       if (!(userInfo.getPassword().equals(user.getPassword()))) {
          return "index";
