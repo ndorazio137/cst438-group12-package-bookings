@@ -117,6 +117,7 @@ public class PackageController {
 //   }
    
 
+   // Testing API endpoint
    @GetMapping("/packages/hotels/getAvailableHotels") // localhost:8080/packages
    public String getAvailableHotels( Model model ) {
       return "availableHotels";

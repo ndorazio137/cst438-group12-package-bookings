@@ -119,7 +119,7 @@ public class PackageService {
       FlightInfo flight = pckage.getFlight();
       HotelInfo hotel = pckage.getHotel();
       
-      SimpleDateFormat dateFormatter = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
+      SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
       
       String carId = String.valueOf(car.getId());
       String dateStart = dateFormatter.format(tripInfo.getDepartureDate());
@@ -161,7 +161,7 @@ public class PackageService {
          System.out.println("hotel Reservation failed.");
          carService.cancelReservation(carReservationId, email);
          flightService.deleteReservation(flightReservationId, email, password, site);
-         return "Flight reservation failed.";
+         return "Hotel reservation failed.";
       }
       // Hotel was booked successfully, so get the reservation ID
       int hotelReservationId = hotelResponse.get("id").asInt();
