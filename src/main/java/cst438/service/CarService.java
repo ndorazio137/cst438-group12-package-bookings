@@ -107,26 +107,26 @@ public class CarService {
     * @return 
     * @throws ParseException
     */
-//      public Object getReservationById(int reservationId) throws ParseException {
-//         ResponseEntity<JsonNode> response =
-//               restTemplate.getForEntity(
-//                     carUrl + "/reservations/details/" + reservationId, 
-//                     JsonNode.class);
-//         JsonNode json = response.getBody();
-//         log.info("Status code from car server:" +
-//               response.getStatusCodeValue());
-//         int id = json.get("id").asInt();
-//         String email = json.get("email").textValue();
-//         int carId = json.get("car_id").asInt();
-//         String startDateString = json.get("date_start").textValue();
-//         String endDateString = json.get("date_end").textValue();
-//            
-//         SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
-//         Date startDate = formatter.parse(startDateString);
-//         Date endDate = formatter.parse(endDateString);
-//         //TODO: find out if we need to get the reservation. Finish then.
-//         return null;
-//      }
+      public Object getReservationById(int reservationId) throws ParseException {
+         ResponseEntity<JsonNode> response =
+               restTemplate.getForEntity(
+                     carUrl + "/reservations/details/" + reservationId, 
+                     JsonNode.class);
+         JsonNode json = response.getBody();
+         log.info("Status code from car server:" +
+               response.getStatusCodeValue());
+         int id = json.get("id").asInt();
+         String email = json.get("email").textValue();
+         int carId = json.get("car_id").asInt();
+         String startDateString = json.get("date_start").textValue();
+         String endDateString = json.get("date_end").textValue();
+            
+         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
+         Date startDate = formatter.parse(startDateString);
+         Date endDate = formatter.parse(endDateString);
+         //TODO: find out if we need to get the reservation. Finish then.
+         return null;
+      }
    
    /**
     * Requests a car to be reserved. 

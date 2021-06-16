@@ -6,7 +6,7 @@ public class Package {
    FlightInfo flight;
    
    public Package() {}
-
+   
    public Package(CarInfo car, HotelInfo hotel, FlightInfo flight) {
       this.car = car;
       this.hotel = hotel;

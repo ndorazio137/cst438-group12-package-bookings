@@ -15,14 +15,16 @@
 	  <br />
 	  <form class="card-body form" action="#" th:action="@{/packages}" th:object="${tripInfo}" method="post">
 	     <div class="form-row">
-	        <!-- Departure City -->
-			  <span class="form-field-title">Departure City: </span>
-		     <input type="text" th:field="*{startingCity}" /> 
-		     <span th:if="${#fields.hasErrors('startingCity')}" th:errors="*{startingCity}"></span> 
-		     <!-- Departure State -->
-			  <span class="form-field-title">State: </span>
-			  <input type="text" th:field="*{startingState}" />
-			  <span th:if="${#fields.hasErrors('startingState')}" th:errors="*{startingState}"></span>
+	        <div class="col-md-10">
+		        <!-- Departure City -->
+			     <input type="text" placeholder="Departure City" th:field="*{startingCity}" /> 
+			     <span class="form-error" th:if="${#fields.hasErrors('startingCity')}" th:errors="*{startingCity}"></span> 
+			  </div>
+			  <div class="col-md-2">
+			     <!-- Departure State -->
+				  <input type="text" placeholder="State" th:field="*{startingState}" />
+				  <span class="form-error" th:if="${#fields.hasErrors('startingState')}" th:errors="*{startingState}"></span>
+           </div>
 		  </div>
 		  
 		  <br />

@@ -79,22 +79,11 @@ public class PackageController {
       if (result.hasErrors()) {
          return "trip_info_form";
       }
-
-      /*
-       * List<Package> packageList = packageService.getPackageList(tripInfo);
-       * 
-       * if (packageList == null) return "packages_error";
-       * 
-       * model.addAttribute("packageList", packageList);
-       */
-      List<Package> packageList = new ArrayList<Package>();
       
-      int i;
-      for (i = 0; i < 10; i++) {
-         Package pkge = new Package(new CarInfo(1, "Car"), new HotelInfo(2, "Hotel"), new FlightInfo(3, "Flight"));
-         packageList.add(pkge);
-      }
+      List<Package> packageList = packageService.getPackageList(tripInfo); 
+      if (packageList == null) return "packages_error";
       model.addAttribute("packageList", packageList);
+    
       return "packages_show";
    }
    
@@ -105,10 +94,10 @@ public class PackageController {
 //   public String getHotelList(@Valid TripInfo tripInfo, BindingResult result,
 //      Model model ) throws ParseException {
 //      
-//      SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
+//      SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
 //      String cityName = "Los Angeles";
 //      String state = "CA";
-//      String dateInString = "1-Jul-2021";
+//      String dateInString = "2021-07-01";
 //      Date startDate = formatter.parse(dateInString);
 //      List<HotelInfo> hotelList = hotelService.getAvailableHotels(cityName, startDate, state);
 //      System.out.println(hotelList);
@@ -128,9 +117,9 @@ public class PackageController {
    public String getAvailableHotels(@Valid TripInfo tripInfo, BindingResult result,
       Model model ) throws ParseException, JsonMappingException, JsonProcessingException {
       
-      SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
+      SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
       String city = "Chicago";
-      String dateString = "1-Jun-2021";
+      String dateString = "2021-07-01";
       String state = "IL";
       Date date = formatter.parse(dateString);
       List<HotelInfo> hotelList = hotelService.getAvailableHotels(city, date, state);
@@ -153,10 +142,11 @@ public class PackageController {
    @PostMapping("/packages/flights/getAvailableFlights")
    public String postAvailableFlight( Model model ) throws ParseException {
       
-      SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+      SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
       String fromCity = "Los Angeles";
       String toCity = "New York";
-      Date date = new Date(2021-07-01);
+      String dateString = "2021-07-01";
+      Date date = formatter.parse(dateString);
       int passengers = 1;
       
       List<FlightInfo> flightList = flightService.getAvailableFlights(fromCity, toCity, date, passengers);
@@ -175,7 +165,6 @@ public class PackageController {
    @PostMapping("/packages/flights/bookFlight")
    public String postBookFlight( Model model ) throws ParseException {
       
-      SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
       String email = "koakesndorazio@csumb.edu";
       String password = "KyleOakesNickDorazio1*";
       String site = "PACKAGE";
@@ -225,9 +214,9 @@ public class PackageController {
    // Testing API endpoint
    @PostMapping("/packages/cars/getAvailableCars")
    public String postAvailableCars( Model model ) throws ParseException {
-      SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
+      SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
       String cityName = "Los Angeles";
-      String dateInString = "1-Jul-2021";
+      String dateInString = "2021-07-01";
       Date startDate = formatter.parse(dateInString);
       Date endDate = formatter.parse(dateInString);
       List<CarInfo> carList = carService.getAvailableCars(cityName, startDate, endDate);
@@ -259,9 +248,9 @@ public class PackageController {
    @PostMapping("/packages/cars/reserve")
    public String postReservation( Model model ) {
       String email = "ndorazio@csumb.edu";
-      String id = "261";
-      String startDate = "1-Jul-2021";
-      String endDate = "1-Jul-2021";
+      String id = "5";
+      String startDate = "2021-07-01";
+      String endDate = "2021-07-01";
       JsonNode reservationBooking = carService.bookCar(email, id, startDate, endDate);
       System.out.println(reservationBooking);
       if (reservationBooking != null) {

@@ -40,7 +40,7 @@ public class HotelService {
       this.authToken = authToken;
    }
    
-   public List<HotelInfo> getAvailableHotels(String city, Date dateDate, String state) {
+   public List<HotelInfo> getAvailableHotels(String city, Date date, String state) {
       
       System.out.println("HotelService.getAvailableHotels(...): Getting available hotels...");
       
@@ -53,9 +53,9 @@ public class HotelService {
       JsonNodeFactory jsonNodeFactory = JsonNodeFactory.instance;
       
       ObjectNode searchJsonObject = new ObjectNode(jsonNodeFactory);
-      SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-      String date = formatter.format(dateDate);
-      searchJsonObject.put("date", date);
+      SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
+      String dateString = formatter.format(date);
+      searchJsonObject.put("date", dateString);
       searchJsonObject.put("city", city);
       searchJsonObject.put("state", state);
       ObjectMapper objectMapper = new ObjectMapper();
