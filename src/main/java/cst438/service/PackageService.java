@@ -133,8 +133,8 @@ public class PackageService {
       String dateEnd = dateFormatter.format(tripInfo.getArrivalDate());
       String email = user.getUsername();
       String password = user.getPassword();
-      String firstName = user.getFirstName();
-      String lastName = user.getLastName();
+      String firstName = "deals";
+      String lastName = "team";
       long flightId = flight.getId();
       int passengers = tripInfo.getNumPassengers();
       String site = "PACKAGES";
