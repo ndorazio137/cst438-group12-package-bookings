@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import cst438.domain.TripInfo;
+import cst438.domain.User;
 import cst438.domain.CarInfo;
 import cst438.domain.FlightInfo;
 import cst438.domain.HotelInfo;
@@ -45,10 +46,11 @@ public class PackageServiceTest {
       Date departureDate = new Date(2021, 07, 01); 
       Date arrivalDate = new Date(2021, 07, 07);
       int numPassengers = 1;
+      User user = new User("koakes@csumb.edu", "password1");
       TripInfo tripInfo = new TripInfo(startingCity, startingState,
             destinationCity, destinationState,
             departureDate, arrivalDate, 
-            numPassengers);
+            numPassengers, user.getUsername());
      
       // Mock null responses from the services
       given(carService.getAvailableCars(destinationCity, departureDate,
@@ -72,10 +74,11 @@ public class PackageServiceTest {
       Date departureDate = new Date(2021, 07, 01); 
       Date arrivalDate = new Date(2021, 07, 07);
       int numPassengers = 1;
+      User user = new User("koakes@csumb.edu", "password1");
       TripInfo tripInfo = new TripInfo(startingCity, startingState,
             destinationCity, destinationState,
             departureDate, arrivalDate, 
-            numPassengers);
+            numPassengers, user.getUsername());
   
       // the list returned by the service will be an empty list
       ArrayList<CarInfo> carList = new ArrayList<CarInfo>();
@@ -113,10 +116,11 @@ public class PackageServiceTest {
       Date departureDate = new Date(2021, 07, 01); 
       Date arrivalDate = new Date(2021, 07, 07);
       int numPassengers = 1;
+      User user = new User("koakes@csumb.edu", "password1");
       TripInfo tripInfo = new TripInfo(startingCity, startingState,
             destinationCity, destinationState,
             departureDate, arrivalDate, 
-            numPassengers);
+            numPassengers, user.getUsername());
       
       // this service will return a null value
       given(carService.getAvailableCars(destinationCity, departureDate,
@@ -161,10 +165,11 @@ public class PackageServiceTest {
       Date departureDate = new Date(2021, 07, 01); 
       Date arrivalDate = new Date(2021, 07, 07);
       int numPassengers = 1;
+      User user = new User("koakes@csumb.edu", "password1");
       TripInfo tripInfo = new TripInfo(startingCity, startingState,
             destinationCity, destinationState,
             departureDate, arrivalDate, 
-            numPassengers);
+            numPassengers, user.getUsername());
       
       // this service will return a list of size > 0 
       List<CarInfo> carList = new ArrayList<CarInfo>(); 
@@ -208,10 +213,11 @@ public class PackageServiceTest {
       Date departureDate = new Date(2021, 07, 01); 
       Date arrivalDate = new Date(2021, 07, 07);
       int numPassengers = 1;
+      User user = new User("koakes@csumb.edu", "password1");
       TripInfo tripInfo = new TripInfo(startingCity, startingState,
             destinationCity, destinationState,
             departureDate, arrivalDate, 
-            numPassengers);
+            numPassengers, user.getUsername());
   
       // this service will return a list of size > 0 
       ArrayList<CarInfo> carList = new ArrayList<CarInfo>(); 
@@ -255,10 +261,11 @@ public class PackageServiceTest {
       Date departureDate = new Date(2021, 07, 01); 
       Date arrivalDate = new Date(2021, 07, 07);
       int numPassengers = 1;
+      User user = new User("koakes@csumb.edu", "password1");
       TripInfo tripInfo = new TripInfo(startingCity, startingState,
             destinationCity, destinationState,
             departureDate, arrivalDate, 
-            numPassengers);
+            numPassengers, user.getUsername());
   
       // this service will return a list of size > 0 
       List<CarInfo> carList = new ArrayList<CarInfo>(); 

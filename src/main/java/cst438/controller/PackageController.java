@@ -26,6 +26,7 @@ import cst438.domain.TripInfo;
 import cst438.domain.User;
 import cst438.domain.UserRepository;
 import cst438.domain.Package;
+import cst438.domain.ReservationInfo;
 import cst438.service.CarService;
 import cst438.service.FlightService;
 import cst438.domain.CarInfo;
@@ -62,6 +63,10 @@ public class PackageController {
       }
       TripInfo tripInfo = new TripInfo();
       model.addAttribute("tripInfo", tripInfo);
+      
+      // This is terrible, and I would do this VERY differently if given time
+      model.addAttribute("user", user);
+      
       return "trip_info_form";
    }
 
@@ -87,6 +92,22 @@ public class PackageController {
       return "packages_show";
    }
    
+   // Package Form submission
+   @PostMapping("/packages/book")
+   public String bookPackage( @Valid ReservationInfo reservationInfo, 
+         BindingResult result, Model model ) {
+      if (result.hasErrors()) {
+         return "trip_info_form";
+      }
+      
+      String bookingResult = packageService.bookPackage(
+            reservationInfo.getPckage(), 
+            reservationInfo.getUser(),
+            reservationInfo.getTripInfo());
+      model.addAttribute("bookingResult", bookingResult);
+    
+      return "package_booked";
+   }
    
    /***************** HOTELS *************/
 

@@ -38,6 +38,8 @@ public class PackageService {
       System.out.println("getPackageList(...): Trip Info: ");
       System.out.println(tripInfo);
       
+      String username = tripInfo.getUsername();
+      
 		String startingCity = tripInfo.getStartingCity();
 		String startingState = tripInfo.getStartingState();
 		String destinationCity = tripInfo.getDestinationCity();
@@ -96,7 +98,8 @@ public class PackageService {
       for (int i = 0; i < shortestListSize; i++) { 
          Package currentPackage = new Package( availableCarList.get(i), 
                                                availableHotelList.get(i),
-                                               availableFlightList.get(i)); 
+                                               availableFlightList.get(i)
+         ); 
          packageList.add(currentPackage); 
       }
       System.out.println("Package List: ");

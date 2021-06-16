@@ -127,6 +127,8 @@
          
          <br />
          
+         <input type="hidden" th:field="${user.username}" th:value="${user.getUsername()}" />
+         
          <!-- Submit -->
          <div>
            <input id="tripInfoFormSubmit" class="btn btn-success submit" type="submit" value="Submit" />
