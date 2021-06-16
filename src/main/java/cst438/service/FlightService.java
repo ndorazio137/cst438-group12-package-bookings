@@ -44,7 +44,7 @@ public class FlightService {
    
    public List<FlightInfo> getAvailableFlights(String fromCity, String toCity, Date date, int passengers) {
       System.out.println("FlightService.getAvailableFlights(...): Getting available flights...");
-      SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+      SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
       String dateString = formatter.format(date);
       ResponseEntity<JsonNode> response =
             restTemplate.getForEntity(

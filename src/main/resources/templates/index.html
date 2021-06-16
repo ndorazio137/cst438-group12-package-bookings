@@ -11,21 +11,22 @@
 </head>
 <body>
    <div class="card form-container center">
-     <h2 class="card-title">Trip Info</h2>
-     <br />
+     <h2 class="card-title">Welcome Back!</h2>
      <form class="card-body form" action="#" th:action="@{/}" th:object="${user}" method="post">
          <div class="form-row">
-         <!-- Username -->
-            <span class="form-field-title">Username: </span>
-               <input type="text" th:field="*{username}" /> 
-            <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
+            <div class="col">
+	            <!-- Username -->
+	            <input type="text" class="form-control" placeholder="username" th:field="*{username}" /> 
+	            <span class="form-error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
+            </div>
          </div>
          <br /> 
          <div class="form-row">
+            <div class="col">
             <!-- Password -->  
-            <span class="form-field-title">Password: </span>
-               <input type="text" th:field="*{password}" /> 
-            <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+	            <input type="text" class="form-control" placeholder="password" th:field="*{password}" /> 
+	            <span class="form-error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+	         </div>
          </div>
          
          <br />

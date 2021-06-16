@@ -1,23 +1,57 @@
 <!DOCTYPE html>
 <html xmlns:th="www.thymeleaf.org">
-<head>
-    <title>Let us help schedule your next trip!</title>
-    
-     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" 
-      rel="stylesheet"
-      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" 
-      crossorigin="anonymous" />
-    <link href="css/styles.css" rel="stylesheet"/></head>
-<body>
-   <div class="center">
-	  <h2 class="package-list-header">Trip Deals</h2>
-	  <table>
-	  	 <tr class="columns package" th:each="package: ${packageList}">
-	  		<td th:text="${package.getCar()}" class="package-item"/>
-	  		<td th:text="${package.getHotel()}" class="package-item"/>
-	  		<td th:text="${package.getFlight()}" class="package-item"/>
-	  	 </tr>
-	  </table>
-  </div>
-</body>
+	<head>
+	    <title>Let us help schedule your next trip!</title>
+	    
+	     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" 
+	      rel="stylesheet"
+	      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" 
+	      crossorigin="anonymous" />
+	    <link href="css/styles.css" rel="stylesheet"/>
+	</head>
+	<header>
+	  <div class="header-container">
+	   <div class="header-img"></div>
+	   <h2 id="package-site-title" class="center" >Package Deals</h2>
+	   </div>
+   </header>
+	<body>
+	   <div id="package-container">
+		   <br />
+ 	      <div class="package-list" th:each="package: ${packageList}">
+ 	         <div class="package">
+	 	         <!-- Package -->
+	 	         <div class="card-group">
+		            <!--  Car card -->
+	 	            <div class="card">
+	 	              <div class="card-header">Car</div>
+	 	              <div class="card-body">
+	  	                 <div class="package-item-image"></div>
+		  		           <div th:text="${package.getCar()}" class="package-item"></div>
+	  		           </div>
+	  		         </div>
+	  		         <!--  Hotel card -->
+	  		         <div class="card">
+	  		           <div class="card-header">Hotel</div>
+	  		           <div class="card-body">
+		  		           <div class="package-item-image"></div>
+		  		           <div th:text="${package.getHotel()}" class="package-item"></div>
+		  		        </div>
+		  		      </div>
+		  		      <!--  Flight card -->
+	  		         <div class="card">
+	  		            <div class="card-header">Flight</div>
+	  		            <div class="card-body">
+		  		            <div class="package-item-image"></div>
+		  		            <div th:text="${package.getFlight()}" class="package-item"></div> 
+	  		           </div>
+	  		         </div>
+	  		         
+  		         </div>
+  		         <!--  Book Package Button -->
+                  <button type="button" class="btn btn-success book-package-button">Book this!</button>
+ 		      </div>	
+ 	      </div>
+	   </div>
+   </body>
 </html>
