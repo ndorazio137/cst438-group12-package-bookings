@@ -12,21 +12,28 @@ import org.hibernate.annotations.Type;
 @Table(name="reservations")
 public class Reservation {
    
-   private String reservationId;
+   private int reservationId;
    @Id
    private int userId;
    private String carReservationId;
    private String hotelReservationId;
    private String flightReservationId;
-   private String  carReservationJson;
+   private String carReservationJson;
    private String hotelReservationJson;
    private String flightReservationJson;
 
-   public Reservation(String reservationId, int userId, String carReservationId,
+   public Reservation(int userId, String carReservationId,
+         String hotelReservationId, String flightReservationId) {
+      this.userId = userId;
+      this.carReservationId = carReservationId;
+      this.hotelReservationId = hotelReservationId;
+      this.flightReservationId = flightReservationId;
+   }
+   
+   public Reservation(int userId, String carReservationId,
       String hotelReservationId, String flightReservationId,
       String carReservationJson, String hotelReservationJson,
       String flightReservationJson) {
-      this.reservationId = reservationId;
       this.userId = userId;
       this.carReservationId = carReservationId;
       this.hotelReservationId = hotelReservationId;
@@ -36,12 +43,8 @@ public class Reservation {
       this.flightReservationJson = flightReservationJson;
    }
 
-   public String getReservationId() {
+   public int getReservationId() {
       return reservationId;
-   }
-   
-   public void setReservationId(String reservationId) {
-      this.reservationId = reservationId;
    }
    
    public int getUserId() {

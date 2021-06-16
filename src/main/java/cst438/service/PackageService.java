@@ -153,7 +153,7 @@ public class PackageService {
          return "Flight reservation failed.";
       }
       // Flight was booked successfully, so get the reservation ID
-      long flightReservationId = flightResponse.get("id").asLong();
+      String flightReservationId = flightResponse.get("id").asText();
       // Attempt to book hotel
       JsonNode hotelResponse = hotelService.bookHotel(date, hotelId, userId);
       // If hotel booking fails, cancel car & flight, then return.
@@ -164,15 +164,13 @@ public class PackageService {
          return "Flight reservation failed.";
       }
       // Hotel was booked successfully, so get the reservation ID
-      int hotelReservationId = hotelResponse.get("id").asInt();
-      
+      String hotelReservationId = hotelResponse.get("id").asText();
       
       // TODO: finish creating reservation object and save in DB
-//      Reservation reservation = new Reservation(reservationId, userId, carReservationId,
-//            hotelReservationId, flightReservationId,
-//            carReservationJson, hotelReservationJson,
-//            flightReservationJson);
+      Reservation reservation = new Reservation(userId, carReservationId,
+            hotelReservationId, flightReservationId);
       
+      reservationRepository.save(reservation);
       
       return "Package booking successful.";
    }
