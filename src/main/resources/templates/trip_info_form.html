@@ -8,12 +8,15 @@
       integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" 
       crossorigin="anonymous" />
     <link href="css/styles.css" rel="stylesheet"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="js/functions.js"></script>
 </head>
 <body>
-   <div class="card form-container center">
+   <h3 id="packageBuildingMessage" class="center deep">Building travel packages...</h3>
+   <div id="mainContainer" class="card form-container center">
      <h2 class="card-title">Enter your trip details</h2>
      <br />
-     <form class="card-body form" action="#" th:action="@{/packages}" th:object="${tripInfo}" method="post">
+     <form id="tripInfoForm" class="card-body form" action="#" th:action="@{/packages}" th:object="${tripInfo}" method="post">
         <div class="form-row g-3">
            <div class="col-md-3">
               <span class="form-field-title">From </span>
@@ -126,7 +129,7 @@
          
          <!-- Submit -->
          <div>
-           <input class="btn btn-success submit" type="submit" value="Submit" />
+           <input id="tripInfoFormSubmit" class="btn btn-success submit" type="submit" value="Submit" />
          </div>
      </form>
   </div>
