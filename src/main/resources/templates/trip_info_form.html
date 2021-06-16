@@ -10,11 +10,11 @@
     <link href="css/styles.css" rel="stylesheet"/>
 </head>
 <body>
-   <div class="card form-container center">
+   <div id="trip-info-form-container" class="card center">
      <h2 class="card-title">Enter your trip details</h2>
      <br />
      <form class="card-body form" action="#" th:action="@{/packages}" th:object="${tripInfo}" method="post">
-        <div class="form-row g-3">
+        <div class="form-row g-3 center-form-field">
            <div class="col-md-3">
               <span class="form-field-title">From </span>
            </div>
@@ -52,7 +52,7 @@
         
         <br />
         
-        <div class="form-row g-3">
+        <div class="form-row g-3 center-form-field">
            <div class="col-md-3">
              <span class="form-field-title">To </span>
            </div>
@@ -71,7 +71,7 @@
               <option value="Dallas">Dallas</option>
               <option value="San Jose">San Jose</option>
            </select>
-           <span th:if="${#fields.hasErrors('destinationCity')}" th:errors="*{destinationCity}"></span> 
+           <span class="form-error" th:if="${#fields.hasErrors('destinationCity')}" th:errors="*{destinationCity}"></span> 
            </div>
            <div class="col-auto">
            <!-- Destination State -->
@@ -84,41 +84,41 @@
               <option value="AZ">AZ</option>
               <option value="PA">PA</option>
            </select>
-           <span th:if="${#fields.hasErrors('destinationState')}" th:errors="*{destinationState}"></span>
+           <span class="form-error" th:if="${#fields.hasErrors('destinationState')}" th:errors="*{destinationState}"></span>
            </div>
          </div>
          
          <br /> 
          
-         <div class="form-row g-2">
+         <div class="form-row g-2 center-form-field">
            <!-- Departure Date -->
-           <div class="col-auto">
+           <div class="col-md-4">
              <span class="form-field-title">Departing Date: </span>
            </div>
            <div class="col-auto">
-             <input type="date" th:field="*{departureDate}" /> 
-               <span th:if="${#fields.hasErrors('departureDate')}" th:errors="*{departureDate}"></span>
+              <input type="date" th:field="*{departureDate}" /> 
+              <span class="form-error" th:if="${#fields.hasErrors('departureDate')}" th:errors="*{departureDate}"></span>
            </div>
          </div>
-         <div class="form-row g-2">
+         <div class="form-row g-2 center-form-field">
            <!-- Arrival Date -->
-           <div class="col-auto">
+           <div class="col-md-4">
              <span class="form-field-title">Arrival Date: </span>
            </div>
-           <div class="col">
-             <input type="date" th:field="*{arrivalDate}" /> 
-               <span th:if="${#fields.hasErrors('arrivalDate')}" th:errors="*{arrivalDate}"></span>
+           <div class="col-auto">
+              <input type="date" th:field="*{arrivalDate}" /> 
+              <span class="form-error" th:if="${#fields.hasErrors('arrivalDate')}" th:errors="*{arrivalDate}"></span>
            </div>
          </div>
          
-         <div class="form-row g-2">
+         <div class="form-row g-2 center-form-field">
            <!-- Number of Passengers -->
-           <div class="col-auto">
+           <div class="col-md-4">
               <span class="form-field-title">Passengers: </span>
            </div>
            <div class="col-auto">
               <input type="text" th:field="*{numPassengers}" />
-              <span th:if="${#fields.hasErrors('numPassengers')}" th:errors="*{numPassengers}"></span>
+              <span class="form-error" th:if="${#fields.hasErrors('numPassengers')}" th:errors="*{numPassengers}"></span>
            </div>
          </div>
          
