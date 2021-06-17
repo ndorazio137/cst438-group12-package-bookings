@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRepository extends JpaRepository<Reservation, Long> {
    @Query("select u from User u order by username")
-   List<User> authenticateUser(String username, String password);
+   List<User> findByUsername(String username);
 }

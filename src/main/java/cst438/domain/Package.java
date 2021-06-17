@@ -4,7 +4,7 @@ public class Package {
    CarInfo car;
    HotelInfo hotel;
    FlightInfo flight;
-   User user;
+   String username;
    
    public Package() {}
    
@@ -13,6 +13,14 @@ public class Package {
       this.car = car;
       this.hotel = hotel;
       this.flight = flight;
+   }
+   
+   public Package(CarInfo car, HotelInfo hotel, FlightInfo flight, String username) {
+      super();
+      this.car = car;
+      this.hotel = hotel;
+      this.flight = flight;
+      this.username = username;
    }
 
    public CarInfo getCar() {
@@ -38,14 +46,22 @@ public class Package {
    public void setFlight(FlightInfo flight) {
       this.flight = flight;
    }
-
-   public User getUser() {
-      return user;
+   
+   public String getUsername() {
+      return username;
    }
 
-   public void setUser(User user) {
-      this.user = user;
+   public void setUsername(String username) {
+      this.username = username;
    }
+   
+//   public User getUser() {
+//      return user;
+//   }
+//
+//   public void setUser(User user) {
+//      this.user = user;
+//   }
 
 //   public TripInfo getTripInfo() {
 //      return tripInfo;
@@ -54,6 +70,14 @@ public class Package {
 //   public void setTripInfo(TripInfo tripInfo) {
 //      this.tripInfo = tripInfo;
 //   }
+   
+   
+   @Override
+   public String toString() {
+//      return "Package [car=" + car + ", hotel=" + hotel + ", flight=" + flight + ", user=" + user + ", tripInfo="
+//            + tripInfo + "]";
+      return "Package [car=" + car + ", hotel=" + hotel + ", flight=" + flight + ", username=" + username + "]";
+   }
 
    @Override
    public int hashCode() {
@@ -62,8 +86,7 @@ public class Package {
       result = prime * result + ((car == null) ? 0 : car.hashCode());
       result = prime * result + ((flight == null) ? 0 : flight.hashCode());
       result = prime * result + ((hotel == null) ? 0 : hotel.hashCode());
-//      result = prime * result + ((tripInfo == null) ? 0 : tripInfo.hashCode());
-      result = prime * result + ((user == null) ? 0 : user.hashCode());
+      result = prime * result + ((username == null) ? 0 : username.hashCode());
       return result;
    }
 
@@ -91,24 +114,12 @@ public class Package {
             return false;
       } else if (!hotel.equals(other.hotel))
          return false;
-//      if (tripInfo == null) {
-//         if (other.tripInfo != null)
-//            return false;
-//      } else if (!tripInfo.equals(other.tripInfo))
-//         return false;
-      if (user == null) {
-         if (other.user != null)
+      if (username == null) {
+         if (other.username != null)
             return false;
-      } else if (!user.equals(other.user))
+      } else if (!username.equals(other.username))
          return false;
       return true;
-   }
-
-   @Override
-   public String toString() {
-//      return "Package [car=" + car + ", hotel=" + hotel + ", flight=" + flight + ", user=" + user + ", tripInfo="
-//            + tripInfo + "]";
-      return "Package [car=" + car + ", hotel=" + hotel + ", flight=" + flight + ", user=" + user + "]";
    }
    
 }

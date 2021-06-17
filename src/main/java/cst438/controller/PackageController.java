@@ -62,14 +62,13 @@ public class PackageController {
          return "index";
       }
       TripInfo tripInfo = new TripInfo();
+      tripInfo.setUsername(user.getUsername());
       model.addAttribute("tripInfo", tripInfo);
-      
-      // This is terrible, and I would do this VERY differently if given time
-      model.addAttribute("user", user);
       
       return "trip_info_form";
    }
 
+   // This won't work anymore because the user must login first
    @GetMapping("/packages") // localhost:8080/packages
    public String getPackageForm( Model model ) {
       TripInfo tripInfo = new TripInfo();
@@ -87,8 +86,15 @@ public class PackageController {
       
       List<Package> packageList = packageService.getPackageList(tripInfo); 
       if (packageList == null) return "packages_error";
+      model.addAttribute("tripInfo", tripInfo);
       model.addAttribute("packageList", packageList);
-    
+      ReservationInfo reservationInfo = new ReservationInfo(
+            tripInfo.getUsername(),
+            tripInfo.getNumPassengers(),
+            tripInfo.getDepartureDate(),
+            tripInfo.getArrivalDate()
+      );
+      model.addAttribute("reservationInfo", reservationInfo);
       return "packages_show";
    }
    
@@ -100,10 +106,13 @@ public class PackageController {
          return "trip_info_form";
       }
       
-      String bookingResult = packageService.bookPackage(
-            reservationInfo.getPckage(), 
-            reservationInfo.getUser(),
-            reservationInfo.getTripInfo());
+      // TODO: fill in the missing info in reservationInfo
+      reservationInfo.setCarId(0);
+      reservationInfo.setFlightId(0);
+      reservationInfo.setHotelId(0);
+      reservationInfo.setHotelDate(null);
+      
+      String bookingResult = packageService.bookPackage(reservationInfo);
       model.addAttribute("bookingResult", bookingResult);
     
       return "package_booked";

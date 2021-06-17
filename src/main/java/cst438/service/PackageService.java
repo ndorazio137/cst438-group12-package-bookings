@@ -16,9 +16,11 @@ import cst438.domain.FlightInfo;
 import cst438.domain.HotelInfo;
 import cst438.domain.Package;
 import cst438.domain.Reservation;
+import cst438.domain.ReservationInfo;
 import cst438.domain.ReservationRepository;
 import cst438.domain.TripInfo;
 import cst438.domain.User;
+import cst438.domain.UserRepository;
 
 @Service
 public class PackageService {
@@ -30,6 +32,8 @@ public class PackageService {
 	private FlightService flightService;
 	@Autowired
 	private ReservationRepository reservationRepository;
+	@Autowired
+   private UserRepository userRepository;
 	
 	public PackageService( ) { }
 
@@ -124,25 +128,31 @@ public class PackageService {
       return reservationList;
    }
    
-   public String bookPackage(Package pckage, User user, TripInfo tripInfo) {
-      CarInfo car = pckage.getCar();
-      FlightInfo flight = pckage.getFlight();
-      HotelInfo hotel = pckage.getHotel();
+   // Uses the data in reservationInfo to get the rest of the data
+   // needed to actually book all three services, then books them.
+   public String bookPackage(ReservationInfo reservationInfo) {
+      
+//      CarInfo car = pckage.getCar();
+//      FlightInfo flight = pckage.getFlight();
+//      HotelInfo hotel = pckage.getHotel();
+      
+      // Fetch the user from the DB using the username from tripInfo 
+      User user = userRepository.findByUsername(reservationInfo.getEmail()).get(0);
       
       SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
       
-      String carId = String.valueOf(car.getId());
-      String dateStart = dateFormatter.format(tripInfo.getDepartureDate());
-      String dateEnd = dateFormatter.format(tripInfo.getArrivalDate());
+      String carId = String.valueOf(reservationInfo.getCarId());
+      String dateStart = dateFormatter.format(reservationInfo.getDateStart());
+      String dateEnd = dateFormatter.format(reservationInfo.getDateEnd());
       String email = user.getUsername();
       String password = user.getPassword();
       String firstName = user.getFirstName();
       String lastName = user.getLastName();
-      long flightId = flight.getId();
-      int passengers = tripInfo.getNumPassengers();
+      long flightId = reservationInfo.getFlightId();
+      int passengers = reservationInfo.getPassengers();
       String site = "PACKAGES";
-      String date = hotel.getAvailableDate();
-      int hotelId = hotel.getId();
+      String date = reservationInfo.getHotelDate();
+      int hotelId = reservationInfo.getHotelId();
       int userId = 1;
       
       // Attempt to book car

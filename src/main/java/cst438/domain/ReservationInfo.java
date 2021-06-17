@@ -1,29 +1,127 @@
 package cst438.domain;
 
-public class ReservationInfo {
-   private Package pckage;
-   private User user;
-   private TripInfo tripInfo;
-   
-   public ReservationInfo(Package pckage, User user, TripInfo tripInfo) {
-      super();
-      this.pckage = pckage;
-      this.user = user;
-      this.tripInfo = tripInfo;
-   }
+import java.util.Date;
 
+public class ReservationInfo {
+//   private Package pckage;
+//   private User user;
+//   private TripInfo tripInfo;
+   
+   private String email;      // for car and hotel
+   
+   private int carId;         // for car booking
+   private long flightId;     // for flight booking
+   private int hotelId;       // for hotel booking
+   
+   private int passengers;    // for flight booking
+   private Date dateStart;  // for car booking
+   private Date dateEnd;    // for car booking
+   private String hotelDate;  // for hotel booking, must get from selected hotel
+   
+   public ReservationInfo(String email, int passengers, Date dateStart, Date dateEnd) {
+      super();
+      this.email = email;
+      this.passengers = passengers;
+      this.dateStart = dateStart;
+      this.dateEnd = dateEnd;
+   }
+   
+//   public ReservationInfo(Package pckage, TripInfo tripInfo) {
+//      super();
+//      this.pckage = pckage;
+////      this.user = user;
+//      this.tripInfo = tripInfo;
+//   }
+
+   
+
+//   public Package getPckage() {
+//      return pckage;
+//   }
+   
    @Override
    public String toString() {
-      return "ReservationInfo [pckage=" + pckage + ", user=" + user + ", tripInfo=" + tripInfo + "]";
+      return "ReservationInfo [email=" + email + ", carId=" + carId + ", flightId=" + flightId + ", hotelId=" + hotelId
+            + ", passengers=" + passengers + ", dateStart=" + dateStart + ", dateEnd=" + dateEnd + ", hotelDate="
+            + hotelDate + "]";
+   }
+
+   public String getEmail() {
+      return email;
+   }
+
+   public void setEmail(String email) {
+      this.email = email;
+   }
+
+   public int getCarId() {
+      return carId;
+   }
+
+   public void setCarId(int carId) {
+      this.carId = carId;
+   }
+
+   public long getFlightId() {
+      return flightId;
+   }
+
+   public void setFlightId(long flightId) {
+      this.flightId = flightId;
+   }
+
+   public int getHotelId() {
+      return hotelId;
+   }
+
+   public void setHotelId(int hotelId) {
+      this.hotelId = hotelId;
+   }
+
+   public int getPassengers() {
+      return passengers;
+   }
+
+   public void setPassengers(int passengers) {
+      this.passengers = passengers;
+   }
+
+   public Date getDateStart() {
+      return dateStart;
+   }
+
+   public void setDateStart(Date dateStart) {
+      this.dateStart = dateStart;
+   }
+
+   public Date getDateEnd() {
+      return dateEnd;
+   }
+
+   public void setDateEnd(Date dateEnd) {
+      this.dateEnd = dateEnd;
+   }
+
+   public String getHotelDate() {
+      return hotelDate;
+   }
+
+   public void setHotelDate(String hotelDate) {
+      this.hotelDate = hotelDate;
    }
 
    @Override
    public int hashCode() {
       final int prime = 31;
       int result = 1;
-      result = prime * result + ((pckage == null) ? 0 : pckage.hashCode());
-      result = prime * result + ((tripInfo == null) ? 0 : tripInfo.hashCode());
-      result = prime * result + ((user == null) ? 0 : user.hashCode());
+      result = prime * result + carId;
+      result = prime * result + ((dateEnd == null) ? 0 : dateEnd.hashCode());
+      result = prime * result + ((dateStart == null) ? 0 : dateStart.hashCode());
+      result = prime * result + ((email == null) ? 0 : email.hashCode());
+      result = prime * result + (int) (flightId ^ (flightId >>> 32));
+      result = prime * result + ((hotelDate == null) ? 0 : hotelDate.hashCode());
+      result = prime * result + hotelId;
+      result = prime * result + passengers;
       return result;
    }
 
@@ -36,46 +134,57 @@ public class ReservationInfo {
       if (getClass() != obj.getClass())
          return false;
       ReservationInfo other = (ReservationInfo) obj;
-      if (pckage == null) {
-         if (other.pckage != null)
-            return false;
-      } else if (!pckage.equals(other.pckage))
+      if (carId != other.carId)
          return false;
-      if (tripInfo == null) {
-         if (other.tripInfo != null)
+      if (dateEnd == null) {
+         if (other.dateEnd != null)
             return false;
-      } else if (!tripInfo.equals(other.tripInfo))
+      } else if (!dateEnd.equals(other.dateEnd))
          return false;
-      if (user == null) {
-         if (other.user != null)
+      if (dateStart == null) {
+         if (other.dateStart != null)
             return false;
-      } else if (!user.equals(other.user))
+      } else if (!dateStart.equals(other.dateStart))
+         return false;
+      if (email == null) {
+         if (other.email != null)
+            return false;
+      } else if (!email.equals(other.email))
+         return false;
+      if (flightId != other.flightId)
+         return false;
+      if (hotelDate == null) {
+         if (other.hotelDate != null)
+            return false;
+      } else if (!hotelDate.equals(other.hotelDate))
+         return false;
+      if (hotelId != other.hotelId)
+         return false;
+      if (passengers != other.passengers)
          return false;
       return true;
    }
 
-   public Package getPckage() {
-      return pckage;
-   }
+   
 
-   public void setPckage(Package pckage) {
-      this.pckage = pckage;
-   }
+//   public void setPckage(Package pckage) {
+//      this.pckage = pckage;
+//   }
 
-   public User getUser() {
-      return user;
-   }
+//   public User getUser() {
+//      return user;
+//   }
+//
+//   public void setUser(User user) {
+//      this.user = user;
+//   }
 
-   public void setUser(User user) {
-      this.user = user;
-   }
-
-   public TripInfo getTripInfo() {
-      return tripInfo;
-   }
-
-   public void setTripInfo(TripInfo tripInfo) {
-      this.tripInfo = tripInfo;
-   }
+//   public TripInfo getTripInfo() {
+//      return tripInfo;
+//   }
+//
+//   public void setTripInfo(TripInfo tripInfo) {
+//      this.tripInfo = tripInfo;
+//   }
    
 }

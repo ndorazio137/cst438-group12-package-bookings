@@ -27,6 +27,8 @@ public class TripInfo {
    @DateTimeFormat(pattern = "yyyy-dd-mm")
    Date arrivalDate;
    
+   @NotNull
+   @Size(min=1, max=254)
    String username;
    
    @NotNull
