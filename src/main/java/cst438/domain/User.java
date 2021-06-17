@@ -12,6 +12,8 @@ import javax.validation.constraints.Size;
 public class User {
    
    @Id
+   private int userId;
+   
    @NotNull
    @Column(unique = true)
    @Size(min=1, max=254)
@@ -21,11 +23,9 @@ public class User {
    @Size(min=1, max=254)
    private String password;
    
-   @NotNull
    @Size(min=1, max=254)
    private String firstName;
    
-   @NotNull
    @Size(min=1, max=254)
    private String lastName;
    
@@ -124,12 +124,13 @@ public class User {
       
       return true;
    }
-   
+
    @Override
    public String toString() {
-
-      return "User [username=" + username + ", firstName=" + firstName 
-         + ", lastName=" + lastName + "]";
+      return "User [username=" + username + ", password=" + password
+         + ", firstName=" + firstName + ", lastName=" + lastName + "]";
    }
+   
+   
 
 }

@@ -155,7 +155,7 @@ public class PackageService {
       String site = "PACKAGES";
       String date = reservationInfo.getHotelDate();
       int hotelId = reservationInfo.getHotelId();
-      int userId = 1;
+      int userId = 5;
       
       // Attempt to book car
       JsonNode carResponse = carService.bookCar(email, carId, dateStart, dateEnd);

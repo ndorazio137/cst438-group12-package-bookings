@@ -61,8 +61,8 @@
   		            <input type="hidden" th:field="*{passengers}" th:value="${reservationInfo.getPassengers()}" />
   		            <input type="hidden" th:field="*{dateStart}" th:value="${reservationInfo.getDateStart()}" />
   		            <input type="hidden" th:field="*{dateEnd}" th:value="${reservationInfo.getDateEnd()}" />
-  		            <input type="hidden" th:field="*{hotelDate}" th:value="${package.getHotel().getAvailableDate())}" />
-                    <button type="button" class="btn btn-success book-package-button">Book this!</button>
+  		            <input type="hidden" th:field="*{hotelDate}" th:value="${package.getHotel().getAvailableDate()}" />
+                  <button type="button" class="btn btn-success book-package-button">Book this!</button>
                </form>
  		      </div>	
  	      </div>

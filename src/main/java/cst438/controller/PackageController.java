@@ -81,7 +81,6 @@ public class PackageController {
       TripInfo tripInfo = new TripInfo();
       tripInfo.setUsername(user.getUsername());
       model.addAttribute("tripInfo", tripInfo);
-      
       return "trip_info_form";
    }
    
@@ -97,7 +96,7 @@ public class PackageController {
    @PostMapping("/signup")
    public String signUp( @Valid User user, BindingResult result,
       Model model ) throws ParseException {
-      if (result.hasErrors()) {
+      if (result.hasErrors() || user.getFirstName() == null || user.getLastName() == null) {
          return "signup";
       }
       
@@ -112,20 +111,13 @@ public class PackageController {
       
       return "signUp";
    }
-
-   // This won't work anymore because the user must login first
-   @GetMapping("/packages") // localhost:8080/packages
-   public String getPackageForm( Model model ) {
-      TripInfo tripInfo = new TripInfo();
-      model.addAttribute("tripInfo", tripInfo);
-      return "trip_info_form";
-   }
    
    // Display a list of packages to choose from
    @PostMapping("/packages")
    public String getPackageInfo( @Valid TripInfo tripInfo, 
          BindingResult result, Model model ) {
       if (result.hasErrors()) {
+         System.out.println(tripInfo.toString());
          return "trip_info_form";
       }
       
