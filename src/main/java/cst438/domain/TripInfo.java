@@ -28,6 +28,10 @@ public class TripInfo {
    Date arrivalDate;
    
    @NotNull
+   @Size(min=1, max=254)
+   String username;
+   
+   @NotNull
    @Min(1)
    private int numPassengers;
    
@@ -35,7 +39,7 @@ public class TripInfo {
    
    public TripInfo(String startingCity, String startingState, 
       String destinationCity, String destinationState,
-      Date departureDate, Date arrivalDate, int numPassengers) {
+      Date departureDate, Date arrivalDate, int numPassengers, String username) {
       this.startingCity = startingCity;
       this.startingState = startingState;
       this.destinationCity = destinationCity;
@@ -43,6 +47,7 @@ public class TripInfo {
       this.departureDate = departureDate;
       this.arrivalDate = arrivalDate;
       this.numPassengers = numPassengers;
+      this.username = username;
    }
 
    public String getStartingCity() {
@@ -101,23 +106,26 @@ public class TripInfo {
       this.numPassengers = numPassengers;
    }
 
+   public String getUsername() {
+      return username;
+   }
+
+   public void setUsername(String username) {
+      this.username = username;
+   }
+
    @Override
    public int hashCode() {
       final int prime = 31;
       int result = 1;
-      result = prime * result
-         + ((arrivalDate == null) ? 0 : arrivalDate.hashCode());
-      result = prime * result
-         + ((departureDate == null) ? 0 : departureDate.hashCode());
-      result = prime * result
-         + ((destinationCity == null) ? 0 : destinationCity.hashCode());
-      result = prime * result
-         + ((destinationState == null) ? 0 : destinationState.hashCode());
+      result = prime * result + ((arrivalDate == null) ? 0 : arrivalDate.hashCode());
+      result = prime * result + ((departureDate == null) ? 0 : departureDate.hashCode());
+      result = prime * result + ((destinationCity == null) ? 0 : destinationCity.hashCode());
+      result = prime * result + ((destinationState == null) ? 0 : destinationState.hashCode());
       result = prime * result + numPassengers;
-      result = prime * result
-         + ((startingCity == null) ? 0 : startingCity.hashCode());
-      result = prime * result
-         + ((startingState == null) ? 0 : startingState.hashCode());
+      result = prime * result + ((startingCity == null) ? 0 : startingCity.hashCode());
+      result = prime * result + ((startingState == null) ? 0 : startingState.hashCode());
+      result = prime * result + ((username == null) ? 0 : username.hashCode());
       return result;
    }
 
@@ -162,15 +170,19 @@ public class TripInfo {
             return false;
       } else if (!startingState.equals(other.startingState))
          return false;
+      if (username == null) {
+         if (other.username != null)
+            return false;
+      } else if (!username.equals(other.username))
+         return false;
       return true;
    }
 
    @Override
    public String toString() {
-      return "TripInfo [startingCity=" + startingCity + ", startingState="
-         + startingState + ", destinationCity=" + destinationCity
-         + ", destinationState=" + destinationState + ", departureDate="
-         + departureDate + ", arrivalDate=" + arrivalDate + ", numPassengers="
-         + numPassengers + "]";
+      return "TripInfo [startingCity=" + startingCity + ", startingState=" + startingState + ", destinationCity="
+            + destinationCity + ", destinationState=" + destinationState + ", departureDate=" + departureDate
+            + ", arrivalDate=" + arrivalDate + ", username=" + username + ", numPassengers=" + numPassengers + "]";
    }
+   
 }
