@@ -105,6 +105,7 @@ public class PackageController {
       if (users.size() <= 0) {
          userRepository.save(user);
          TripInfo tripInfo = new TripInfo();
+         tripInfo.setUsername(user.getUsername());
          model.addAttribute("tripInfo", tripInfo);
          return "trip_info_form";
       }
@@ -286,7 +287,7 @@ public class PackageController {
    }
    
    // Testing API endpoint
-   @GetMapping("/packages/cars/reserve") // localhost:8080/packages
+   @GetMapping("/packages/cars/reserve/") // localhost:8080/packages
    public String bookCar( Model model ) {
       return "bookCar";
    }
@@ -294,7 +295,7 @@ public class PackageController {
    // Testing API endpoint
    @PostMapping("/packages/cars/reserve")
    public String postReservation( Model model ) {
-      String email = "ndorazio@csumb.edu";
+      String email = "test@csumb.edu";
       String id = "5";
       String startDate = "2021-07-01";
       String endDate = "2021-07-01";
