@@ -49,8 +49,20 @@
 	  		         
   		         </div>
   		         <!--  Book Package Button -->
-  		         <form action="#" th:action="@{/packages/cars/reserve}"method="post">
-                  <button type="button" class="btn btn-success book-package-button">Book this!</button>
+  		         <form action="#" th:action="@{/packages/book}" th:object="${reservationInfo}" method="post">
+  		            <!--  Here, I have decided to redesign ReservationInfo so I can use it to 
+  		            		pass all the basic info PackageService needs in order to retrieve 
+  		            		the rest of the info to book all 3 services.
+  		             -->
+  		            <input type="hidden" th:field="*{email}" th:value="${reservationInfo.getEmail()}" />
+  		            <input type="hidden" th:field="*{carId}" th:value="${package.getCar().getId()}" />
+  		            <input type="hidden" th:field="*{flightId}" th:value="${package.getFlight().getId()}" />
+  		            <input type="hidden" th:field="*{hotelId}" th:value="${package.getHotel().getId()}" />
+  		            <input type="hidden" th:field="*{passengers}" th:value="${reservationInfo.getPassengers()}" />
+  		            <input type="hidden" th:field="*{dateStart}" th:value="${reservationInfo.getDateStart()}" />
+  		            <input type="hidden" th:field="*{dateEnd}" th:value="${reservationInfo.getDateEnd()}" />
+  		            <input type="hidden" th:field="*{hotelDate}" th:value="${package.getHotel().getAvailableDate())}" />
+                    <button type="button" class="btn btn-success book-package-button">Book this!</button>
                </form>
  		      </div>	
  	      </div>

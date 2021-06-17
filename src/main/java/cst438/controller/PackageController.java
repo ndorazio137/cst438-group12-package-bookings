@@ -26,6 +26,7 @@ import cst438.domain.TripInfo;
 import cst438.domain.User;
 import cst438.domain.UserRepository;
 import cst438.domain.Package;
+import cst438.domain.ReservationInfo;
 import cst438.service.CarService;
 import cst438.service.FlightService;
 import cst438.domain.CarInfo;
@@ -78,7 +79,9 @@ public class PackageController {
       
       // Render the trip info form
       TripInfo tripInfo = new TripInfo();
+      tripInfo.setUsername(user.getUsername());
       model.addAttribute("tripInfo", tripInfo);
+      
       return "trip_info_form";
    }
    
@@ -108,8 +111,8 @@ public class PackageController {
       return "signUp";
    }
 
-   // Package Form
-   @GetMapping("/packages/") // localhost:8080/packages
+   // This won't work anymore because the user must login first
+   @GetMapping("/packages") // localhost:8080/packages
    public String getPackageForm( Model model ) {
       TripInfo tripInfo = new TripInfo();
       model.addAttribute("tripInfo", tripInfo);
@@ -126,11 +129,39 @@ public class PackageController {
       
       List<Package> packageList = packageService.getPackageList(tripInfo); 
       if (packageList == null) return "packages_error";
+      model.addAttribute("tripInfo", tripInfo);
       model.addAttribute("packageList", packageList);
-    
+      ReservationInfo reservationInfo = new ReservationInfo(
+            tripInfo.getUsername(),
+            tripInfo.getNumPassengers(),
+            tripInfo.getDepartureDate(),
+            tripInfo.getArrivalDate()
+      );
+      model.addAttribute("reservationInfo", reservationInfo);
       return "packages_show";
    }
    
+   // Package Form submission
+   @PostMapping("/packages/book")
+   public String bookPackage( @Valid ReservationInfo reservationInfo, 
+         BindingResult result, Model model ) {
+      if (result.hasErrors()) {
+         return "trip_info_form";
+      }
+      
+      // TODO: fill in the missing info in reservationInfo
+      reservationInfo.setCarId(0);
+      reservationInfo.setFlightId(0);
+      reservationInfo.setHotelId(0);
+      reservationInfo.setHotelDate(null);
+      
+      String bookingResult = packageService.bookPackage(reservationInfo);
+      model.addAttribute("bookingResult", bookingResult);
+    
+      return "package_booked";
+   }
+   
+  
    /***************** HOTELS *************/
 
    // Testing API endpoint
