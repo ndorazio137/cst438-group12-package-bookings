@@ -139,14 +139,10 @@ public class PackageController {
    public String bookPackage( @Valid ReservationInfo reservationInfo, 
          BindingResult result, Model model ) {
       if (result.hasErrors()) {
+         System.out.println(reservationInfo);
          return "trip_info_form";
       }
-      
-      // TODO: fill in the missing info in reservationInfo
-      reservationInfo.setCarId(0);
-      reservationInfo.setFlightId(0);
-      reservationInfo.setHotelId(0);
-      reservationInfo.setHotelDate(null);
+      System.out.println(reservationInfo);
       
       String bookingResult = packageService.bookPackage(reservationInfo);
       model.addAttribute("bookingResult", bookingResult);
