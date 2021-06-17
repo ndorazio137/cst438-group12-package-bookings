@@ -4,7 +4,6 @@ public class Package {
    CarInfo car;
    HotelInfo hotel;
    FlightInfo flight;
-   String username;
    
    public Package() {}
    
@@ -13,14 +12,6 @@ public class Package {
       this.car = car;
       this.hotel = hotel;
       this.flight = flight;
-   }
-   
-   public Package(CarInfo car, HotelInfo hotel, FlightInfo flight, String username) {
-      super();
-      this.car = car;
-      this.hotel = hotel;
-      this.flight = flight;
-      this.username = username;
    }
 
    public CarInfo getCar() {
@@ -47,36 +38,12 @@ public class Package {
       this.flight = flight;
    }
    
-   public String getUsername() {
-      return username;
-   }
-
-   public void setUsername(String username) {
-      this.username = username;
-   }
-   
-//   public User getUser() {
-//      return user;
-//   }
-//
-//   public void setUser(User user) {
-//      this.user = user;
-//   }
-
-//   public TripInfo getTripInfo() {
-//      return tripInfo;
-//   }
-//
-//   public void setTripInfo(TripInfo tripInfo) {
-//      this.tripInfo = tripInfo;
-//   }
-   
    
    @Override
    public String toString() {
 //      return "Package [car=" + car + ", hotel=" + hotel + ", flight=" + flight + ", user=" + user + ", tripInfo="
 //            + tripInfo + "]";
-      return "Package [car=" + car + ", hotel=" + hotel + ", flight=" + flight + ", username=" + username + "]";
+      return "Package [car=" + car + ", hotel=" + hotel + ", flight=" + flight + ", username=" + "]";
    }
 
    @Override
@@ -86,7 +53,6 @@ public class Package {
       result = prime * result + ((car == null) ? 0 : car.hashCode());
       result = prime * result + ((flight == null) ? 0 : flight.hashCode());
       result = prime * result + ((hotel == null) ? 0 : hotel.hashCode());
-      result = prime * result + ((username == null) ? 0 : username.hashCode());
       return result;
    }
 
@@ -113,11 +79,6 @@ public class Package {
          if (other.hotel != null)
             return false;
       } else if (!hotel.equals(other.hotel))
-         return false;
-      if (username == null) {
-         if (other.username != null)
-            return false;
-      } else if (!username.equals(other.username))
          return false;
       return true;
    }
