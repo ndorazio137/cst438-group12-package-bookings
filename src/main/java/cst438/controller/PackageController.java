@@ -45,8 +45,10 @@ public class PackageController {
    private HotelService hotelService;
    @Autowired
    private FlightService flightService;
+   @Autowired 
+   private UserRepository userRepository;
 
-
+   // Login Form
    @GetMapping("/") // localhost:8080/
    public String getIndex( Model model ) {
       User user = new User();
@@ -56,16 +58,57 @@ public class PackageController {
    
    // Authentication
    @PostMapping("/")
-   public String signIn( @Valid User user, BindingResult result,
+   public String logIn( @Valid User user, BindingResult result,
       Model model ) throws ParseException {
       if (result.hasErrors()) {
          return "index";
       }
+      
+      // look up user
+      List<User> users = userRepository.findByUsername(user.getUsername());
+      // no user found with the username provided
+      if (users.size() <= 0) {
+         return "signup";
+      }
+      
+      // found user but wrong password
+      User userInfo = users.get(0);
+      if (!(userInfo.getPassword().equals(user.getPassword()))) {
+         return "index";
+      }
+      
+      // Render the trip info form
       TripInfo tripInfo = new TripInfo();
       tripInfo.setUsername(user.getUsername());
       model.addAttribute("tripInfo", tripInfo);
       
       return "trip_info_form";
+   }
+   
+   @GetMapping("/signup") // localhost:8080/
+   public String registerUser( Model model ) {
+      User user = new User();
+      model.addAttribute("user", user);
+      return "signup";
+   }
+   
+   // Sign up new users
+   @PostMapping("/signup")
+   public String signUp( @Valid User user, BindingResult result,
+      Model model ) throws ParseException {
+      if (result.hasErrors()) {
+         return "signup";
+      }
+      
+      List<User> users = userRepository.findByUsername(user.getUsername());
+      if (users.size() <= 0) {
+         userRepository.save(user);
+         TripInfo tripInfo = new TripInfo();
+         model.addAttribute("tripInfo", tripInfo);
+         return "trip_info_form";
+      }
+      
+      return "signUp";
    }
 
    // This won't work anymore because the user must login first
@@ -76,7 +119,7 @@ public class PackageController {
       return "trip_info_form";
    }
    
-   // Package Form submission
+   // Package Booking 
    @PostMapping("/packages")
    public String getPackageInfo( @Valid TripInfo tripInfo, 
          BindingResult result, Model model ) {
@@ -117,6 +160,7 @@ public class PackageController {
       return "package_booked";
    }
    
+  
    /***************** HOTELS *************/
 
    // Testing API endpoint

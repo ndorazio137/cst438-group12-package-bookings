@@ -1,7 +1,7 @@
 package cst438.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -13,15 +13,13 @@ public class User {
    
    @Id
    @NotNull
+   @Column(unique = true)
    @Size(min=1, max=254)
    private String username;
    
    @NotNull
    @Size(min=1, max=254)
    private String password;
-   
-   private String firstName;
-   private String lastName;
    
    public User() {}
    
@@ -46,28 +44,10 @@ public class User {
       this.password = password;
    }
    
-   public String getFirstName() {
-      return firstName;
-   }
-
-   public void setFirstName(String firstName) {
-      this.firstName = firstName;
-   }
-
-   public String getLastName() {
-      return lastName;
-   }
-
-   public void setLastName(String lastName) {
-      this.lastName = lastName;
-   }
-   
    @Override
    public int hashCode() {
       final int prime = 31;
       int result = 1;
-      result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
-      result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
       result = prime * result + ((password == null) ? 0 : password.hashCode());
       result = prime * result + ((username == null) ? 0 : username.hashCode());
       return result;
@@ -82,16 +62,6 @@ public class User {
       if (getClass() != obj.getClass())
          return false;
       User other = (User) obj;
-      if (firstName == null) {
-         if (other.firstName != null)
-            return false;
-      } else if (!firstName.equals(other.firstName))
-         return false;
-      if (lastName == null) {
-         if (other.lastName != null)
-            return false;
-      } else if (!lastName.equals(other.lastName))
-         return false;
       if (password == null) {
          if (other.password != null)
             return false;
@@ -107,7 +77,9 @@ public class User {
 
    @Override
    public String toString() {
-      return "User [username=" + username + ", firstName=" + firstName + ", lastName=" + lastName + "]";
+      return "User [username=" + username + "]";
    }
+
+   
    
 }
