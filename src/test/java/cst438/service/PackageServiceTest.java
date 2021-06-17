@@ -46,7 +46,7 @@ public class PackageServiceTest {
       Date departureDate = new Date(2021, 07, 01); 
       Date arrivalDate = new Date(2021, 07, 07);
       int numPassengers = 1;
-      User user = new User("koakes@csumb.edu", "password1");
+      User user = new User("koakes@csumb.edu", "password1", "Kyle", "Oakes");
       TripInfo tripInfo = new TripInfo(startingCity, startingState,
             destinationCity, destinationState,
             departureDate, arrivalDate, 
@@ -74,7 +74,7 @@ public class PackageServiceTest {
       Date departureDate = new Date(2021, 07, 01); 
       Date arrivalDate = new Date(2021, 07, 07);
       int numPassengers = 1;
-      User user = new User("koakes@csumb.edu", "password1");
+      User user = new User("koakes@csumb.edu", "password1", "Kyle", "Oakes");
       TripInfo tripInfo = new TripInfo(startingCity, startingState,
             destinationCity, destinationState,
             departureDate, arrivalDate, 
@@ -116,7 +116,7 @@ public class PackageServiceTest {
       Date departureDate = new Date(2021, 07, 01); 
       Date arrivalDate = new Date(2021, 07, 07);
       int numPassengers = 1;
-      User user = new User("koakes@csumb.edu", "password1");
+      User user = new User("koakes@csumb.edu", "password1", "Kyle", "Oakes");
       TripInfo tripInfo = new TripInfo(startingCity, startingState,
             destinationCity, destinationState,
             departureDate, arrivalDate, 
@@ -165,7 +165,7 @@ public class PackageServiceTest {
       Date departureDate = new Date(2021, 07, 01); 
       Date arrivalDate = new Date(2021, 07, 07);
       int numPassengers = 1;
-      User user = new User("koakes@csumb.edu", "password1");
+      User user = new User("koakes@csumb.edu", "password1", "Kyle", "Oakes");
       TripInfo tripInfo = new TripInfo(startingCity, startingState,
             destinationCity, destinationState,
             departureDate, arrivalDate, 
@@ -213,7 +213,7 @@ public class PackageServiceTest {
       Date departureDate = new Date(2021, 07, 01); 
       Date arrivalDate = new Date(2021, 07, 07);
       int numPassengers = 1;
-      User user = new User("koakes@csumb.edu", "password1");
+      User user = new User("koakes@csumb.edu", "password1", "Kyle", "Oakes");
       TripInfo tripInfo = new TripInfo(startingCity, startingState,
             destinationCity, destinationState,
             departureDate, arrivalDate, 
@@ -261,7 +261,7 @@ public class PackageServiceTest {
       Date departureDate = new Date(2021, 07, 01); 
       Date arrivalDate = new Date(2021, 07, 07);
       int numPassengers = 1;
-      User user = new User("koakes@csumb.edu", "password1");
+      User user = new User("koakes@csumb.edu", "password1", "Kyle", "Oakes");
       TripInfo tripInfo = new TripInfo(startingCity, startingState,
             destinationCity, destinationState,
             departureDate, arrivalDate, 
