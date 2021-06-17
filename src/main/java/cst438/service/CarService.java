@@ -16,6 +16,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
+import org.springframework.web.client.HttpServerErrorException.ServiceUnavailable;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -184,6 +186,7 @@ public class CarService {
          json = objectMapper.readTree(response.getBody());
          System.out.println(json);
       } catch (HttpClientErrorException.NotFound e) {
+         System.out.println("Car: 404: NOT FOUND ERROR");
          json = null;
       } catch (JsonMappingException e) {
          // TODO Auto-generated catch block

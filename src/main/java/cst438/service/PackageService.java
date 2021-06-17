@@ -136,33 +136,33 @@ public class PackageService {
 //      HotelInfo hotel = pckage.getHotel();
       // Fetch the user from the DB using the username from tripInfo 
       User user = userRepository.findByUsername(reservationInfo.getEmail()).get(0);
-      System.out.println(user);
+      System.out.println("USER: " + user);
       SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
       
       String carId = String.valueOf(reservationInfo.getCarId());
-      System.out.println(carId);
+      System.out.println("CarID: " + carId);
       String dateStart = dateFormatter.format(reservationInfo.getDateStart());
-      System.out.println(dateStart);
+      System.out.println("DateStart: " + dateStart);
       String dateEnd = dateFormatter.format(reservationInfo.getDateEnd());
-      System.out.println(dateEnd);
+      System.out.println("DateEnd: " + dateEnd);
       String email = user.getUsername();
-      System.out.println(email);
+      System.out.println("Email: " + email);
       String password = user.getPassword();
-      System.out.println(password);
+      System.out.println("Password: " + password);
       String firstName = user.getFirstName();
-      System.out.println(firstName);
+      System.out.println("FirstName: " + firstName);
       String lastName = user.getLastName();
-      System.out.println(lastName);
+      System.out.println("LastName: " + lastName);
       long flightId = reservationInfo.getFlightId();
-      System.out.println(flightId);
+      System.out.println("FlightId: " + flightId);
       int passengers = reservationInfo.getPassengers();
-      System.out.println(passengers);
+      System.out.println("Passengers: " + passengers);
 
       String site = "PACKAGES";
       String date = reservationInfo.getHotelDate();
-      System.out.println(date);
+      System.out.println("HotelDate: " + date);
       int hotelId = reservationInfo.getHotelId();
-      System.out.println(hotelId);
+      System.out.println("HotelId: " + hotelId);
       
       // Attempt to book car
       JsonNode carResponse = carService.bookCar(email, carId, dateStart, dateEnd);
