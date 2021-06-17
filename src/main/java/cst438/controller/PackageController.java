@@ -111,7 +111,7 @@ public class PackageController {
    }
 
    // Get user trip details
-   @GetMapping("/packages/") // localhost:8080/packages
+   @GetMapping("/packages") // localhost:8080/packages
    public String getPackageForm( Model model ) {
       TripInfo tripInfo = new TripInfo();
       model.addAttribute("tripInfo", tripInfo);
