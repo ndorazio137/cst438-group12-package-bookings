@@ -110,7 +110,7 @@ public class PackageController {
          return "trip_info_form";
       }
       
-      return "signUp";
+      return "signup";
    }
    
    // Display a list of packages to choose from
