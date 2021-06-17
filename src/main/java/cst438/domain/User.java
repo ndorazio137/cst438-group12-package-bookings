@@ -22,11 +22,9 @@ public class User {
    @Size(min=1, max=254)
    private String password;
    
-   @NotNull
    @Size(min=1, max=254)
    private String firstName;
    
-   @NotNull
    @Size(min=1, max=254)
    private String lastName;
    
@@ -130,5 +128,7 @@ public class User {
       return "User [userId=" + userId + ", username=" + username + ", password=" + password + ", firstName=" + firstName
             + ", lastName=" + lastName + "]";
    }
+   
+   
 
 }
