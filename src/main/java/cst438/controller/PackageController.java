@@ -131,7 +131,6 @@ public class PackageController {
       
       List<Package> packageList = packageService.getPackageList(tripInfo); 
       if (packageList == null) return "packages_error";
-      model.addAttribute("tripInfo", tripInfo);
       model.addAttribute("packageList", packageList);
       ReservationInfo reservationInfo = new ReservationInfo(
             tripInfo.getUsername(),

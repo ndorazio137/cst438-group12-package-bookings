@@ -31,15 +31,15 @@ public class User {
    
    public User() {}
    
-   public User(@NotNull @Size(min = 1, max = 254) String username,
-      @NotNull @Size(min = 1, max = 254) String password, String firstName,
-      String lastName) {
+   public User(@NotNull @Size(min = 1, max = 254) String username, @NotNull @Size(min = 1, max = 254) String password,
+         @NotNull @Size(min = 1, max = 254) String firstName, @NotNull @Size(min = 1, max = 254) String lastName) {
+      super();
       this.username = username;
       this.password = password;
       this.firstName = firstName;
       this.lastName = lastName;
    }
-   
+
    public String getUsername() {
       return username;
    }
@@ -59,7 +59,7 @@ public class User {
    public String getFirstName() {
       return firstName;
    }
-   
+
    public void setFirstName(String firstName) {
       this.firstName = firstName;
    }
@@ -84,6 +84,7 @@ public class User {
       return result;
    }
 
+
    @Override
    public boolean equals(Object obj) {
       if (this == obj)
@@ -96,19 +97,19 @@ public class User {
          return false;
       
       User other = (User) obj;
-      
+
       if (firstName == null) {
          if (other.firstName != null)
             return false;
       } else if (!firstName.equals(other.firstName))
          return false;
-      
+
       if (lastName == null) {
          if (other.lastName != null)
             return false;
       } else if (!lastName.equals(other.lastName))
          return false;
-      
+
       if (password == null) {
          if (other.password != null)
             return false;
@@ -123,10 +124,12 @@ public class User {
       
       return true;
    }
-
+   
    @Override
    public String toString() {
+
       return "User [username=" + username + ", firstName=" + firstName 
          + ", lastName=" + lastName + "]";
    }
+
 }
