@@ -58,7 +58,6 @@ public class PackageService {
 		   carService.getAvailableCars(destinationCity, departureDate, arrivalDate);
 		System.out.println("availableCarList: " + availableCarList);
 		
-      
       List<HotelInfo> availableHotelList =
          hotelService.getAvailableHotels(destinationCity, arrivalDate,
             destinationState); System.out.println("availableHotelList: " +
@@ -135,30 +134,39 @@ public class PackageService {
 //      CarInfo car = pckage.getCar();
 //      FlightInfo flight = pckage.getFlight();
 //      HotelInfo hotel = pckage.getHotel();
-      
       // Fetch the user from the DB using the username from tripInfo 
       User user = userRepository.findByUsername(reservationInfo.getEmail()).get(0);
-      
+      System.out.println(user);
       SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
       
       String carId = String.valueOf(reservationInfo.getCarId());
+      System.out.println(carId);
       String dateStart = dateFormatter.format(reservationInfo.getDateStart());
+      System.out.println(dateStart);
       String dateEnd = dateFormatter.format(reservationInfo.getDateEnd());
+      System.out.println(dateEnd);
       String email = user.getUsername();
+      System.out.println(email);
       String password = user.getPassword();
-
+      System.out.println(password);
       String firstName = user.getFirstName();
+      System.out.println(firstName);
       String lastName = user.getLastName();
+      System.out.println(lastName);
       long flightId = reservationInfo.getFlightId();
+      System.out.println(flightId);
       int passengers = reservationInfo.getPassengers();
+      System.out.println(passengers);
 
       String site = "PACKAGES";
       String date = reservationInfo.getHotelDate();
+      System.out.println(date);
       int hotelId = reservationInfo.getHotelId();
-      int hotelUserId = 5;
+      System.out.println(hotelId);
       
       // Attempt to book car
       JsonNode carResponse = carService.bookCar(email, carId, dateStart, dateEnd);
+      System.out.println(carResponse);
       // If car fails, return.
       if (carResponse == null) { 
          System.out.println("Car Reservation failed.");
@@ -166,8 +174,10 @@ public class PackageService {
       }
       // Car was booked successfully, so get the reservation ID
       String carReservationId = carResponse.get("id").asText();
+      System.out.println("carReservationId: " + carReservationId);
       // Attempt to book the flight
       JsonNode flightResponse = flightService.bookFlight(email, password, site, firstName, lastName, flightId, passengers);
+      System.out.println(flightResponse);
       // If flight booking fails, cancel car booking and return.
       if (flightResponse == null) { 
          System.out.println("Flight Reservation failed.");
@@ -176,8 +186,9 @@ public class PackageService {
       }
       // Flight was booked successfully, so get the reservation ID
       String flightReservationId = flightResponse.get("id").asText();
+      System.out.println(flightReservationId);
       // Attempt to book hotel
-      JsonNode hotelResponse = hotelService.bookHotel(date, hotelId, hotelUserId);
+      JsonNode hotelResponse = hotelService.bookHotel(date, hotelId);
       // If hotel booking fails, cancel car & flight, then return.
       if (hotelResponse == null) { 
          System.out.println("hotel Reservation failed.");

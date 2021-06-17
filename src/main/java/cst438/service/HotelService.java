@@ -31,10 +31,12 @@ public class HotelService {
    private RestTemplate restTemplate;
    private String hotelUrl;
    private String authToken;
+   private int userId;
    
    public HotelService( 
          @Value("${hotel.url}") final String hotelUrl,
-         @Value("${hotel.key}") final String authToken) {
+         @Value("${hotel.key}") final String authToken,
+         @Value("${hotel.userId}") final String userId) {
       this.restTemplate = new RestTemplate();
       this.hotelUrl = hotelUrl;
       this.authToken = authToken;
@@ -109,7 +111,7 @@ public class HotelService {
       return hotelList;
    }
    
-   public JsonNode bookHotel(String date, int hotelId, int userId) {
+   public JsonNode bookHotel(String date, int hotelId) {
       System.out.println("HotelService.bookHotel(...): booking hotel...");
       
       String postReservationUrl = hotelUrl + "/reservation";
