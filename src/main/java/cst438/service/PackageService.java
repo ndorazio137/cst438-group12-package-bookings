@@ -146,10 +146,12 @@ public class PackageService {
       String dateEnd = dateFormatter.format(reservationInfo.getDateEnd());
       String email = user.getUsername();
       String password = user.getPassword();
+
       String firstName = user.getFirstName();
       String lastName = user.getLastName();
       long flightId = reservationInfo.getFlightId();
       int passengers = reservationInfo.getPassengers();
+
       String site = "PACKAGES";
       String date = reservationInfo.getHotelDate();
       int hotelId = reservationInfo.getHotelId();
