@@ -37,7 +37,8 @@ public class PackageServiceTest {
    //*********TEST CASES***********
    
    // Test the case where all services are down or otherwise return null
-   @Test public void testAllServiceResponsesNull() throws Exception { 
+   @Test 
+   public void testAllServiceResponsesNull() throws Exception { 
       // Create TripInfo Object 
       String startingCity = "Los Angeles"; 
       String startingState = "CA";
@@ -65,7 +66,8 @@ public class PackageServiceTest {
    }
      
    // Test the case where there are no cars, hotels, or flights available
-   @Test public void testNoAvailability() throws Exception {
+   @Test 
+   public void testNoAvailability() throws Exception {
       // Create TripInfo Object 
       String startingCity = "Los Angeles"; 
       String startingState = "CA";
@@ -107,7 +109,8 @@ public class PackageServiceTest {
    }
      
    // Test the case where only the car service response is null
-   @Test public void testCarServiceResponseNull() throws Exception { 
+   @Test 
+   public void testCarServiceResponseNull() throws Exception { 
       // Create TripInfo Object 
       String startingCity = "Los Angeles"; 
       String startingState = "CA";
@@ -156,7 +159,8 @@ public class PackageServiceTest {
    }
      
    // Test the case where only the hotel service response is null
-   @Test public void testHotelServiceResponseNull() throws Exception { 
+   @Test 
+   public void testHotelServiceResponseNull() throws Exception { 
       // Create TripInfo Object 
       String startingCity = "Los Angeles"; 
       String startingState = "CA";
@@ -204,7 +208,8 @@ public class PackageServiceTest {
    }
   
    // Test the case where only the flight service response is null
-   @Test public void testFlightServiceResponseNull() throws Exception { 
+   @Test 
+   public void testFlightServiceResponseNull() throws Exception { 
       // Create TripInfo Object 
       String startingCity = "Los Angeles"; 
       String startingState = "CA";
@@ -252,7 +257,8 @@ public class PackageServiceTest {
    }
   
    // All three return valid
-   @Test public void testAllGoodResponses() throws Exception { 
+   @Test 
+   public void testAllGoodResponses() throws Exception { 
       // Create TripInfo Object 
       String startingCity = "Los Angeles"; 
       String startingState = "CA";
