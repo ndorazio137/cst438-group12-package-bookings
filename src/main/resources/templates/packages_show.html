@@ -54,15 +54,15 @@
   		            		pass all the basic info PackageService needs in order to retrieve 
   		            		the rest of the info to book all 3 services.
   		             -->
-  		            <input type="hidden" th:field="*{email}" th:value="${reservationInfo.getEmail()}" />
-  		            <input type="hidden" th:field="*{carId}" th:value="${package.getCar().getId()}" />
-  		            <input type="hidden" th:field="*{flightId}" th:value="${package.getFlight().getId()}" />
-  		            <input type="hidden" th:field="*{hotelId}" th:value="${package.getHotel().getId()}" />
-  		            <input type="hidden" th:field="*{passengers}" th:value="${reservationInfo.getPassengers()}" />
-  		            <input type="hidden" th:field="*{dateStart}" th:value="${reservationInfo.getDateStart()}" />
-  		            <input type="hidden" th:field="*{dateEnd}" th:value="${reservationInfo.getDateEnd()}" />
-  		            <input type="hidden" th:field="*{hotelDate}" th:value="${package.getHotel().getAvailableDate()}" />
-                  <button type="button" class="btn btn-success book-package-button">Book this!</button>
+  		            <input type="hidden" th:attr="name='email'" th:value="${reservationInfo.getEmail()}" />
+  		            <input type="hidden" th:attr="name='carId'" th:value="${package.getCar().getId()}" />
+  		            <input type="hidden" th:attr="name='flightId'" th:value="${package.getFlight().getId()}" />
+  		            <input type="hidden" th:attr="name='hotelId'" th:value="${package.getHotel().getId()}" />
+  		            <input type="hidden" th:attr="name='passengers'" th:value="${reservationInfo.getPassengers()}" />
+  		            <input type="hidden" th:attr="name='dateStart'" th:value="${reservationInfo.getDateStart()}" />
+  		            <input type="hidden" th:attr="name='dateEnd'" th:value="${reservationInfo.getDateEnd()}" />
+  		            <input type="hidden" th:attr="name='hotelDate'" th:value="${package.getHotel().getAvailableDate()}" />
+                  <button type="submit" class="btn btn-success book-package-button" value="Submit">Book this!</button>
                </form>
  		      </div>	
  	      </div>
