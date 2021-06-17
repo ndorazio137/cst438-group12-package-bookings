@@ -155,7 +155,7 @@ public class PackageService {
       String site = "PACKAGES";
       String date = reservationInfo.getHotelDate();
       int hotelId = reservationInfo.getHotelId();
-      int userId = 1;
+      int hotelUserId = 5;
       
       // Attempt to book car
       JsonNode carResponse = carService.bookCar(email, carId, dateStart, dateEnd);
@@ -177,7 +177,7 @@ public class PackageService {
       // Flight was booked successfully, so get the reservation ID
       String flightReservationId = flightResponse.get("id").asText();
       // Attempt to book hotel
-      JsonNode hotelResponse = hotelService.bookHotel(date, hotelId, userId);
+      JsonNode hotelResponse = hotelService.bookHotel(date, hotelId, hotelUserId);
       // If hotel booking fails, cancel car & flight, then return.
       if (hotelResponse == null) { 
          System.out.println("hotel Reservation failed.");
@@ -189,6 +189,7 @@ public class PackageService {
       String hotelReservationId = hotelResponse.get("id").asText();
       
       // TODO: finish creating reservation object and save in DB
+      int userId = user.getUserId();
       Reservation reservation = new Reservation(userId, carReservationId,
             hotelReservationId, flightReservationId);
       
