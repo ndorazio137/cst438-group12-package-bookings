@@ -85,6 +85,7 @@ public class PackageController {
       return "trip_info_form";
    }
    
+   // render sign up page
    @GetMapping("/signup") // localhost:8080/
    public String registerUser( Model model ) {
       User user = new User();
@@ -92,7 +93,7 @@ public class PackageController {
       return "signup";
    }
    
-   // Sign up new users
+   // Sign up new users by entering in the database
    @PostMapping("/signup")
    public String signUp( @Valid User user, BindingResult result,
       Model model ) throws ParseException {
@@ -100,6 +101,7 @@ public class PackageController {
          return "signup";
       }
       
+      // if user does not exist, create the user
       List<User> users = userRepository.findByUsername(user.getUsername());
       if (users.size() <= 0) {
          userRepository.save(user);
@@ -119,7 +121,7 @@ public class PackageController {
       return "trip_info_form";
    }
    
-   // Package Booking 
+   // Display a list of packages to choose from
    @PostMapping("/packages")
    public String getPackageInfo( @Valid TripInfo tripInfo, 
          BindingResult result, Model model ) {

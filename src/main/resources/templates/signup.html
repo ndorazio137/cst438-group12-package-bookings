@@ -15,6 +15,22 @@
      <form class="card-body form" action="#" th:action="@{/signup}" th:object="${user}" method="post">
          <div class="form-row">
             <div class="col">
+               <!-- First Name -->
+               <input type="text" class="form-control" placeholder="first name" th:field="*{firstName}" /> 
+               <span class="form-error" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
+            </div>
+         </div>
+         <br /> 
+         <div class="form-row">
+            <div class="col">
+               <!-- Last Name -->
+               <input type="text" class="form-control" placeholder="last name" th:field="*{lastName}" /> 
+               <span class="form-error" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
+            </div>
+         </div>
+         <br /> 
+         <div class="form-row">
+            <div class="col">
                <!-- Username -->
                <input type="text" class="form-control" placeholder="username" th:field="*{username}" /> 
                <span class="form-error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
