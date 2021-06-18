@@ -2,6 +2,8 @@ package cst438.domain;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class ReservationInfo {
 //   private Package pckage;
 //   private User user;

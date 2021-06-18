@@ -30,9 +30,11 @@ public class FlightService {
          LoggerFactory.getLogger(CarService.class);
    private RestTemplate restTemplate;
    private String flightUrl;
+   private String flightSite;
    
    public FlightService( 
-         @Value("${flight.url}") final String flightUrl) {
+         @Value("${flight.url}") final String flightUrl,
+         @Value("${flight.site}") final String flightSite) {
       this.restTemplate = new RestTemplate();
       this.flightUrl = flightUrl;
    }
@@ -95,8 +97,8 @@ public class FlightService {
       return flightList;
    }
 
-   public JsonNode bookFlight(String email, String password, String site, 
-         String firstName, String lastName, long flightId, int passengers) {
+   public JsonNode bookFlight(String email, String password, String firstName, 
+         String lastName, long flightId, int passengers) {
       System.out.println("FlightService.bookFlight(...): booking flights...");
       
       String postReservationUrl = flightUrl + "/book";
@@ -108,7 +110,7 @@ public class FlightService {
       ObjectNode reservationJsonObject = new ObjectNode(jsonNodeFactory);
       reservationJsonObject.put("email", email);
       reservationJsonObject.put("password", password);
-      reservationJsonObject.put("site", site);
+      reservationJsonObject.put("site", flightSite);
       reservationJsonObject.put("firstName", firstName);
       reservationJsonObject.put("lastName", lastName);
       reservationJsonObject.put("flightId", flightId);
@@ -135,7 +137,7 @@ public class FlightService {
       return null;
    }
    
-   public JsonNode deleteReservation(long id, String email, String password, String site) {
+   public JsonNode deleteReservation(long id, String email, String password) {
       System.out.println("FlightService.deleteReservation(...): deleting reservation...");
       String deleteReservationUrl = flightUrl + "/cancel/" + id;
       restTemplate = new RestTemplate();
@@ -147,7 +149,7 @@ public class FlightService {
       reservationJsonObject.put("id", id);
       reservationJsonObject.put("email", email);
       reservationJsonObject.put("password", password);
-      reservationJsonObject.put("site", site);
+      reservationJsonObject.put("site", flightSite);
       ObjectMapper objectMapper = new ObjectMapper();
       HttpEntity<String> entity = new HttpEntity<String>(reservationJsonObject.toString(), headers);
       ResponseEntity<String> response = restTemplate.exchange(deleteReservationUrl, HttpMethod.DELETE, entity, String.class);
