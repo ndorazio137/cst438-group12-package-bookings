@@ -115,7 +115,6 @@ public class HotelService {
       System.out.println("HotelService.bookHotel(...): booking hotel...");
       
       String postReservationUrl = hotelUrl + "/reservation";
-      
       restTemplate = new RestTemplate();
       HttpHeaders headers = new HttpHeaders();
       headers.setContentType(MediaType.APPLICATION_JSON);

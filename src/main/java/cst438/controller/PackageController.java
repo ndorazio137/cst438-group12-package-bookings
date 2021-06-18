@@ -176,7 +176,7 @@ public class PackageController {
       return "index";
    }
    
-   // Authentication
+   // Authenticationd
    @PostMapping("/")
    public String logIn( @Valid User user, BindingResult result,
       Model model ) throws ParseException {
@@ -287,7 +287,7 @@ public class PackageController {
       
       SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
       String city = "Chicago";
-      String dateString = "2021-07-01";
+      String dateString = "2021-07-07";
       String state = "IL";
       Date date = formatter.parse(dateString);
       List<HotelInfo> hotelList = hotelService.getAvailableHotels(city, date, state);
@@ -297,6 +297,26 @@ public class PackageController {
       return "testHotels";
    }
    
+   // Testing API endpoint
+   @GetMapping("/packages/hotels/bookHotel") // localhost:8080/packages
+   public String getBookHotel( Model model ) {
+      return "bookHotel";
+   }
+   
+   // Testing API endpoint
+   @PostMapping("/packages/hotels/bookHotel")
+   public String postBookHotel( Model model ) throws ParseException {
+      
+      SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
+      Date date = new Date(2021, 07, 07);
+      String dateString = formatter.format(date);
+      int hotelId = 4;
+      JsonNode reservationBooking = hotelService.bookHotel(dateString, hotelId);
+      System.out.println(reservationBooking);
+      int reservationId = reservationBooking.get("idreservations").asInt();
+      model.addAttribute("reservationId", reservationId);
+      return "testHotelBooking";
+   }
    
    /************* FLIGHTS ****************/
    
@@ -357,7 +377,7 @@ public class PackageController {
    // Testing API endpoint
    @PostMapping("/packages/flights/deleteBooking")
    public String postDeleteBookedFlight( Model model ) {
-      String id = "415";
+      long id = 415;
       String email = "koakesndorazio@csumb.edu";
       String password = "KyleOakesNickDorazio1*";
       String site = "PACKAGE";
@@ -394,19 +414,6 @@ public class PackageController {
    }
    
    // Testing API endpoint
-   @GetMapping("/packages/cars/details")
-   public String getCarDetails( Model model ) {
-      int carId = 383;
-      CarInfo carInfo = carService.getCarDetails(carId);
-      System.out.println(carInfo.toString());
-      List<CarInfo> carList = new ArrayList<CarInfo>();
-      carList.add(carInfo);
-      
-      model.addAttribute("carList", carList);
-      return "testCars";
-   }
-   
-   // Testing API endpoint
    @GetMapping("/packages/cars/reserve") // localhost:8080/packages
    public String bookCar( Model model ) {
       return "bookCar";
@@ -416,7 +423,7 @@ public class PackageController {
    @PostMapping("/packages/cars/reserve")
    public String postReservation( Model model ) {
       String email = "test";
-      int id = 5;
+      long id = 5;
       String startDate = "2021-07-01";
       String endDate = "2021-07-01";
       JsonNode reservationBooking = carService.bookCar(email, id, startDate, endDate);
@@ -440,7 +447,7 @@ public class PackageController {
    // Testing API endpoint
    @PostMapping("/packages/cars/cancel")
    public String cancelReservation( Model model ) {
-      String id = "8";
+      long id = 12;
       String email = "ndorazio@csumb.edu";
       JsonNode reservationBooking = carService.cancelReservation(id, email);
       System.out.println(reservationBooking);
