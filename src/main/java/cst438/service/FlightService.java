@@ -135,7 +135,7 @@ public class FlightService {
       return null;
    }
    
-   public JsonNode deleteReservation(String id, String email, String password, String site) {
+   public JsonNode deleteReservation(long id, String email, String password, String site) {
       System.out.println("FlightService.deleteReservation(...): deleting reservation...");
       String deleteReservationUrl = flightUrl + "/cancel/" + id;
       restTemplate = new RestTemplate();
