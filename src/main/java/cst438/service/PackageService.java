@@ -137,9 +137,9 @@ public class PackageService {
       // Fetch the user from the DB using the username from tripInfo 
       User user = userRepository.findByUsername(reservationInfo.getEmail()).get(0);
       System.out.println("USER: " + user);
-      SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
+      SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MMM-dd", Locale.ENGLISH);
       
-      String carId = String.valueOf(reservationInfo.getCarId());
+      int carId = reservationInfo.getCarId();
       System.out.println("CarID: " + carId);
       String dateStart = dateFormatter.format(reservationInfo.getDateStart());
       System.out.println("DateStart: " + dateStart);
@@ -158,12 +158,11 @@ public class PackageService {
       int passengers = reservationInfo.getPassengers();
       System.out.println("Passengers: " + passengers);
 
-      String site = "PACKAGES";
+      String site = "PACKAGE";
       String date = reservationInfo.getHotelDate();
       System.out.println("HotelDate: " + date);
       int hotelId = reservationInfo.getHotelId();
       System.out.println("HotelId: " + hotelId);
-      
       // Attempt to book car
       JsonNode carResponse = carService.bookCar(email, carId, dateStart, dateEnd);
       System.out.println(carResponse);

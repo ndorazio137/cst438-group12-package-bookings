@@ -218,7 +218,7 @@ public class PackageController {
       String site = "PACKAGE";
       String firstName = "NickKyle";
       String lastName = "DorazioOakes";
-      long flightId = 271;
+      long flightId = 272;
       int passengers = 1;
       JsonNode reservationBooking = flightService.bookFlight(email, password, site, 
          firstName, lastName, flightId, passengers);
@@ -237,9 +237,9 @@ public class PackageController {
    // Testing API endpoint
    @PostMapping("/packages/flights/deleteBooking")
    public String postDeleteBookedFlight( Model model ) {
-      String id = "286";
-      String email = "ndorazio@csumb.edu";
-      String password = "Nicholasdorazio1*";
+      String id = "415";
+      String email = "koakesndorazio@csumb.edu";
+      String password = "KyleOakesNickDorazio1*";
       String site = "PACKAGE";
       
       JsonNode deletedBooking = flightService.deleteReservation(id, email, password, site);
@@ -296,7 +296,7 @@ public class PackageController {
    @PostMapping("/packages/cars/reserve")
    public String postReservation( Model model ) {
       String email = "test";
-      String id = "5";
+      int id = 5;
       String startDate = "2021-07-01";
       String endDate = "2021-07-01";
       JsonNode reservationBooking = carService.bookCar(email, id, startDate, endDate);
