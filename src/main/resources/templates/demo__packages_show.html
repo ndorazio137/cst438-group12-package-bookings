@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+	<head>
+	    <title>Let us help schedule your next trip!</title>
+	    
+	     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" 
+	      rel="stylesheet"
+	      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" 
+	      crossorigin="anonymous" />
+	    <link href="css/styles.css" rel="stylesheet"/>
+	</head>
+	<header>
+	  <div class="header-container">
+	   <div class="header-img"></div>
+	   <h2 id="package-site-title" class="center" >Package Deals</h2>
+	   </div>
+   </header>
+	<body>
+	   <div id="package-container">
+		   <br />
+ 	      <div class="package-list" th:each="package: ${packageList}">
+ 	         <div class="package">
+	 	         <!-- Package -->
+	 	         <div class="card-group">
+		            <!--  Car card -->
+	 	            <div class="card">
+	 	              <div class="card-header">Car</div>
+	 	              <div class="card-body">
+	  	                 <div class="package-item-image"></div>
+		  		           <div th:text="${package.getCar()}" class="package-item"></div>
+	  		           </div>
+	  		         </div>
+	  		         <!--  Hotel card -->
+	  		         <div class="card">
+	  		           <div class="card-header">Hotel</div>
+	  		           <div class="card-body">
+		  		           <div class="package-item-image"></div>
+		  		           <div th:text="${package.getHotel()}" class="package-item"></div>
+		  		        </div>
+		  		      </div>
+		  		      <!--  Flight card -->
+	  		         <div class="card">
+	  		            <div class="card-header">Flight</div>
+	  		            <div class="card-body">
+		  		            <div class="package-item-image"></div>
+		  		            <div th:text="${package.getFlight()}" class="package-item"></div> 
+	  		           </div>
+	  		         </div>
+	  		         
+  		         </div>
+  		         <!--  Book Package Button -->
+  		         <form action="#" th:action="@{/demo/packages/book}" th:object="${reservationInfo}" method="post">
+  		            <!--  Here, I have decided to redesign ReservationInfo so I can use it to 
+  		            		pass all the basic info PackageService needs in order to retrieve 
+  		            		the rest of the info to book all 3 services.
+  		             -->
+  		            <input type="hidden" th:attr="name='email'" th:value="${reservationInfo.getEmail()}" />
+  		            <input type="hidden" th:attr="name='carId'" th:value="${package.getCar().getId()}" />
+  		            <input type="hidden" th:attr="name='flightId'" th:value="${package.getFlight().getId()}" />
+  		            <input type="hidden" th:attr="name='hotelId'" th:value="${package.getHotel().getId()}" />
+  		            <input type="hidden" th:attr="name='passengers'" th:value="${reservationInfo.getPassengers()}" />
+  		            <input type="hidden" th:attr="name='dateStart'" th:value="${reservationInfo.getDateStart()}" />
+  		            <input type="hidden" th:attr="name='dateEnd'" th:value="${reservationInfo.getDateEnd()}" />
+  		            <input type="hidden" th:attr="name='hotelDate'" th:value="${package.getHotel().getAvailableDate()}" />
+                  <button type="submit" class="btn btn-success book-package-button" value="Submit">Book this!</button>
+               </form>
+ 		      </div>	
+ 	      </div>
+	   </div>
+   </body>
+</html>

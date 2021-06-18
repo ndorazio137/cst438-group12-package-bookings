@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>TripInfo</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" 
+      rel="stylesheet"
+      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" 
+      crossorigin="anonymous" />
+    <link href="css/styles.css" rel="stylesheet"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="js/functions.js"></script>
+</head>
+<body>
+   <h3 id="packageBuildingMessage" class="center deep">Building travel packages...</h3>
+   <div id="mainContainer" class="card form-container center">
+     <h2 class="card-title">Enter your trip details</h2>
+     <br />
+     <form id="tripInfoForm" class="card-body form" action="#" th:action="@{/demo/packages}" th:object="${tripInfo}" method="post">
+        <div class="form-row g-3">
+           <div class="col-md-3">
+              <span class="form-field-title">From </span>
+           </div>
+           <div class="col-auto">
+              <!-- Departure City -->
+              <select id="departureCity" class="form-control" th:field="*{startingCity}">
+                <option selected value="">City...</option>
+                <option value="Los Angeles">Los Angeles</option>
+                <option value="New York">New York</option>
+                <option value="Chicago">Chicago</option>
+                <option value="Houston">Houston</option>
+                <option value="Phoenix">Phoenix</option>
+                <option value="Philadelphia">Philadelphia</option>
+                <option value="San Antonio">San Antonio</option>
+                <option value="San Diego">San Diego</option>
+                <option value="Dallas">Dallas</option>
+                <option value="San Jose">San Jose</option>
+              </select>
+              <span class="form-error" th:if="${#fields.hasErrors('startingCity')}" th:errors="*{startingCity}"></span> 
+           </div>
+           <div class="col-auto">
+              <!-- Departure State -->
+              <select id="departureState" class="form-control" th:field="*{startingState}">
+                <option selected value="">State...</option>
+                <option value="NY">NY</option>
+                <option value="CA">CA</option>
+                <option value="IL">IL</option>
+                <option value="TX">TX</option>
+                <option value="AZ">AZ</option>
+                <option value="PA">PA</option>
+              </select>
+              <span class="form-error" th:if="${#fields.hasErrors('startingState')}" th:errors="*{startingState}"></span>
+           </div>
+        </div>
+        
+        <br />
+        
+        <div class="form-row g-3 center-form-field">
+           <div class="col-md-3">
+             <span class="form-field-title">To </span>
+           </div>
+           <div class="col-auto">
+           <!-- Destination City -->
+           <select id="destinationCity" class="form-control" th:field="*{destinationCity}">
+              <option selected value="">City...</option>
+              <option value="Los Angeles">Los Angeles</option>
+              <option value="New York">New York</option>
+              <option value="Chicago">Chicago</option>
+              <option value="Houston">Houston</option>
+              <option value="Phoenix">Phoenix</option>
+              <option value="Philadelphia">Philadelphia</option>
+              <option value="San Antonio">San Antonio</option>
+              <option value="San Diego">San Diego</option>
+              <option value="Dallas">Dallas</option>
+              <option value="San Jose">San Jose</option>
+           </select>
+           <span class="form-error" th:if="${#fields.hasErrors('destinationCity')}" th:errors="*{destinationCity}"></span> 
+           </div>
+           <div class="col-auto">
+           <!-- Destination State -->
+           <select id="destinationState" class="form-control" th:field="*{destinationState}">
+              <option selected value="">State...</option>
+              <option value="NY">NY</option>
+              <option value="CA">CA</option>
+              <option value="IL">IL</option>
+              <option value="TX">TX</option>
+              <option value="AZ">AZ</option>
+              <option value="PA">PA</option>
+           </select>
+           <span class="form-error" th:if="${#fields.hasErrors('destinationState')}" th:errors="*{destinationState}"></span>
+           </div>
+         </div>
+         
+         <br /> 
+         
+         <div class="form-row g-2 center-form-field">
+           <!-- Departure Date -->
+           <div class="col-md-auto">
+             <span class="form-field-title">Departing Date: </span>
+           </div>
+           <div class="col-auto">
+              <input type="date" th:field="*{departureDate}" /> 
+              <span class="form-error" th:if="${#fields.hasErrors('departureDate')}" th:errors="*{departureDate}"></span>
+           </div>
+         </div>
+         <div class="form-row g-2 center-form-field">
+           <!-- Arrival Date -->
+           <div class="col-auto">
+             <span class="form-field-title">Arrival Date: </span>
+           </div>
+           <div class="col-md-auto">
+              <input type="date" th:field="*{arrivalDate}" /> 
+              <span class="form-error" th:if="${#fields.hasErrors('arrivalDate')}" th:errors="*{arrivalDate}"></span>
+           </div>
+         </div>
+         
+         <div class="form-row g-2 center-form-field">
+           <!-- Number of Passengers -->
+           <div class="col-md-auto">
+              <span class="form-field-title">Passengers: </span>
+           </div>
+           <div class="col-md-auto">
+              <input type="text" th:field="*{numPassengers}" />
+              <span class="form-error" th:if="${#fields.hasErrors('numPassengers')}" th:errors="*{numPassengers}"></span>
+           </div>
+         </div>
+         
+         <br />
+         
+         <input type="hidden" th:field="*{username}" th:value="${tripInfo.getUsername()}" />
+         
+         <!-- Submit -->
+         <div>
+           <input id="tripInfoFormSubmit" class="btn btn-success submit" type="submit" value="Submit" />
+         </div>
+     </form>
+  </div>
+</body>
+</html>
