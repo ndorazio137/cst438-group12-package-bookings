@@ -176,7 +176,7 @@ public class PackageController {
       return "index";
    }
    
-   // Authenticationd
+   // Authentication
    @PostMapping("/")
    public String logIn( @Valid User user, BindingResult result,
       Model model ) throws ParseException {
@@ -385,7 +385,7 @@ public class PackageController {
       String password = "KyleOakesNickDorazio1*";
       String site = "PACKAGE";
       
-      JsonNode deletedBooking = flightService.deleteReservation(id, email, password);
+      JsonNode deletedBooking = flightService.cancelReservation(id, email, password);
       System.out.println(deletedBooking);
       int reservationId = deletedBooking.get("reservation").get("id").asInt();
       String cancellationMessage = deletedBooking.get("message").asText();
@@ -427,8 +427,8 @@ public class PackageController {
    public String postReservation( Model model ) {
       String email = "test";
       long id = 5;
-      String startDate = "2021-07-01";
-      String endDate = "2021-07-01";
+      Date startDate = new Date(2021, 07, 01);
+      Date endDate = new Date(2021, 07, 01);
       JsonNode reservationBooking = carService.bookCar(email, id, startDate, endDate);
       System.out.println(reservationBooking);
       if (reservationBooking != null) {
@@ -465,3 +465,4 @@ public class PackageController {
       return "testCancelCarReservation";
    }
 }
+

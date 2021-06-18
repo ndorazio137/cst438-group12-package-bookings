@@ -21,6 +21,8 @@ import cst438.domain.ReservationRepository;
 import cst438.domain.TripInfo;
 import cst438.domain.User;
 import cst438.domain.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Service
 public class DemoPackageService {
@@ -35,14 +37,15 @@ public class DemoPackageService {
 	@Autowired
    private UserRepository userRepository;
 	
+	private static final Logger log =
+      LoggerFactory.getLogger(DemoPackageService.class);
+	
 	public DemoPackageService( ) { }
 
    public List<Package> getPackageList(TripInfo tripInfo) {
 		
       System.out.println("getPackageList(...): Trip Info: ");
       System.out.println(tripInfo);
-      
-      String username = tripInfo.getUsername();
       
 		String startingCity = tripInfo.getStartingCity();
 		String startingState = tripInfo.getStartingState();
@@ -139,62 +142,63 @@ public class DemoPackageService {
       System.out.println("USER: " + user);
       SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MMM-dd", Locale.ENGLISH);
       
-      int carId = reservationInfo.getCarId();
-      System.out.println("CarID: " + carId);
+      long carId = reservationInfo.getCarId();
       String dateStart = dateFormatter.format(reservationInfo.getDateStart());
-      System.out.println("DateStart: " + dateStart);
       String dateEnd = dateFormatter.format(reservationInfo.getDateEnd());
-      System.out.println("DateEnd: " + dateEnd);
       String email = user.getUsername();
-      System.out.println("Email: " + email);
       String password = user.getPassword();
-      System.out.println("Password: " + password);
       String firstName = user.getFirstName();
-      System.out.println("FirstName: " + firstName);
       String lastName = user.getLastName();
-      System.out.println("LastName: " + lastName);
       long flightId = reservationInfo.getFlightId();
-      System.out.println("FlightId: " + flightId);
       int passengers = reservationInfo.getPassengers();
-      System.out.println("Passengers: " + passengers);
-
-      String site = "PACKAGE";
       String date = reservationInfo.getHotelDate();
       System.out.println("HotelDate: " + date);
       int hotelId = reservationInfo.getHotelId();
       System.out.println("HotelId: " + hotelId);
+
+
       // Attempt to book car
+      System.out.println("This is whats passed to CarService:");
+      System.out.println("CarID: " + carId);
+      System.out.println("Email: " + email);
+      System.out.println("DateStart: " + dateStart);
+      System.out.println("DateEnd: " + dateEnd);
       JsonNode carResponse = carService.bookCar(email, carId, dateStart, dateEnd);
       System.out.println(carResponse);
-      // If car fails, return.
-      if (carResponse == null || carResponse.get("id") == null) { 
-         System.out.println("Car Reservation failed.");
-         return "Car reservation failed.";
-      }
-      // Car was booked successfully, so get the reservation ID
-      long carReservationId = carResponse.get("id").asLong();
-      System.out.println("carReservationId: " + carReservationId);
+
+
       // Attempt to book the flight
-      JsonNode flightResponse = flightService.bookFlight(email, password, site, firstName, lastName, flightId, passengers);
+      System.out.println("This is whats passed to FlightService:");
+      System.out.println("Email: " + email);
+      System.out.println("Password: " + password);
+      System.out.println("FirstName: " + firstName);
+      System.out.println("LastName: " + lastName);
+      System.out.println("FlightId: " + flightId);
+      System.out.println("Passengers: " + passengers);
+      JsonNode flightResponse = flightService.bookFlight(email, password, 
+         firstName, lastName, flightId, passengers);
       System.out.println(flightResponse);
-      // If flight booking fails, cancel car booking and return.
-      if (flightResponse == null) { 
-         System.out.println("Flight Reservation failed.");
-         carService.cancelReservation(carReservationId, email);
-         return "Flight reservation failed.";
-      }
+      
       // Flight was booked successfully, so get the reservation ID
       long flightReservationId = flightResponse.get("id").asLong();
       System.out.println(flightReservationId);
       // Attempt to book hotel
       JsonNode hotelResponse = hotelService.bookHotel(date, hotelId);
-      // If hotel booking fails, cancel car & flight, then return.
-      if (hotelResponse == null) { 
-         System.out.println("hotel Reservation failed.");
-         carService.cancelReservation(carReservationId, email);
-         flightService.deleteReservation(flightReservationId, email, password, site);
-         return "Hotel reservation failed.";
+      System.out.println(hotelResponse);
+      
+      // If any of the services fails to reserve item, cancel all reservations attached to the package.
+      if (carResponse == null || carResponse.get("id") == null 
+            || flightResponse == null || hotelResponse == null) {
+         cancelCarReservation(carResponse);
+         cancelFlightReservation(flightResponse, user);
+         cancelHotelReservation(hotelResponse);
+         return "We could not book your package at this time";
       }
+      
+      // Car was booked successfully, so get the reservation ID
+      long carReservationId = carResponse.get("id").asLong();
+      System.out.println("carReservationId: " + carReservationId);
+      
       // Hotel was booked successfully, so get the reservation ID
       long hotelReservationId = hotelResponse.get("id").asLong();
       
@@ -206,6 +210,33 @@ public class DemoPackageService {
       reservationRepository.save(reservation);
       
       return "Package booking successful.";
+   }
+   
+   private void cancelCarReservation(JsonNode carResponse) {
+      if (carResponse != null || carResponse.get("id") == null) {
+         long carReservationId = carResponse.get("id").asLong();
+         String email = carResponse.get("email").asText();
+         carService.cancelReservation(carReservationId, email);
+         log.info("Car Reservation Successfully Cancelled");
+      }
+   }
+   
+   private void cancelFlightReservation(JsonNode flightResponse, User user) {
+      if (flightResponse != null) {
+         long flightId = flightResponse.get("id").asLong();
+         String email = user.getUsername();
+         String password = user.getPassword();
+         flightService.cancelReservation(flightId, email, password);
+         log.info("Flight Reservation Successfully Cancelled");
+      } 
+   }
+   
+   private void cancelHotelReservation(JsonNode hotelResponse) {
+      if (hotelResponse != null) {
+         long reservationId = hotelResponse.get("idreservations").asLong();
+         hotelService.cancelReservation(reservationId);
+         log.info("Hotel Reservation Successfully Cancelled");
+      }
    }
 }
 

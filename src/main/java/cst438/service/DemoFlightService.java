@@ -32,11 +32,14 @@ public class DemoFlightService {
          LoggerFactory.getLogger(CarService.class);
    private RestTemplate restTemplate;
    private String flightUrl;
+   private String flightSite;
    
    public DemoFlightService( 
-         @Value("${flight.url}") final String flightUrl) {
+         @Value("${flight.url}") final String flightUrl,
+         @Value("${flight.site}") final String flightSite) {
       this.restTemplate = new RestTemplate();
       this.flightUrl = flightUrl;
+      this.flightSite = flightSite;
    }
    
    public List<FlightInfo> getAvailableFlights(String fromCity, String toCity, Date date, int passengers) {
@@ -50,7 +53,7 @@ System.out.println("DemoFlightService.getAvailableFlights(...): Getting availabl
       return flightList;
    }
 
-   public JsonNode bookFlight(String email, String password, String site, 
+   public JsonNode bookFlight(String email, String password, 
          String firstName, String lastName, long flightId, int passengers) {
       System.out.println("DemoFlightService.bookFlight(...): booking flights...");
       
@@ -75,7 +78,7 @@ System.out.println("DemoFlightService.getAvailableFlights(...): Getting availabl
       return null;
    }
    
-   public JsonNode deleteReservation(long id, String email, String password, String site) {
+   public JsonNode cancelReservation(long id, String email, String password) {
       System.out.println("DemoFlightService.deleteReservation(...): deleting reservation...");
       ObjectMapper objectMapper = new ObjectMapper();
       
