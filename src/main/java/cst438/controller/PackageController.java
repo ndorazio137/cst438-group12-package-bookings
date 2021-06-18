@@ -28,6 +28,10 @@ import cst438.domain.UserRepository;
 import cst438.domain.Package;
 import cst438.domain.ReservationInfo;
 import cst438.service.CarService;
+import cst438.service.DemoCarService;
+import cst438.service.DemoFlightService;
+import cst438.service.DemoHotelService;
+import cst438.service.DemoPackageService;
 import cst438.service.FlightService;
 import cst438.domain.CarInfo;
 import cst438.domain.FlightInfo;
@@ -47,7 +51,123 @@ public class PackageController {
    private FlightService flightService;
    @Autowired 
    private UserRepository userRepository;
-
+   
+   // Demo / Manual Testing Services
+   @Autowired
+   private DemoPackageService demoPackageService;
+   @Autowired
+   private DemoCarService demoCarService;
+   @Autowired
+   private DemoHotelService demoHotelService;
+   @Autowired
+   private DemoFlightService demoFlightService;
+   
+   // =========== Demo / Manual Testing Routes ========
+   // Login Form
+   @GetMapping("/demo") // localhost:8080/
+   public String getIndexDemo( Model model ) {
+      User user = new User();
+      model.addAttribute("user", user);
+      return "demo__index";
+   }
+   
+   // Authentication
+   @PostMapping("/demo")
+   public String logInDemo( @Valid User user, BindingResult result,
+      Model model ) throws ParseException {
+      if (result.hasErrors()) {
+         return "demo__index";
+      }
+      
+      // look up user
+      List<User> users = userRepository.findByUsername(user.getUsername());
+      // no user found with the username provided
+      if (users.size() <= 0) {
+         return "demo__signup";
+      }
+      
+      // found user but wrong password
+      User userInfo = users.get(0);
+      if (!(userInfo.getPassword().equals(user.getPassword()))) {
+         return "demo__index";
+      }
+      
+      // Render the trip info form
+      TripInfo tripInfo = new TripInfo();
+      tripInfo.setUsername(user.getUsername());
+      model.addAttribute("tripInfo", tripInfo);
+      return "demo__trip_info_form";
+   }
+   
+   // render sign up page
+   @GetMapping("/demo/signup") // localhost:8080/
+   public String registerUserDemo( Model model ) {
+      User user = new User();
+      model.addAttribute("user", user);
+      return "demo__signup";
+   }
+   
+   // Sign up new users by entering in the database
+   @PostMapping("/demo/signup")
+   public String signUpDemo( @Valid User user, BindingResult result,
+      Model model ) throws ParseException {
+      if (result.hasErrors() || user.getFirstName() == null || user.getLastName() == null) {
+         return "demo__signup";
+      }
+      
+      // if user does not exist, create the user
+      List<User> users = userRepository.findByUsername(user.getUsername());
+      if (users.size() <= 0) {
+         userRepository.save(user);
+         TripInfo tripInfo = new TripInfo();
+         tripInfo.setUsername(user.getUsername());
+         model.addAttribute("tripInfo", tripInfo);
+         return "trip_info_form";
+      }
+      
+      return "demo__signup";
+   }
+   
+   // Display a list of packages to choose from
+   @PostMapping("/demo/packages")
+   public String getPackageInfoDemo( @Valid TripInfo tripInfo, 
+         BindingResult result, Model model ) {
+      if (result.hasErrors()) {
+         System.out.println(tripInfo.toString());
+         return "demo__trip_info_form";
+      }
+      
+      List<Package> packageList = demoPackageService.getPackageList(tripInfo); 
+      if (packageList == null) return "demo__packages_error";
+      model.addAttribute("packageList", packageList);
+      ReservationInfo reservationInfo = new ReservationInfo(
+            tripInfo.getUsername(),
+            tripInfo.getNumPassengers(),
+            tripInfo.getDepartureDate(),
+            tripInfo.getArrivalDate()
+      );
+      model.addAttribute("reservationInfo", reservationInfo);
+      return "demo__packages_show";
+   }
+   
+   // Package Form submission
+   @PostMapping("/demo/packages/book")
+   public String bookPackageDemo( @Valid ReservationInfo reservationInfo, 
+         BindingResult result, Model model ) {
+      if (result.hasErrors()) {
+         System.out.println(reservationInfo);
+         return "trip_info_form";
+      }
+      System.out.println(reservationInfo);
+      
+      String bookingResult = demoPackageService.bookPackage(reservationInfo);
+      model.addAttribute("bookingResult", bookingResult);
+    
+      return "demo__package_booked";
+   }
+   // ==================================================
+   
+   
    // Login Form
    @GetMapping("/") // localhost:8080/
    public String getIndex( Model model ) {

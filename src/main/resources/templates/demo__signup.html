@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>TripInfo</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" 
+      rel="stylesheet"
+      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" 
+      crossorigin="anonymous" />
+    <link href="css/styles.css" rel="stylesheet"/>
+</head>
+<body>
+   <div class="card form-container center">
+     <h2 class="card-title">Become a member</h2>
+     <form class="card-body form" action="#" th:action="@{/demo/signup}" th:object="${user}" method="post">
+         <div class="form-row">
+            <div class="col">
+               <!-- First Name -->
+               <input type="text" class="form-control" placeholder="first name" th:field="*{firstName}" /> 
+               <span class="form-error" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
+            </div>
+         </div>
+         <br /> 
+         <div class="form-row">
+            <div class="col">
+               <!-- Last Name -->
+               <input type="text" class="form-control" placeholder="last name" th:field="*{lastName}" /> 
+               <span class="form-error" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
+            </div>
+         </div>
+         <br /> 
+         <div class="form-row">
+            <div class="col">
+               <!-- Username -->
+               <input type="text" class="form-control" placeholder="username" th:field="*{username}" /> 
+               <span class="form-error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
+            </div>
+         </div>
+         <br /> 
+         <div class="form-row">
+            <div class="col">
+               <!-- Password -->  
+               <input type="text" class="form-control" placeholder="password" th:field="*{password}" /> 
+               <span class="form-error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+            </div>
+         </div>
+         
+         <br />
+         
+         <!-- Submit -->
+         <div>
+           <input class="btn btn-success submit" type="submit" value="Submit" />
+         </div>
+     </form>
+  </div>
+</body>
+</html>

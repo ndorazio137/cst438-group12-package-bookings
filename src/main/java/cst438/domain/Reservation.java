@@ -18,10 +18,12 @@ public class Reservation {
    private String carReservationId;
    private String hotelReservationId;
    private String flightReservationId;
-   private String carReservationJson;
-   private String hotelReservationJson;
-   private String flightReservationJson;
+   private String jsonCarReservation;
+   private String jsonHotelReservation;
+   private String jsonFlightReservation;
 
+   public Reservation() { }
+   
    public Reservation(int userId, String carReservationId,
          String hotelReservationId, String flightReservationId) {
       this.userId = userId;
@@ -38,9 +40,9 @@ public class Reservation {
       this.carReservationId = carReservationId;
       this.hotelReservationId = hotelReservationId;
       this.flightReservationId = flightReservationId;
-      this.carReservationJson = carReservationJson;
-      this.hotelReservationJson = hotelReservationJson;
-      this.flightReservationJson = flightReservationJson;
+      this.jsonCarReservation = carReservationJson;
+      this.jsonHotelReservation = hotelReservationJson;
+      this.jsonFlightReservation = flightReservationJson;
    }
 
    public int getReservationId() {
@@ -80,34 +82,34 @@ public class Reservation {
    }
    
    public String getCarReservationJson() {
-      return carReservationJson;
+      return jsonCarReservation;
    }
    
    public void setCarReservationJson(String carReservationJson) {
-      this.carReservationJson = carReservationJson;
+      this.jsonCarReservation = carReservationJson;
    }
    
    public String getHotelReservationJson() {
-      return hotelReservationJson;
+      return jsonHotelReservation;
    }
    
    public void setHotelReservationJson(String hotelReservationJson) {
-      this.hotelReservationJson = hotelReservationJson;
+      this.jsonHotelReservation = hotelReservationJson;
    }
    
    public String getFlightReservationJson() {
-      return flightReservationJson;
+      return jsonFlightReservation;
    }
    
    public void setFlightReservationJson(String flightReservationJson) {
-      this.flightReservationJson = flightReservationJson;
+      this.jsonFlightReservation = flightReservationJson;
    }
 
    @Override
    public int hashCode() {
-      return Objects.hash(carReservationId, carReservationJson,
-         flightReservationId, flightReservationJson, hotelReservationId,
-         hotelReservationJson, reservationId, userId);
+      return Objects.hash(carReservationId, jsonCarReservation,
+         flightReservationId, jsonFlightReservation, hotelReservationId,
+         jsonHotelReservation, reservationId, userId);
    }
 
    @Override
@@ -120,11 +122,11 @@ public class Reservation {
          return false;
       Reservation other = (Reservation) obj;
       return Objects.equals(carReservationId, other.carReservationId)
-         && Objects.equals(carReservationJson, other.carReservationJson)
+         && Objects.equals(jsonCarReservation, other.jsonCarReservation)
          && Objects.equals(flightReservationId, other.flightReservationId)
-         && Objects.equals(flightReservationJson, other.flightReservationJson)
+         && Objects.equals(jsonFlightReservation, other.jsonFlightReservation)
          && Objects.equals(hotelReservationId, other.hotelReservationId)
-         && Objects.equals(hotelReservationJson, other.hotelReservationJson)
+         && Objects.equals(jsonHotelReservation, other.jsonHotelReservation)
          && Objects.equals(reservationId, other.reservationId)
          && userId == other.userId;
    }
