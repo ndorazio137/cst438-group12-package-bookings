@@ -159,7 +159,7 @@ public class CarService {
     * @throws JsonMappingException
     * @throws JsonProcessingException
     */
-   public JsonNode bookCar(String email, String carId, String dateStart, String dateEnd) {
+   public JsonNode bookCar(String email, int carId, String dateStart, String dateEnd) {
       
       System.out.println("carService.bookCar(...): booking car...");
       
@@ -187,7 +187,7 @@ public class CarService {
          System.out.println(json);
       } catch (HttpClientErrorException.NotFound e) {
          System.out.println("Car: 404: NOT FOUND ERROR");
-         json = null;
+         json = json;
       } catch (JsonMappingException e) {
          // TODO Auto-generated catch block
          e.printStackTrace();
