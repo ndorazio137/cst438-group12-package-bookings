@@ -2,12 +2,7 @@ package cst438.domain;
 
 import java.util.Date;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 public class ReservationInfo {
-//   private Package pckage;
-//   private User user;
-//   private TripInfo tripInfo;
    
    private String email;      // for car and hotel
    
@@ -27,19 +22,6 @@ public class ReservationInfo {
       this.dateStart = dateStart;
       this.dateEnd = dateEnd;
    }
-   
-//   public ReservationInfo(Package pckage, TripInfo tripInfo) {
-//      super();
-//      this.pckage = pckage;
-////      this.user = user;
-//      this.tripInfo = tripInfo;
-//   }
-
-   
-
-//   public Package getPckage() {
-//      return pckage;
-//   }
    
    @Override
    public String toString() {
@@ -166,27 +148,5 @@ public class ReservationInfo {
          return false;
       return true;
    }
-
-   
-
-//   public void setPckage(Package pckage) {
-//      this.pckage = pckage;
-//   }
-
-//   public User getUser() {
-//      return user;
-//   }
-//
-//   public void setUser(User user) {
-//      this.user = user;
-//   }
-
-//   public TripInfo getTripInfo() {
-//      return tripInfo;
-//   }
-//
-//   public void setTripInfo(TripInfo tripInfo) {
-//      this.tripInfo = tripInfo;
-//   }
-   
 }
+

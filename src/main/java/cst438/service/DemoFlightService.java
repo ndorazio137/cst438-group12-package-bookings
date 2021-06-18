@@ -75,7 +75,7 @@ System.out.println("DemoFlightService.getAvailableFlights(...): Getting availabl
       return null;
    }
    
-   public JsonNode deleteReservation(String id, String email, String password, String site) {
+   public JsonNode deleteReservation(long id, String email, String password, String site) {
       System.out.println("DemoFlightService.deleteReservation(...): deleting reservation...");
       ObjectMapper objectMapper = new ObjectMapper();
       
