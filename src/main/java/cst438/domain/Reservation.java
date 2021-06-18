@@ -17,10 +17,11 @@ public class Reservation {
    private long carReservationId;
    private long hotelReservationId;
    private long flightReservationId;
-   private String carReservationJson;
-   private String hotelReservationJson;
-   private String flightReservationJson;
+   private String jsonCarReservation;
+   private String jsonHotelReservation;
+   private String jsonFlightReservation;
    
+   public Reservation() { }
    
    public Reservation(long userId, long carReservationId,
       long hotelReservationId, long flightReservationId) {
@@ -40,9 +41,9 @@ public class Reservation {
       this.carReservationId = carReservationId;
       this.hotelReservationId = hotelReservationId;
       this.flightReservationId = flightReservationId;
-      this.carReservationJson = carReservationJson;
-      this.hotelReservationJson = hotelReservationJson;
-      this.flightReservationJson = flightReservationJson;
+      this.jsonCarReservation = carReservationJson;
+      this.jsonHotelReservation = hotelReservationJson;
+      this.jsonFlightReservation = flightReservationJson;
    }
 
    public long getReservationId() {
@@ -85,28 +86,28 @@ public class Reservation {
       this.flightReservationId = flightReservationId;
    }
 
-   public String getCarReservationJson() {
-      return carReservationJson;
+   public String getJsonCarReservation() {
+      return jsonCarReservation;
    }
 
-   public void setCarReservationJson(String carReservationJson) {
-      this.carReservationJson = carReservationJson;
+   public void setJsonCarReservation(String jsonCarReservation) {
+      this.jsonCarReservation = jsonCarReservation;
    }
    
-   public String getHotelReservationJson() {
-      return hotelReservationJson;
+   public String getJsonHotelReservation() {
+      return jsonHotelReservation;
    }
 
-   public void setHotelReservationJson(String hotelReservationJson) {
-      this.hotelReservationJson = hotelReservationJson;
+   public void setJsonHotelReservation(String jsonHotelReservation) {
+      this.jsonHotelReservation = jsonHotelReservation;
    }
    
-   public String getFlightReservationJson() {
-      return flightReservationJson;
+   public String getJsonFlightReservation() {
+      return jsonFlightReservation;
    }
 
-   public void setFlightReservationJson(String flightReservationJson) {
-      this.flightReservationJson = flightReservationJson;
+   public void setJsonFlightReservation(String jsonFlightReservation) {
+      this.jsonFlightReservation = jsonFlightReservation;
    }
 
    @Override
@@ -116,15 +117,15 @@ public class Reservation {
       result = prime * result
          + (int) (carReservationId ^ (carReservationId >>> 32));
       result = prime * result
-         + ((carReservationJson == null) ? 0 : carReservationJson.hashCode());
+         + ((jsonCarReservation == null) ? 0 : jsonCarReservation.hashCode());
       result = prime * result
          + (int) (flightReservationId ^ (flightReservationId >>> 32));
-      result = prime * result + ((flightReservationJson == null) ? 0
-         : flightReservationJson.hashCode());
+      result = prime * result + ((jsonFlightReservation == null) ? 0
+         : jsonFlightReservation.hashCode());
       result = prime * result
          + (int) (hotelReservationId ^ (hotelReservationId >>> 32));
-      result = prime * result + ((hotelReservationJson == null) ? 0
-         : hotelReservationJson.hashCode());
+      result = prime * result + ((jsonHotelReservation == null) ? 0
+         : jsonHotelReservation.hashCode());
       result = prime * result + (int) (reservationId ^ (reservationId >>> 32));
       result = prime * result + (int) (userId ^ (userId >>> 32));
       return result;
@@ -141,24 +142,24 @@ public class Reservation {
       Reservation other = (Reservation) obj;
       if (carReservationId != other.carReservationId)
          return false;
-      if (carReservationJson == null) {
-         if (other.carReservationJson != null)
+      if (jsonCarReservation == null) {
+         if (other.jsonCarReservation != null)
             return false;
-      } else if (!carReservationJson.equals(other.carReservationJson))
+      } else if (!jsonCarReservation.equals(other.jsonCarReservation))
          return false;
       if (flightReservationId != other.flightReservationId)
          return false;
-      if (flightReservationJson == null) {
-         if (other.flightReservationJson != null)
+      if (jsonFlightReservation == null) {
+         if (other.jsonFlightReservation != null)
             return false;
-      } else if (!flightReservationJson.equals(other.flightReservationJson))
+      } else if (!jsonFlightReservation.equals(other.jsonFlightReservation))
          return false;
       if (hotelReservationId != other.hotelReservationId)
          return false;
-      if (hotelReservationJson == null) {
-         if (other.hotelReservationJson != null)
+      if (jsonHotelReservation == null) {
+         if (other.jsonHotelReservation != null)
             return false;
-      } else if (!hotelReservationJson.equals(other.hotelReservationJson))
+      } else if (!jsonHotelReservation.equals(other.jsonHotelReservation))
          return false;
       if (reservationId != other.reservationId)
          return false;
@@ -173,8 +174,8 @@ public class Reservation {
          + userId + ", carReservationId=" + carReservationId
          + ", hotelReservationId=" + hotelReservationId
          + ", flightReservationId=" + flightReservationId
-         + ", carReservationJson=" + carReservationJson
-         + ", hotelReservationJson=" + hotelReservationJson
-         + ", flightReservationJson=" + flightReservationJson + "]";
+         + ", jsonCarReservation=" + jsonCarReservation
+         + ", jsonHotelReservation=" + jsonHotelReservation
+         + ", jsonFlightReservation=" + jsonFlightReservation + "]";
    }
 }
