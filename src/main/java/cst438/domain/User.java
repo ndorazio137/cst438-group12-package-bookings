@@ -14,7 +14,7 @@ import javax.validation.constraints.Size;
 public class User {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
-   private int userId;
+   private long userId;
    
    @NotNull
    @Column(unique = true)
@@ -44,7 +44,7 @@ public class User {
    
    
    
-   public int getUserId() {
+   public long getUserId() {
       return userId;
    }
 
@@ -79,15 +79,16 @@ public class User {
    public void setLastName(String lastName) {
       this.lastName = lastName;
    }
-   
+
    @Override
    public int hashCode() {
       final int prime = 31;
       int result = 1;
-      result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
+      result = prime * result
+         + ((firstName == null) ? 0 : firstName.hashCode());
       result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
       result = prime * result + ((password == null) ? 0 : password.hashCode());
-      result = prime * result + userId;
+      result = prime * result + (int) (userId ^ (userId >>> 32));
       result = prime * result + ((username == null) ? 0 : username.hashCode());
       return result;
    }
@@ -131,7 +132,4 @@ public class User {
       return "User [userId=" + userId + ", username=" + username + ", password=" + password + ", firstName=" + firstName
             + ", lastName=" + lastName + "]";
    }
-   
-   
-
 }

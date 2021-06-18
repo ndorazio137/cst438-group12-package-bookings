@@ -1,11 +1,8 @@
 package cst438.service;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,12 +13,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.HttpServerErrorException;
-import org.springframework.web.client.HttpServerErrorException.ServiceUnavailable;
 import org.springframework.web.client.RestTemplate;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -71,6 +64,7 @@ public class CarService {
           System.out.println("Car:");
           System.out.println(car);
           int carId = car.get("id").asInt();
+          System.out.println("Car:" + carId);
           String model = car.get("model").textValue();
           String make = car.get("make").textValue();
           int year = car.get("year").asInt();
@@ -91,64 +85,6 @@ public class CarService {
    }
    
    /**
-    * Gets the details for a specific car available for rental.
-    * 
-    * @param id An int representing the id of a specific car.
-    * @return Info about a specific car on the form of a CarInfo object. 
-    */
-   public CarInfo getCarDetails(int id) {
-      System.out.println("CarService.getCarDetails(...): Getting available car details...");
-      ResponseEntity<JsonNode> response =
-            restTemplate.getForEntity(
-                  carUrl + "/carsByCity/details/" + id, 
-                  JsonNode.class);
-      JsonNode json = response.getBody();
-      log.info("Status code from car server:" +
-            response.getStatusCodeValue());
-      int carId = json.get("id").asInt();
-      String model = json.get("model").textValue();
-      String make = json.get("make").textValue();
-      int year = json.get("year").asInt();
-      String trany = json.get("trany").textValue();
-      double rentalPrice = json.get("rentalPrice").asInt();
-      String state = json.get("state").textValue();
-      String city = json.get("city").textValue();
-      
-      CarInfo carDetails = new CarInfo(carId, model, make, year, trany, 
-            rentalPrice, state, city);
-      System.out.println(carDetails.toString());
-      return carDetails;
-   }
-   
-   /**
-    * Gets the reservation details of a specific car available for rental.
-    * 
-    * @param int reservationId The id the car will be reserved under when requested.
-    * @return 
-    * @throws ParseException
-    */
-      public Object getReservationById(int reservationId) throws ParseException {
-         ResponseEntity<JsonNode> response =
-               restTemplate.getForEntity(
-                     carUrl + "/reservations/details/" + reservationId, 
-                     JsonNode.class);
-         JsonNode json = response.getBody();
-         log.info("Status code from car server:" +
-               response.getStatusCodeValue());
-         int id = json.get("id").asInt();
-         String email = json.get("email").textValue();
-         int carId = json.get("car_id").asInt();
-         String startDateString = json.get("date_start").textValue();
-         String endDateString = json.get("date_end").textValue();
-            
-         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
-         Date startDate = formatter.parse(startDateString);
-         Date endDate = formatter.parse(endDateString);
-         //TODO: find out if we need to get the reservation. Finish then.
-         return null;
-      }
-   
-   /**
     * Requests a car to be reserved. 
     * 
     * @param email A String that represents the users email that is booking the reservation.
@@ -159,7 +95,7 @@ public class CarService {
     * @throws JsonMappingException
     * @throws JsonProcessingException
     */
-   public JsonNode bookCar(String email, int carId, String dateStart, String dateEnd) {
+   public JsonNode bookCar(String email, long carId, String dateStart, String dateEnd) {
       
       System.out.println("carService.bookCar(...): booking car...");
       
@@ -187,7 +123,7 @@ public class CarService {
          System.out.println(json);
       } catch (HttpClientErrorException.NotFound e) {
          System.out.println("Car: 404: NOT FOUND ERROR");
-         json = json;
+         json = null;
       } catch (JsonMappingException e) {
          // TODO Auto-generated catch block
          e.printStackTrace();
@@ -199,7 +135,7 @@ public class CarService {
       return json;
    }
    
-   public JsonNode cancelReservation(String reservationId, String username) {
+   public JsonNode cancelReservation(long reservationId, String username) {
       
       System.out.println("carService.cancelReservation(...): cancelling car...");
       
