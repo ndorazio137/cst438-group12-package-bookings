@@ -182,11 +182,11 @@ public class PackageService {
       System.out.println("carReservationId: " + carReservationId);
       
       // Flight was booked successfully, so get the reservation ID
-      long flightReservationId = flightResponse.get("id").asLong();
+      long flightReservationId = flightResponse.get("reservation").get("id").asLong();
       System.out.println(flightReservationId);
       
       // Hotel was booked successfully, so get the reservation ID
-      long hotelReservationId = hotelResponse.get("id").asLong();
+      long hotelReservationId = hotelResponse.get("idreservations").asLong();
       System.out.println(hotelReservationId);
       
       // TODO: finish creating reservation object and save in DB

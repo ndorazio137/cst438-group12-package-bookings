@@ -1,7 +1,9 @@
 package cst438.service;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -33,12 +35,12 @@ public class HotelService {
    private RestTemplate restTemplate;
    private String hotelUrl;
    private String authToken;
-   private String userId;
+   private int userId;
    
    public HotelService( 
          @Value("${hotel.url}") final String hotelUrl,
          @Value("${hotel.key}") final String authToken,
-         @Value("${hotel.userId}") final String userId) {
+         @Value("${hotel.userId}") final int userId) {
       this.restTemplate = new RestTemplate();
       this.hotelUrl = hotelUrl;
       this.authToken = authToken;
@@ -126,6 +128,9 @@ public class HotelService {
       
       String postReservationUrl = hotelUrl + "/reservation";
       
+      // remove the extra quotes from the date (""2021-07-07"")
+      date = date.replace("\"", "");
+      
       System.out.println("This is whats passed to HotelService:");
       System.out.println("Date: " + date);
       System.out.println("hotelId: " + hotelId);
@@ -135,12 +140,15 @@ public class HotelService {
       restTemplate = new RestTemplate();
       HttpHeaders headers = new HttpHeaders();
       headers.setContentType(MediaType.APPLICATION_JSON);
+      headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
       JsonNodeFactory jsonNodeFactory = JsonNodeFactory.instance;
       ObjectNode reservationJsonObject = new ObjectNode(jsonNodeFactory);
       reservationJsonObject.put("date", date);
       reservationJsonObject.put("hotelId", hotelId);
       reservationJsonObject.put("authToken", authToken);
       reservationJsonObject.put("userId", userId);
+      System.out.println("Hotel Reservation request object: ");
+      System.out.println(reservationJsonObject);
       ObjectMapper objectMapper = new ObjectMapper();
       HttpEntity<String> request = 
             new HttpEntity<String>(reservationJsonObject.toString(), headers);

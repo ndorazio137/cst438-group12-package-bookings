@@ -75,17 +75,18 @@ public class CarService {
                response.getStatusCodeValue());
       } catch (HttpServerErrorException.InternalServerError e) {
          System.out.println("Car: 500: Internal Server Error");
-         try {
-            json = objectMapper.readTree("{ \"msg\":" + "\"Car: 500: Internal Server Error\" }" );
-         } catch (JsonMappingException e1) {
-            // TODO Auto-generated catch block
-            System.out.println("Car: JsonMappingException e");
-            e1.printStackTrace();
-         } catch (JsonProcessingException e1) {
-            // TODO Auto-generated catch block
-            System.out.println("Car: JsonProcessingException e");
-            e1.printStackTrace();
-         }
+//         try {
+//            json = objectMapper.readTree("{ \"msg\":" + "\"Car: 500: Internal Server Error\" }" );
+//         } catch (JsonMappingException e1) {
+//            // TODO Auto-generated catch block
+//            System.out.println("Car: JsonMappingException e");
+//            e1.printStackTrace();
+//         } catch (JsonProcessingException e1) {
+//            // TODO Auto-generated catch block
+//            System.out.println("Car: JsonProcessingException e");
+//            e1.printStackTrace();
+//         }
+         return null;
       }
       
       
@@ -95,6 +96,9 @@ public class CarService {
       { 
           System.out.println("Car:");
           System.out.println(car);
+          if (car.get("id") == null) {
+             return null;
+          }
           int carId = car.get("id").asInt();
           System.out.println("Car:" + carId);
           String model = car.get("model").textValue();

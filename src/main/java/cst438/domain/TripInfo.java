@@ -22,9 +22,9 @@ public class TripInfo {
    @NotNull
    @Size(min=1, max=2)
    String destinationState;
-   @DateTimeFormat(pattern = "yyyy-dd-mm")
+   @DateTimeFormat(pattern = "yyyy-mm-dd")
    Date departureDate;
-   @DateTimeFormat(pattern = "yyyy-dd-mm")
+   @DateTimeFormat(pattern = "yyyy-mm-dd")
    Date arrivalDate;
    
    @NotNull
