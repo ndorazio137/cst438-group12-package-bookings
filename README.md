@@ -1,6 +1,7 @@
 # cst438-group12-package-bookings
 
 Production site: https://cst438-package-bookings.herokuapp.com/
+Developer Demo: https://cst438-package-bookings.herokuapp.com/demo
 
 Test login credentials:
 
