@@ -199,7 +199,7 @@ public class DemoPackageService {
       String hotelReservationId = hotelResponse.get("id").asText();
       
       // TODO: finish creating reservation object and save in DB
-      int userId = user.getUserId();
+      long userId = user.getUserId();
       Reservation reservation = new Reservation(userId, carReservationId,
             hotelReservationId, flightReservationId);
       
