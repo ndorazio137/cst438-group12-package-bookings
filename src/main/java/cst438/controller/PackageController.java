@@ -176,7 +176,7 @@ public class PackageController {
       return "index";
    }
    
-   // Authenticationd
+   // Authentication
    @PostMapping("/")
    public String logIn( @Valid User user, BindingResult result,
       Model model ) throws ParseException {
@@ -239,6 +239,7 @@ public class PackageController {
          BindingResult result, Model model ) {
       if (result.hasErrors()) {
          System.out.println(tripInfo.toString());
+         model.addAttribute("tripInfo", tripInfo);
          return "trip_info_form";
       }
       
@@ -260,7 +261,9 @@ public class PackageController {
    public String bookPackage( @Valid ReservationInfo reservationInfo, 
          BindingResult result, Model model ) {
       if (result.hasErrors()) {
-         System.out.println(reservationInfo);
+         TripInfo tripInfo = new TripInfo();
+         tripInfo.setUsername(reservationInfo.getEmail());
+         model.addAttribute("tripInfo", tripInfo);
          return "trip_info_form";
       }
       System.out.println(reservationInfo);
@@ -360,7 +363,7 @@ public class PackageController {
       String lastName = "DorazioOakes";
       long flightId = 272;
       int passengers = 1;
-      JsonNode reservationBooking = flightService.bookFlight(email, password, site, 
+      JsonNode reservationBooking = flightService.bookFlight(email, password,  
          firstName, lastName, flightId, passengers);
       System.out.println(reservationBooking);
       int reservationId = reservationBooking.get("reservation").get("id").asInt();
@@ -382,7 +385,7 @@ public class PackageController {
       String password = "KyleOakesNickDorazio1*";
       String site = "PACKAGE";
       
-      JsonNode deletedBooking = flightService.deleteReservation(id, email, password, site);
+      JsonNode deletedBooking = flightService.cancelReservation(id, email, password);
       System.out.println(deletedBooking);
       int reservationId = deletedBooking.get("reservation").get("id").asInt();
       String cancellationMessage = deletedBooking.get("message").asText();
@@ -424,8 +427,8 @@ public class PackageController {
    public String postReservation( Model model ) {
       String email = "test";
       long id = 5;
-      String startDate = "2021-07-01";
-      String endDate = "2021-07-01";
+      Date startDate = new Date(2021, 07, 01);
+      Date endDate = new Date(2021, 07, 01);
       JsonNode reservationBooking = carService.bookCar(email, id, startDate, endDate);
       System.out.println(reservationBooking);
       if (reservationBooking != null) {
@@ -462,3 +465,4 @@ public class PackageController {
       return "testCancelCarReservation";
    }
 }
+

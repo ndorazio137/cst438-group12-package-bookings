@@ -78,7 +78,7 @@ public class DemoCarService {
     * @throws JsonMappingException
     * @throws JsonProcessingException
     */
-   public JsonNode bookCar(String email, int carId, String dateStart, String dateEnd) {
+   public JsonNode bookCar(String email, long carId, String dateStart, String dateEnd) {
       
       System.out.println("DemoCarService.bookCar(...): booking car...");
       
@@ -114,7 +114,7 @@ public class DemoCarService {
       return json;
    }
    
-   public JsonNode cancelReservation(String reservationId, String username) {
+   public JsonNode cancelReservation(long reservationId, String username) {
       
       System.out.println("DemoCarService.cancelReservation(...): cancelling car...");
       
@@ -137,3 +137,4 @@ public class DemoCarService {
       return json;
    }
 }
+

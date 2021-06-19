@@ -10,9 +10,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -31,7 +33,7 @@ public class HotelService {
    private RestTemplate restTemplate;
    private String hotelUrl;
    private String authToken;
-   private int userId;
+   private String userId;
    
    public HotelService( 
          @Value("${hotel.url}") final String hotelUrl,
@@ -40,6 +42,7 @@ public class HotelService {
       this.restTemplate = new RestTemplate();
       this.hotelUrl = hotelUrl;
       this.authToken = authToken;
+      this.userId = userId;
    }
    
    public List<HotelInfo> getAvailableHotels(String city, Date date, String state) {
@@ -47,6 +50,11 @@ public class HotelService {
       System.out.println("HotelService.getAvailableHotels(...): Getting available hotels...");
       
       String searchUrl = hotelUrl + "/search";
+      
+      System.out.println("This is whats passed to HotelService:");
+      System.out.println("City: " + city);
+      System.out.println("Date: " + date);
+      System.out.println("State: " + state);
       
       restTemplate = new RestTemplate();
       HttpHeaders headers = new HttpHeaders();
@@ -63,12 +71,17 @@ public class HotelService {
       ObjectMapper objectMapper = new ObjectMapper();
       HttpEntity<String> request = 
             new HttpEntity<String>(searchJsonObject.toString(), headers);
-      ResponseEntity<String> response = restTemplate.
-            postForEntity(searchUrl, request, String.class);
+      
       
       JsonNode json;
       try {
+         ResponseEntity<String> response = restTemplate.
+            postForEntity(searchUrl, request, String.class);
          json = objectMapper.readTree(response.getBody());
+         log.info("Status code from hotel server:" +
+            response.getStatusCodeValue());
+         System.out.println("Response: ");
+         System.out.println(response);
       } catch (JsonMappingException e) {
          e.printStackTrace();
          return null;
@@ -76,10 +89,7 @@ public class HotelService {
          e.printStackTrace();
          return null;
       }
-      log.info("Status code from hotel server:" +
-            response.getStatusCodeValue());
-      System.out.println("Response: ");
-      System.out.println(response);
+      
       List<HotelInfo> hotelList = new ArrayList<HotelInfo>();
       for (JsonNode item : json)
       { 
@@ -111,10 +121,17 @@ public class HotelService {
       return hotelList;
    }
    
-   public JsonNode bookHotel(String date, int hotelId) {
+   public JsonNode bookHotel(String date, long hotelId) {
       System.out.println("HotelService.bookHotel(...): booking hotel...");
       
       String postReservationUrl = hotelUrl + "/reservation";
+      
+      System.out.println("This is whats passed to HotelService:");
+      System.out.println("Date: " + date);
+      System.out.println("hotelId: " + hotelId);
+      System.out.println("authToken: " + authToken);
+      System.out.println("userId: " + userId);
+      
       restTemplate = new RestTemplate();
       HttpHeaders headers = new HttpHeaders();
       headers.setContentType(MediaType.APPLICATION_JSON);
@@ -127,12 +144,66 @@ public class HotelService {
       ObjectMapper objectMapper = new ObjectMapper();
       HttpEntity<String> request = 
             new HttpEntity<String>(reservationJsonObject.toString(), headers);
-      ResponseEntity<String> response = restTemplate.
-            postForEntity(postReservationUrl, request, String.class);
       
       JsonNode json;
       
       try {
+         ResponseEntity<String> response = restTemplate.
+            postForEntity(postReservationUrl, request, String.class);
+         json = objectMapper.readTree(response.getBody());
+         System.out.println(json);
+         return json;
+      } catch (HttpServerErrorException.InternalServerError e) {
+         System.out.println("Hotel: 500: Internal Server Error");
+         try {
+            json = objectMapper.readTree("{ \"msg\":" + "\"Hotel: 500: Internal Server Error\" }" );
+         } catch (JsonMappingException e1) {
+            // TODO Auto-generated catch block
+            System.out.println("Hotel: JsonMappingException e1");
+            e1.printStackTrace();
+         } catch (JsonProcessingException e1) {
+            // TODO Auto-generated catch block
+            System.out.println("Hotel: JsonProcessingException e1");
+            e1.printStackTrace();
+         }
+      } catch (JsonMappingException e) {
+         System.out.println("Hotel: JsonMappingException e");
+         // TODO Auto-generated catch block
+         e.printStackTrace();
+      } catch (JsonProcessingException e) {
+         System.out.println("Hotel: JsonProcessingException e");
+         // TODO Auto-generated catch block
+         e.printStackTrace();
+      }
+      return null;
+   }
+   
+   public JsonNode cancelReservation(long reservationId) {
+      System.out.println("HotelService.cancelReservation(...): canceling reservation...");
+      
+      String deleteReservationUrl = hotelUrl + "reservation/cancel";
+      
+      System.out.println("This is whats passed to HotelService:");
+      System.out.println("ReservationId: " + reservationId);
+      System.out.println("authToken: " + authToken);
+      System.out.println("userId: " + userId);
+      
+      restTemplate = new RestTemplate();
+      
+      HttpHeaders headers = new HttpHeaders();
+      headers.setContentType(MediaType.APPLICATION_JSON);
+      JsonNodeFactory jsonNodeFactory = JsonNodeFactory.instance;
+      ObjectNode reservationJsonObject = new ObjectNode(jsonNodeFactory);
+      reservationJsonObject.put("userId", userId);
+      reservationJsonObject.put("reservationId", reservationId);
+      reservationJsonObject.put("authToken", authToken);
+      ObjectMapper objectMapper = new ObjectMapper();
+      HttpEntity<String> entity = new HttpEntity<String>(reservationJsonObject.toString(), headers);
+      
+      JsonNode json;
+      
+      try {
+         ResponseEntity<String> response = restTemplate.exchange(deleteReservationUrl, HttpMethod.DELETE, entity, String.class);
          json = objectMapper.readTree(response.getBody());
          System.out.println(json);
          return json;
@@ -143,6 +214,8 @@ public class HotelService {
          // TODO Auto-generated catch block
          e.printStackTrace();
       }
+      
       return null;
    }
 }
+

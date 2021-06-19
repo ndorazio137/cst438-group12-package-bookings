@@ -1,8 +1,10 @@
 package cst438.service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -49,15 +52,44 @@ public class CarService {
     * @param endDate A String the date the car will be returned. Format "yyyy-mm-dd".
     * @return An ArrayList of CarInfo objects.
     */
-   public List<CarInfo> getAvailableCars(String cityName, Date startDate, Date endDate) {
+   public List<CarInfo> getAvailableCars(String cityName, Date dateStart, Date dateEnd) {
       System.out.println("CarService.getAvailableCars(...): Getting available cars...");
-      ResponseEntity<JsonNode> response =
-            restTemplate.getForEntity(
-                  carUrl + "/carsByCity/" + cityName + "/" + startDate + "/" + endDate, 
-                  JsonNode.class);
-      JsonNode json = response.getBody();
-      log.info("Status code from car server:" +
-            response.getStatusCodeValue());
+      System.out.println("This is whats passed to CarService:");
+      SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
+      String dateStartString = dateFormatter.format(dateStart);
+      String dateEndString = dateFormatter.format(dateEnd);
+      System.out.println("departureDate :" + dateStartString);
+      System.out.println("arrivalDate :" + dateEndString);
+      System.out.println("destinationCity: " + cityName);
+      
+      ObjectMapper objectMapper = new ObjectMapper();
+      JsonNode json = null; 
+      
+      try {
+         ResponseEntity<JsonNode> response =
+               restTemplate.getForEntity(
+                     carUrl + "/carsByCity/" + cityName + "/" + dateStartString + "/" + dateEndString, 
+                     JsonNode.class);
+         json = response.getBody();
+         log.info("Status code from car server:" +
+               response.getStatusCodeValue());
+      } catch (HttpServerErrorException.InternalServerError e) {
+         System.out.println("Car: 500: Internal Server Error");
+         try {
+            json = objectMapper.readTree("{ \"msg\":" + "\"Car: 500: Internal Server Error\" }" );
+         } catch (JsonMappingException e1) {
+            // TODO Auto-generated catch block
+            System.out.println("Car: JsonMappingException e");
+            e1.printStackTrace();
+         } catch (JsonProcessingException e1) {
+            // TODO Auto-generated catch block
+            System.out.println("Car: JsonProcessingException e");
+            e1.printStackTrace();
+         }
+      }
+      
+      
+      
       ArrayList<CarInfo> carList = new ArrayList<CarInfo>();
       for (JsonNode car : json)
       { 
@@ -89,17 +121,28 @@ public class CarService {
     * 
     * @param email A String that represents the users email that is booking the reservation.
     * @param carId A String that represents the id of the car to be reserved.
-    * @param dateStart A String that represents the date to pick up the reserved car. Format "yyyy-mm-dd".
-    * @param dateEnd A String that represents the date to return the reserved car. Format "yyyy-mm-dd".
+    * @param dateStart A String that represents the date to pick up the reserved car. Format "yyyy/mm/dd".
+    * @param dateEnd A String that represents the date to return the reserved car. Format "yyyy/mm/dd".
     * @return A reservation id in the form of an int.
     * @throws JsonMappingException
     * @throws JsonProcessingException
     */
-   public JsonNode bookCar(String email, long carId, String dateStart, String dateEnd) {
+   public JsonNode bookCar(String email, long carId, Date dateStart, Date dateEnd) {
       
       System.out.println("carService.bookCar(...): booking car...");
       
       String postReservationUrl = carUrl + "/reserve";
+      
+      System.out.println("This is whats passed to CarService:");
+      System.out.println("CarID: " + carId);
+      System.out.println("Email: " + email);
+      
+      
+      SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy/mm/dd", Locale.ENGLISH);
+      String dateStartString = dateFormatter.format(dateStart);
+      String dateEndString = dateFormatter.format(dateEnd);
+      System.out.println("departureDate: " + dateStartString);
+      System.out.println("arrivalDate: " + dateEndString);
       
       restTemplate = new RestTemplate();
       HttpHeaders headers = new HttpHeaders();
@@ -108,8 +151,8 @@ public class CarService {
       ObjectNode reservationJsonObject = new ObjectNode(jsonNodeFactory);
       reservationJsonObject.put("email", email);
       reservationJsonObject.put("car_id", carId);
-      reservationJsonObject.put("date_start", dateStart);
-      reservationJsonObject.put("date_end", dateEnd);
+      reservationJsonObject.put("date_start", dateStartString);
+      reservationJsonObject.put("date_end", dateEndString);
       ObjectMapper objectMapper = new ObjectMapper();
       HttpEntity<String> request = 
             new HttpEntity<String>(reservationJsonObject.toString(), headers);
@@ -140,6 +183,11 @@ public class CarService {
       System.out.println("carService.cancelReservation(...): cancelling car...");
       
       String postReservationUrl = carUrl + "/cancel";
+      
+      System.out.println("This is whats passed to CarService:");
+      System.out.println("ReservationId: " + reservationId);
+      System.out.println("Username: " + username);
+      
       
       restTemplate = new RestTemplate();
       HttpHeaders headers = new HttpHeaders();
@@ -172,3 +220,4 @@ public class CarService {
       return json;
    }
 }
+

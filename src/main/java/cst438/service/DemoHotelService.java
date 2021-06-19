@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -32,7 +33,7 @@ public class DemoHotelService {
    private RestTemplate restTemplate;
    private String hotelUrl;
    private String authToken;
-   private int userId;
+   private String userId;
    
    public DemoHotelService( 
          @Value("${hotel.url}") final String hotelUrl,
@@ -41,13 +42,14 @@ public class DemoHotelService {
       this.restTemplate = new RestTemplate();
       this.hotelUrl = hotelUrl;
       this.authToken = authToken;
+      this.userId = userId;
    }
    
    public List<HotelInfo> getAvailableHotels(String city, Date date, String state) {
       
       System.out.println("DemoHotelService.getAvailableHotels(...): Getting available hotels...");
       
-System.out.println("DemoCarService.getAvailableCars(...): Getting available cars...");
+      System.out.println("DemoCarService.getAvailableCars(...): Getting available cars...");
       
       ArrayList<HotelInfo> hotelList = new ArrayList<HotelInfo>();
       hotelList.add(new HotelInfo(28, "Hampton", "7360 North Manor St.",
@@ -108,4 +110,35 @@ System.out.println("DemoCarService.getAvailableCars(...): Getting available cars
       
       return json;
    }
+   
+   public JsonNode cancelReservation(long reservationId) {
+      System.out.println("HotelService.cancelReservation(...): cancelling hotel...");
+
+      ObjectMapper objectMapper = new ObjectMapper();
+     
+      JsonNode json = null;
+      
+      String responseBody;
+      
+      if (reservationId == 28) {
+         responseBody = "{\"status\": 200}";
+
+      } else {
+         responseBody = "{\"status\": 404}";
+      }
+      
+      try {
+         json = objectMapper.readTree(responseBody);
+         System.out.println(json);
+      } catch (JsonMappingException e) {
+         // TODO Auto-generated catch block
+         e.printStackTrace();
+      } catch (JsonProcessingException e) {
+         // TODO Auto-generated catch block
+         e.printStackTrace();
+      } 
+      
+      return json;
+   }
 }
+

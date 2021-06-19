@@ -1,11 +1,13 @@
 package cst438.service;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,14 +37,15 @@ public class PackageService {
 	@Autowired
    private UserRepository userRepository;
 	
+	private static final Logger log =
+      LoggerFactory.getLogger(PackageService.class);
+	
 	public PackageService( ) { }
 
    public List<Package> getPackageList(TripInfo tripInfo) {
 		
       System.out.println("getPackageList(...): Trip Info: ");
       System.out.println(tripInfo);
-      
-      String username = tripInfo.getUsername();
       
 		String startingCity = tripInfo.getStartingCity();
 		String startingState = tripInfo.getStartingState();
@@ -53,17 +56,16 @@ public class PackageService {
 		int passengers = tripInfo.getNumPassengers();
 		
 		List<Package> packageList = new ArrayList<Package>();
-		
+      
 		List<CarInfo> availableCarList = 
 		   carService.getAvailableCars(destinationCity, departureDate, arrivalDate);
 		System.out.println("availableCarList: " + availableCarList);
 		
       List<HotelInfo> availableHotelList =
          hotelService.getAvailableHotels(destinationCity, arrivalDate,
-            destinationState); System.out.println("availableHotelList: " +
-               availableHotelList);
+            destinationState); 
+      System.out.println("availableHotelList: " + availableHotelList);
        
-		
 		List<FlightInfo> availableFlightList = 
 		      flightService.getAvailableFlights(startingCity, destinationCity, departureDate, passengers);
 		System.out.println("availableFlightList: " + availableFlightList);
@@ -131,72 +133,61 @@ public class PackageService {
    // needed to actually book all three services, then books them.
    public String bookPackage(ReservationInfo reservationInfo) {
       
-//      CarInfo car = pckage.getCar();
-//      FlightInfo flight = pckage.getFlight();
-//      HotelInfo hotel = pckage.getHotel();
+      System.out.println("ReservationInfo: " + reservationInfo);
       // Fetch the user from the DB using the username from tripInfo 
       User user = userRepository.findByUsername(reservationInfo.getEmail()).get(0);
       System.out.println("USER: " + user);
-      SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MMM-dd", Locale.ENGLISH);
+      
       
       long carId = reservationInfo.getCarId();
-      System.out.println("CarID: " + carId);
-      String dateStart = dateFormatter.format(reservationInfo.getDateStart());
-      System.out.println("DateStart: " + dateStart);
-      String dateEnd = dateFormatter.format(reservationInfo.getDateEnd());
-      System.out.println("DateEnd: " + dateEnd);
+      Date dateStart = reservationInfo.getDateStart();
+      Date dateEnd = reservationInfo.getDateEnd();
       String email = user.getUsername();
-      System.out.println("Email: " + email);
       String password = user.getPassword();
-      System.out.println("Password: " + password);
       String firstName = user.getFirstName();
-      System.out.println("FirstName: " + firstName);
       String lastName = user.getLastName();
-      System.out.println("LastName: " + lastName);
       long flightId = reservationInfo.getFlightId();
-      System.out.println("FlightId: " + flightId);
       int passengers = reservationInfo.getPassengers();
-      System.out.println("Passengers: " + passengers);
-
-      String site = "PACKAGE";
       String date = reservationInfo.getHotelDate();
       System.out.println("HotelDate: " + date);
       int hotelId = reservationInfo.getHotelId();
       System.out.println("HotelId: " + hotelId);
+      
+      
       // Attempt to book car
       JsonNode carResponse = carService.bookCar(email, carId, dateStart, dateEnd);
       System.out.println(carResponse);
-      // If car fails, return.
-      if (carResponse == null) { 
-         System.out.println("Car Reservation failed.");
-         return "Car reservation failed.";
+      
+      
+      // Attempt to book the flight
+      JsonNode flightResponse = flightService.bookFlight(email, password, firstName, lastName, flightId, passengers);
+      System.out.println(flightResponse);
+      
+      // Attempt to book hotel
+      JsonNode hotelResponse = hotelService.bookHotel(date, hotelId);
+      System.out.println(hotelResponse);
+      
+      // If any of the services fails to reserve item, cancel all reservations attached to the package.
+      if (carResponse == null || carResponse.get("id") == null 
+            || flightResponse == null
+            || hotelResponse == null) {
+         cancelCarReservation(carResponse);
+         cancelFlightReservation(flightResponse, user);
+         cancelHotelReservation(hotelResponse);
+         return "We could not book your package at this time";
       }
+      
       // Car was booked successfully, so get the reservation ID
       long carReservationId = carResponse.get("id").asLong();
       System.out.println("carReservationId: " + carReservationId);
-      // Attempt to book the flight
-      JsonNode flightResponse = flightService.bookFlight(email, password, site, firstName, lastName, flightId, passengers);
-      System.out.println(flightResponse);
-      // If flight booking fails, cancel car booking and return.
-      if (flightResponse == null) { 
-         System.out.println("Flight Reservation failed.");
-         carService.cancelReservation(carReservationId, email);
-         return "Flight reservation failed.";
-      }
+      
       // Flight was booked successfully, so get the reservation ID
       long flightReservationId = flightResponse.get("id").asLong();
       System.out.println(flightReservationId);
-      // Attempt to book hotel
-      JsonNode hotelResponse = hotelService.bookHotel(date, hotelId);
-      // If hotel booking fails, cancel car & flight, then return.
-      if (hotelResponse == null) { 
-         System.out.println("hotel Reservation failed.");
-         carService.cancelReservation(carReservationId, email);
-         flightService.deleteReservation(flightReservationId, email, password, site);
-         return "Hotel reservation failed.";
-      }
+      
       // Hotel was booked successfully, so get the reservation ID
       long hotelReservationId = hotelResponse.get("id").asLong();
+      System.out.println(hotelReservationId);
       
       // TODO: finish creating reservation object and save in DB
       long userId = user.getUserId();
@@ -207,4 +198,32 @@ public class PackageService {
       
       return "Package booking successful.";
    }
+   
+   private void cancelCarReservation(JsonNode carResponse) {
+      if ( carResponse != null) {
+         long carReservationId = carResponse.get("id").asLong();
+         String email = carResponse.get("email").asText();
+         carService.cancelReservation(carReservationId, email);
+         log.info("Car Reservation Successfully Cancelled");
+      }
+   }
+   
+   private void cancelFlightReservation(JsonNode flightResponse, User user) {
+      if ( flightResponse != null ) {
+         long flightId = flightResponse.get("reservation").get("id").asLong();
+         String email = user.getUsername();
+         String password = user.getPassword();
+         flightService.cancelReservation(flightId, email, password);
+         log.info("Flight Reservation Successfully Cancelled");
+      } 
+   }
+   
+   private void cancelHotelReservation(JsonNode hotelResponse) {
+      if ( hotelResponse != null ) {
+         long reservationId = hotelResponse.get("idreservations").asLong();
+         hotelService.cancelReservation(reservationId);
+         log.info("Hotel Reservation Successfully Cancelled");
+      }
+   }
 }
+

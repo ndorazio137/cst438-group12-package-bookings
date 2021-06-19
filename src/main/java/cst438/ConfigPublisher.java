@@ -28,7 +28,7 @@ public class ConfigPublisher {
 
    @Bean
    public FanoutExchange fanout() {
-      return new FanoutExchange("travelSite3");
+      return new FanoutExchange("package");
    }
    
    @Bean
