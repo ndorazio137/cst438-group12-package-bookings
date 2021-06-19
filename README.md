@@ -5,6 +5,12 @@ Production site: https://cst438-package-bookings.herokuapp.com/
 Test login credentials:
    Username/email: koakes@csumb.edu
    Password: password1
+Test Cities:
+   Los Angeles
+   New York
+Only valid dates between: 
+   2021/07/01
+   2021/07/07
    
 =========== Database design ==========
 MySQL relational database
